@@ -1,15 +1,14 @@
         // --- I18N Translations ---
         const translations = {
             "zh-CN": {
-                "pageTitle": "对话北极星",
-                "headerTitleComplete": "对话北极星<br>\"让AI点亮你心中永恒的灯塔\"",
-                "headerTitle": "对话北极星",
-                "headerSubtitle": "让AI点亮你心中永恒的灯塔",
-                "tabAi": "泛AI",
-                "tabQuantum": "泛量子",
-                "tabFinance": "泛金融",
-                "tabLiterature": "泛人文",
-                "tabArt": "泛艺术",
+                "pageTitle": "智源生医",
+                "headerTitleComplete": "智源生医<br>\"探索生医奥秘，解决人间疾苦\"",
+                "headerTitle": "智源生医",
+                "headerSubtitle": "探索生医奥秘，解决人间疾苦",
+                "tabTCM": "泛AI",
+                "tabWM": "泛量子",
+                "tabMO": "多组学",
+                "tabNL": "脑机接口",
                 "tabChinaEntrepreneurs": "泛中华",
                 "selectAiLeader": "选择一位泛AI北极星",
                 "selectQuantumLeader": "选择一位泛量子北极星",
