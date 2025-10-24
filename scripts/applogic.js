@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setLanguage(currentLang);
 
-    openTab(null, 'ai');
+    openTab(null, 'TCM');
     const firstTabButton = document.querySelector('.tab-button');
     if (firstTabButton && !firstTabButton.classList.contains('active')) {
          firstTabButton.classList.add('active');
