@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<!-- lang attribute will be set by JavaScript -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- title will be set by JavaScript -->
+    <title data-i18n-key="pageTitle" data-i18n-target="title">对话北极星</title>
+    <!-- 引入 Google Font "Poppins" -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?6f10ee37f81ce474f6bebaabad0da6d7";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    
+    <!-- *** START: MathJax Integration *** -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <!-- *** END: MathJax Integration *** -->
+
+
+    <style>
+        /* (CSS 部分保持不变) */
+        /* --- DARK THEME VARIABLES --- */
+        :root {
+            --dark-bg: #1e1e1e; /* 更深的背景 */
+            --dark-surface: #2a2a2a; /* 容器、卡片等表面 */
+            --dark-surface-light: #333333; /* 卡片等稍亮一点的表面 */
+            --dark-text-primary: #e0e0e0; /* 主要文字颜色 */
+            --dark-text-secondary: #b0b0b0; /* 次要文字颜色 */
+            --dark-border: #444444; /* 边框颜色 */
+            --dark-accent: #4a90e2; /* 强调色，蓝色 */
+            --dark-accent-hover: #3a7bc8; /* 强调色悬停 */
+            --dark-selected-bg: #004a8e; /* 选中项背景 */
+            --dark-field-text: #4a90e2; /* 领域文本颜色 (原绿色系66bb6a调整为蓝色，调整亮度) */
+            --dark-remarks-border: #00DFD8; /* 备注边框 (原黄色系#ffca28，修改为#00DFD8 Bright Cyan, 调整亮度 ) */
+            --dark-remarks-text: #bdbdbd; /* 备注文本 */
+            --dark-input-bg: #3a3a3a; /* 输入框背景 */
+            --dark-input-border: #555555; /* 输入框边框 */
+            --dark-pre-bg: #1c1c1c; /* pre标签背景 */
+            --dark-pre-border: #383838; /* pre标签边框 */
+            
+            /* --- [新增] 定义小说风格的字体变量 --- */
+            --font-family-novel: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        }
+    
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg); /* DARK */
+            color: var(--dark-text-primary);   /* DARK */
+            line-height: 1.6;
+        }
+        
+        /* --- Header & Controls --- */
+        header {
+            text-align: center;
+            padding: 20px 0; /* 保持原有的垂直内边距 */
+            margin: 0 auto;
+            position: relative;
+            max-width: 1200px;
+        }
+        
+        /* --- Logo Styles --- */
+        .logo-container {
+            position: absolute;
+            top: 1px; /* 调整 Logo 的 top 值从20-》1，使其与按钮的底部对齐 */
+            left: 20px; /* 左侧距离 */
+            z-index: 20; /* 确保在其他内容之上 */
+            display: flex; /* 让logo内部的img居中 */
+            align-items: center; 
+            justify-content: center;
+        }
+        .logo-container img {
+            height: 70px;
+            width: auto;
+            border-radius: 5px;
+        }
+        
+        /* 标题现在独立于 Logo 容器，并使用 h1 标签 */
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin-top: 80px; /* 根据实际 Logo 和按钮高度调整，从100-》80 */
+            margin-bottom: 1px; /* 增加一点底部边距，与下方内容隔开，从20-》1 */
+            font-size: 2.4em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            background: linear-gradient(
+                90deg,               
+                #00DFD8, /* 亮青色 */
+                #7928CA  /* 紫色 */
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: colorWave 7s linear infinite;
+            -webkit-animation: colorWave 7s linear infinite;
+        }
+    
+        .top-right-controls {
+            position: absolute;
+            top: 20px; /* 保持与原代码一致 */
+            right: 20px; /* 保持与原代码一致 */
+            display: flex; /* 改回 flex，因为按钮要水平对齐 */
+            align-items: center;
+            gap: 15px; /* 按钮之间间距 */
+            z-index: 10;
+        }
+        /* 修改：了解我们按钮样式，与其他按钮保持一致 */
+        .about-us-button {
+            color: var(--dark-text-secondary); /* 文本颜色 */
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+            background-color: var(--dark-surface-light); /* 背景色 */
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--dark-border); /* 边框 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer; /* 添加指针样式 */
+        }
+
+        .about-us-button:hover {
+            color: var(--dark-accent); /* 悬停时强调色 */
+            border-color: var(--dark-accent); /* 悬停时边框颜色 */
+            background-color: var(--dark-surface-light); /* 保持背景色不变或微调 */
+            transform: none; /* 移除原来的 translateY 效果 */
+        }
+    
+       .settings-link {
+            color: var(--dark-text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+            background-color: var(--dark-surface-light);
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--dark-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .settings-link:hover {
+            color: var(--dark-accent);
+            border-color: var(--dark-accent);
+        }
+        .settings-link .fa-cog {
+            margin-right: 6px;
+        }
+        
+         .language-selector {
+            padding: 8px;
+            background-color: var(--dark-input-bg);
+            color: var(--dark-text-primary);
+            border: 1px solid var(--dark-border);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-sizing: border-box;
+            width: auto;
+        }
+        .language-selector:hover {
+            border-color: var(--dark-accent);
+        }
+        
+        /* --- Modal Styles (No changes below this point) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+        .modal-content {
+            background-color: var(--dark-surface);
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid var(--dark-border);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        /* 新增：了解我们模态框的特定样式 */
+        .manifesto-modal .modal-content {
+            max-width: 700px; /* 宣言模态框可以更宽 */
+            margin: 8% auto; /* 稍微向上移动，并居中 */
+            background-color: var(--dark-surface-light); /* 稍亮的背景 */
+            border: 1px solid var(--dark-border); /* 修改边框颜色 */
+        }
+        .manifesto-modal .manifesto-text {
+            font-family: var(--font-family-novel); /* 使用小说风格字体 */
+            color: var(--dark-text-primary);
+            font-size: 1.1em;
+            line-height: 1.8;
+            padding: 10px;
+            max-height: 70vh; /* 限制高度并允许滚动 */
+            overflow-y: auto;
+            text-align: justify; /* 两端对齐 */
+        }
+        .manifesto-modal h2 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-accent);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            letter-spacing: 0.8px;
+            line-height: 1.4;
+            background: linear-gradient(
+                90deg,               
+                #00DFD8, /* 亮青色 */
+                #7928CA  /* 紫色 */
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: colorWave 7s linear infinite;
+            -webkit-animation: colorWave 7s linear infinite;
+        }
+        .manifesto-modal p {
+            margin-bottom: 1.2em;
+        }
+        .manifesto-modal p.conclusion {
+            text-align: center;
+            font-style: italic;
+            font-weight: bold;
+            color: var(--dark-remarks-border); /* 使用备注边框的颜色作为强调 */
+            margin-top: 30px;
+            font-size: 1.2em;
+        }
+
+
+        .close-button {
+            color: var(--dark-text-secondary);
+            position: absolute;
+            top: 10px; right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close-button:hover { color: var(--dark-text-primary); }
+    
+        .modal h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: var(--dark-accent);
+            display: flex;
+            align-items: center;
+        }
+        .modal h2 .fa-cog {
+            margin-right: 12px;
+        }
+    
+        .settings-form .form-group {
+            margin-bottom: 20px;
+        }
+        .settings-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--dark-text-primary);
+        }
+        .settings-form select, .settings-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--dark-input-bg);
+            border: 1px solid var(--dark-input-border);
+            border-radius: 4px;
+            color: var(--dark-text-primary);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .settings-form select:focus, .settings-form input[type="password"]:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
+    
+        .settings-form .save-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            background-color: var(--dark-accent);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .settings-form .save-btn:hover {
+            background-color: var(--dark-accent-hover);
+        }
+    
+        @keyframes colorWave {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+    
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--dark-surface);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+    
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--dark-accent);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+    
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            color: var(--dark-text-secondary);
+            font-size: 16px;
+            margin-right: 5px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+    
+        .tab-button:hover {
+            background-color: var(--dark-surface-light);
+            color: var(--dark-text-primary);
+        }
+    
+        .tab-button.active {
+            border-bottom-color: var(--dark-accent);
+            font-weight: bold;
+            color: var(--dark-accent);
+        }
+    
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    
+        .tab-content h2 {
+            color: var(--dark-accent);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+    
+        .leader-scroll-container {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 0 40px;
+        }
+    
+        .leader-grid {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 0;
+            gap: 20px;
+            border-radius: 4px;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .leader-grid::-webkit-scrollbar { display: none; }
+    
+        .leader-card {
+            border: 1px solid var(--dark-border);
+            border-radius: 8px;
+            padding: 15px;
+            background-color: var(--dark-surface-light);
+            color: var(--dark-text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            flex: 0 0 300px;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    
+        .leader-card:hover, .leader-card.selected {
+            border-color: var(--dark-accent);
+            box-shadow: 0 4px 10px rgba(0, 149, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        .leader-card.selected {
+                background-color: var(--dark-selected-bg);
+        }
+    
+        .leader-card h3 {
+            margin-top: 0;
+            color: var(--dark-accent);
+            font-size: 1.1em;
+        }
+    
+        .leader-card p {
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            color: var(--dark-text-secondary);
+            flex-grow: 1;
+        }
+        .leader-card .field {
+            font-style: italic;
+            color: var(--dark-field-text);
+            margin-top: auto;
+        }
+        .leader-card .remarks {
+            font-size: 0.8em;
+            color: var(--dark-remarks-text);
+            border-left: 3px solid var(--dark-remarks-border);
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+    
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(50, 50, 50, 0.8);
+            color: var(--dark-text-primary);
+            border: 1px solid var(--dark-border);
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, box-shadow 0.3s, width 0.3s, height 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .scroll-button:hover {
+            background-color: var(--dark-accent);
+            color: var(--dark-bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .scroll-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .scroll-button.left { left: 0px; }
+        .scroll-button.right { right: 0px; }
+    
+        .interaction-area {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--dark-border);
+        }
+    
+        .interaction-area h2 {
+            color: var(--dark-accent);
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        
+        /* Shared styles for textareas */
+        .interaction-area textarea {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 80px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--dark-input-border);
+            margin-bottom: 15px;
+            font-size: 1em;
+            background-color: var(--dark-input-bg);
+            color: var(--dark-text-primary);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            line-height: 1.5;
+        }
+
+        .interaction-area textarea::placeholder {
+            color: var(--dark-text-secondary);
+        }
+    
+        .interaction-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center; /* 让按钮在容器中居中 */
+        }
+    
+        .interaction-area button {
+            padding: 10px 15px;
+            background-color: var(--dark-accent);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease;
+            flex: 1 1 200px; /* 确保宽度一致性 */
+            box-sizing: border-box;
+            max-width: 250px; /* 增加一个最大宽度，防止按钮在宽屏上过长 */
+            text-align: center; /* 文本居中 */
+            display: flex; /* 让按钮内容（文本和loading）也使用flex布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+        }
+        .interaction-area button:hover {
+            background-color: var(--dark-accent-hover);
+        }
+        .interaction-area button:disabled {
+            background-color: #555;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        #selected-leader-info {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--dark-surface-light);
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--dark-text-primary);
+        }
+    
+        .response-display {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--dark-surface);
+            border: 1px solid var(--dark-border);
+            border-radius: 4px;
+        }
+        .response-display h4 {
+            margin-top:0;
+            color: var(--dark-text-primary);
+        }
+        
+        /* --- MODIFICATION START: Styles for aiResponseText (was pre) --- */
+        #aiResponseText {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: var(--dark-pre-bg);
+            padding: 10px;
+            border: 1px solid var(--dark-pre-border);
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            color: var(--dark-text-secondary);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        /* --- MODIFICATION END --- */
+
+        /* --- [新增] 统一输入框与答复框为小说阅读字体风格 --- */
+        #userQuestion, 
+        #generatedPromptText, 
+        #aiResponseText {
+            font-family: var(--font-family-novel);
+            font-size: 1.05rem; /* 稍大字体 */
+            line-height: 1.7;   /* 更宽松的行高 */
+            text-align: justify;/* 两端对齐 */
+            color: var(--dark-text-primary); /* 确保文字颜色为主要文字颜色 */
+        }
+        /* Make the prompt textarea taller */
+        #generatedPromptText {
+            min-height: 200px; /* Increased height for better editing */
+        }
+        /* --- [新增] 结束 --- */
+
+
+        .loading-spinner {
+            border: 4px solid #555;
+            border-top: 4px solid var(--dark-accent);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    
+        footer {
+            text-align: left;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    
+        /* 媒体查询，在小屏幕上调整布局 */
+        @media (max-width: 768px) {
+             header {
+                padding-top: 15px; /* 适当减少顶部内边距 */
+            }
+            .logo-container {
+                top: 15px;
+                left: 15px;
+            }
+            .logo-container img {
+                height: 50px;
+            }
+            h1 {
+                /* 调整移动端的 h1 margin-top */
+                margin-top: 64px; /* 根据实际情况调整，确保不被 Logo 遮挡，从80—》64 */
+                font-size: 2em; 
+                margin-bottom: 1px; /* 增加一点底部边距，从15-》1 */
+                line-height: 1.25;
+                text-wrap: balance; /* 新增此行 */
+            }
+            .top-right-controls { 
+                /* 相应调整移动端按钮位置 */
+                top: 15px;
+                right: 15px; 
+                gap: 10px;
+            }
+            .about-us-button {
+                font-size: 0.9rem; /* 恢复自动宽度 */
+                padding: 6px 12px;
+            }
+            .settings-link { font-size: 0.9rem; padding: 6px 12px;}
+            .language-selector { font-size: 0.8rem; padding: 7px; }
+    
+            body { line-height: 1.55; }
+            .container { width: 92%; padding: 15px; margin-top: 15px; }
+            .tabs { justify-content: flex-start; margin-bottom: 15px; }
+            .tab-button { padding: 9px 14px; font-size: 10px; margin-right: 4px; margin-bottom: 4px; }
+            .tab-content h2, .interaction-area h2 { font-size: 0.9em; margin-bottom: 12px; }
+            .leader-scroll-container { padding: 0 35px; }
+            .leader-grid { gap: 15px; }
+            .leader-card { flex: 0 0 250px; min-height: 260px; padding: 12px; }
+            .leader-card h3 { font-size: 1.05em; }
+            .leader-card p { font-size: 0.85em; }
+            .leader-card .remarks { font-size: 0.78em; }
+            .scroll-button { width: 32px; height: 32px; font-size: 18px; }
+            .scroll-button.left { left: 3px; }
+            .scroll-button.right { right: 3px; }
+            .interaction-buttons { flex-direction: column; gap: 10px; }
+            .interaction-area button { width: 100%; font-size: 0.92em; padding: 12px 15px; flex-grow: 0; flex-basis: auto; max-width: none; }
+            .interaction-area textarea { font-size: 0.95em; min-height: 75px; padding: 9px; }
+            #selected-leader-info { font-size: 0.95em; padding: 9px; }
+            #aiResponseText { font-size: 0.88em; } /* MODIFIED: was pre */
+
+            .manifesto-modal .modal-content {
+                margin: 5% auto;
+                max-width: 95%;
+            }
+            .manifesto-modal h2 {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+            }
+            .manifesto-modal .manifesto-text {
+                font-size: 0.95em;
+                line-height: 1.7;
+            }
+            .manifesto-modal p.conclusion {
+                font-size: 1.05em;
+                margin-top: 20px;
+            }
+        }
+    
+        @media (max-width: 480px) {
+            header {
+                padding-top: 10px;
+            }
+            .logo-container {
+                top: 10px;
+                left: 10px;
+            }
+            .logo-container img {
+                height: 45px;
+            }
+            h1 {
+                /* 调整更小屏幕的 h1 margin-top */
+                margin-top: 56px; /* 进一步调整，适应更小屏幕，从70-》56 */
+                font-size: 1.6em; /*1.8-》1.6*/
+                letter-spacing: 0px; /*0.1-》0*/
+                line-height: 1.2; 
+                text-wrap: balance; /* 新增此行 */
+            }
+             .top-right-controls { 
+                right: 10px; 
+                gap: 8px;
+            }
+            .about-us-button {
+                font-size: 0.8rem; 
+                padding: 5px 10px;
+            }
+            .settings-link { font-size: 0.8rem; padding: 5px 10px;}
+            .language-selector { font-size: 0.75rem; padding: 6px; }
+
+            .container { width: 95%; padding: 10px; margin-top: 10px; }
+            .tab-content h2, .interaction-area h2 { font-size: 0.9em; margin-bottom: 10px; }
+            .tab-button { font-size: 10px; padding: 8px 10px; margin-right: 3px; margin-bottom: 3px; }
+            .leader-scroll-container { padding: 0 28px; }
+            .leader-grid{ gap: 12px; }
+            .leader-card { flex: 0 0 78vw; min-height: auto; padding: 10px; }
+            .leader-card h3 { font-size: 1em; }
+            .leader-card p { font-size: 0.82em; }
+            .leader-card .remarks { font-size: 0.75em; }
+            .scroll-button { width: 28px; height: 28px; font-size: 16px; }
+            .scroll-button.left { left: 2px; }
+            .scroll-button.right { right: 2px; }
+            .interaction-area button { font-size: 0.88em; padding: 10px 12px; }
+            #selected-leader-info { font-size: 0.9em; padding: 8px; }
+            .interaction-area textarea { min-height: 65px; font-size: 0.9em; padding: 8px; }
+            .response-display { padding: 10px; }
+            #aiResponseText { font-size: 0.82em; padding: 8px; } /* MODIFIED: was pre */
+            
+            .manifesto-modal h2 {
+                font-size: 1.3em;
+            }
+            .manifesto-modal .manifesto-text {
+                font-size: 0.9em;
+                line-height: 1.6;
+            }
+            .manifesto-modal p.conclusion {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+  <header>
+        <div class="logo-container">
+            <img src="images/TalktoNorthStarIcon.png" alt="Talk to NorthStar Logo">
+        </div>
+        <div class="top-right-controls">
+            <!-- “了解我们”按钮现在在这里，并放在最左边 -->
+            <button class="about-us-button" onclick="openManifestoModal()">
+                <i class="fas fa-book-open"></i>                 
+                <span data-i18n-key="aboutBtnText">了解我们</span>
+            </button>
+            <a href="#" onclick="openApiSettingsModal(event)" class="settings-link">
+                <i class="fas fa-cog"></i>
+                <span data-i18n-key="settingsBtnText">设置</span>
+            </a>
+            <select id="languageSelector" class="language-selector" onchange="setLanguage(this.value)">
+                <option value="zh-CN">简体中文</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <!-- h1 保持原位，但会通过 margin-top 被向下推 -->
+        <h1 data-i18n-key="headerTitleComplete" data-i18n-target="innerHTML">对话北极星</h1>
+        
+    </header>
+
+    <div class="container">
+        <!-- ... rest of the body is unchanged ... -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'ai')" data-i18n-key="tabAi">泛AI</button>
+            <button class="tab-button" onclick="openTab(event, 'quantum')" data-i18n-key="tabQuantum">泛量子</button>
+            <button class="tab-button" onclick="openTab(event, 'finance')" data-i18n-key="tabFinance">泛金融</button>
+            <button class="tab-button" onclick="openTab(event, 'literature')" data-i18n-key="tabLiterature">泛人文</button>
+            <button class="tab-button" onclick="openTab(event, 'art')" data-i18n-key="tabArt">泛艺术</button>
+            <button class="tab-button" onclick="openTab(event, 'chinaEntrepreneurs')" data-i18n-key="tabChinaEntrepreneurs">泛中华</button>
+        </div>
+
+        <div id="ai" class="tab-content active">
+            <h2 data-i18n-key="selectAiLeader">选择一位泛AI北极星</h2>
+            <div class="leader-scroll-container">
+                <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
+                <div class="leader-grid" id="aiGrid"></div>
+                <button class="scroll-button right" onclick="scrollGrid(this, 1)" aria-label="Scroll Right">></button>
+            </div>
+        </div>
+
+        <div id="quantum" class="tab-content">
+            <h2 data-i18n-key="selectQuantumLeader">选择一位泛量子北极星</h2>
+            <div class="leader-scroll-container">
+                <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
+                <div class="leader-grid" id="quantumGrid"></div>
+                <button class="scroll-button right" onclick="scrollGrid(this, 1)" aria-label="Scroll Right">></button>
+            </div>
+        </div>
+
+        <div id="finance" class="tab-content">
+            <h2 data-i18n-key="selectFinanceLeader">选择一位泛金融北极星</h2>
+            <div class="leader-scroll-container">
+                <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
+                <div class="leader-grid" id="financeGrid"></div>
+                <button class="scroll-button right" onclick="scrollGrid(this, 1)" aria-label="Scroll Right">></button>
+            </div>
+        </div>
+
+       <div id="literature" class="tab-content">
+            <h2 data-i18n-key="selectLiteratureLeader">选择一位泛人文领域北极星</h2>
+            <div class="leader-scroll-container">
+                <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
+                <div class="leader-grid" id="literatureGrid"></div>
+                <button class="scroll-button right" onclick="scrollGrid(this, 1)" aria-label="Scroll Right">></button>
+            </div>
+        </div>
+
+        <div id="art" class="tab-content">
+            <h2 data-i18n-key="selectArtLeader">选择一位泛艺术领域北极星</h2>
+            <div class="leader-scroll-container">
+                <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
+                <div class="leader-grid" id="artGrid"></div>
+                <button class="scroll-button right" onclick="scrollGrid(this, 1)" aria-label="Scroll Right">></button>
+            </div>
+        </div>
+
+        <div id="chinaEntrepreneurs" class="tab-content">
+            <h2 data-i18n-key="selectChinaEntrepreneursLeader">选择一位泛中华北极星</h2>
+             <div class="leader-scroll-container">
+                <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
+                <div class="leader-grid" id="chinaEntrepreneursGrid"></div>
+                <button class="scroll-button right" onclick="scrollGrid(this, 1)" aria-label="Scroll Right">></button>
+            </div>
+        </div>
+        
+        <div class="interaction-area">
+            <h2 data-i18n-key="interactWithLeader">与北极星对话</h2>
+            <div id="selected-leader-info">
+                <span data-i18n-key="currentSelectedLeaderPrefix">当前选择的北极星: </span><span id="selectedLeaderName" data-i18n-key="noLeaderSelectedInitial">无</span>
+            </div>
+            <textarea id="userQuestion" data-i18n-key="placeholderUserQuestion" data-i18n-target="placeholder"></textarea>
+            
+            <div class="interaction-buttons">
+                <button onclick="generateAndShowPrompt()" data-i18n-key="btnGeneratePrompt">1. 生成 问题</button>
+                <button id="getAIResponseButton" onclick="getAIResponse()">
+                    <span data-i18n-key="btnGetAiResponse">2. 获取 北极星 回复</span>
+                    <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
+                </button>
+                <button id="copyToClipboardButton" onclick="copyContentToClipboard()" data-i18n-key="btnCopyToClipboard">拷贝到粘贴板</button>
+            </div>
+
+            <div id="prompt-display-area" class="response-display" style="display:none;">
+                <h4 data-i18n-key="generatedPromptTitle">生成的 问题 (对选择北极星):</h4>
+                <!-- === MODIFICATION START === -->
+                <textarea id="generatedPromptText"></textarea>
+                <!-- === MODIFICATION END === -->
+            </div>
+            
+            <div id="ai-response-area" class="response-display" style="display:none;">
+                <h4 data-i18n-key="aiResponseTitle">AI 回复:</h4>
+                <!-- *** MODIFICATION START: Changed <pre> to <div> *** -->
+                <div id="aiResponseText"></div>
+                <!-- *** MODIFICATION END *** -->
+            </div>
+        </div>
+    </div>
+    
+    <div id="apiSettingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeApiSettingsModal()">×</span>
+            <!-- 模态框标题的 data-i18n-key 应该在 h2 上，因为它可能没有内部的 span -->
+            <h2 data-i18n-key="modalTitle"><i class="fas fa-cog"></i> API及模型设置</h2> 
+            <div class="settings-form">
+                <div class="form-group">
+                    <label for="apiEndpoint" style="display: flex; align-items: center;">
+                        <i class="fas fa-server" style="margin-right: 8px;"></i> 
+                        <span data-i18n-key="labelApiEndpoint">模型接入点:</span>
+                    </label>
+                    <select id="apiEndpoint">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="apiKey" style="display: flex; align-items: center;">
+                        <i class="fas fa-key" style="margin-right: 8px;"></i> 
+                        <span data-i18n-key="labelApiKey">API Key :</span>
+                    </label>
+                    <input type="password" id="apiKey" data-i18n-key="placeholderApiKey" data-i18n-target="placeholder">
+                </div>
+                <div class="form-group">
+                    <label for="apiModel" style="display: flex; align-items: center;">
+                        <i class="fas fa-robot" style="margin-right: 8px;"></i> 
+                        <span data-i18n-key="labelApiModel">模型选择:</span>
+                    </label>
+                    <select id="apiModel">
+                    </select>
+                </div>
+                <!-- 设为默认模型选项 (这个已经正常显示，无需更改) -->
+                <div class="form-group">
+                    <label style="display: flex; align-items: center;">
+                        <i class="fas fa-star" style="margin-right: 8px; color: gold;"></i> 
+                        <span data-i18n-key="labelSetDefaultModel">设为默认模型</span>
+                        <input type="checkbox" id="apiDefaultModelCheck" style="margin-left: 10px;">
+                    </label>
+                </div>
+                <button onclick="saveApiSettings()" class="save-btn">
+                    <i class="fas fa-save"></i> 
+                    <span data-i18n-key="saveBtnText">保存设置</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增宣言模态框的HTML -->
+    <div id="manifestoModal" class="modal manifesto-modal">
+        <div class="modal-content large">
+            <span class="close-button" onclick="closeManifestoModal()">×</span>
+            <div class="manifesto-text">
+                <!-- 调整标题和段落，以便通过 JS 更新内容 -->
+                <h2 id="manifestoModalTitle">《对话北极星》——一场与信念最深刻的对话</h2>
+                <p id="manifestoPara1">你，是否曾仰望星空，渴望与群星对话？</p>
+                <p id="manifestoPara2">在知识的浩瀚海洋中，我们时常感到迷茫，被信息的洪流裹挟，被表面的喧嚣困扰。我们追逐着零散的知识碎片，却鲜少有机会触及那些真正塑造人类文明的深刻思想。</p>
+                <p id="manifestoPara3">达·芬奇、爱因斯坦、海明威、马斯克……他们的卓越并非偶然，而是源于对世界运转的深刻洞察：物理的第一性原理、艺术的无限可能、人性的光辉与挑战。他们理解系统，面对混沌，每一次的远见与修正都如北极星般指引，最终塑造了他们的时代。</p>
+                <p id="manifestoPara4">我们不再只是被动地接收信息，而是主动去触碰那些照亮人类文明的智慧之光。</p>
+                <p id="manifestoPara5">想象一下：你轻轻点击，就能与OpenAI的Sam Altman探讨通用人工智能的伦理边界，或与Google DeepMind的Demis Hassabis共话AI如何加速科学发现；你可以与量子理论的Max Planck回溯能量量子化的起源，也能与Google量子AI实验室的Hartmut Neven展望量子计算的未来。</p>
+                <p id="manifestoPara6">如果你对商业的脉搏充满好奇，可以与巴菲特洞察价值投资的精髓，或和腾讯的马化腾分析社交媒体的演变。在文学的殿堂，与莎士比亚品味人性的悲喜，或随马尔克斯的魔幻现实主义漫游拉美大地；艺术的殿堂里，与达·芬奇共鸣科学与艺术的融合，或与梵高感受色彩深处的情感。更可以与中国家电巨头美的的方洪波探讨智能制造的未来，或跟比亚迪的王传福展望新能源汽车的蓝图。</p>
+                <p id="manifestoPara7">这不仅仅是技术，更是一次灵魂的邀约，一次思维的远征。我们精心构建《对话北极星》，让AI化身为连接人类智慧与潜能的桥梁。它严格遵循每一位“北极星”人物的思想框架、专业领域和语言风格，确保每一次回复都深邃而富有启发性。</p>
+                <p id="manifestoPara8">你无需穷尽所有数据，也无需在噪音中苦寻信号。在这里，你的每一个问题，都将得到北极星般的回应。每一次提问，都可能激发你内心深处未曾触及的创新火花；每一次对话，都将拓展你认知世界的边界，推动你个人成长的进程。</p>
+                <p class="conclusion" id="manifestoModalConclusion"><em>我们使命是以AI原生智慧，重燃探索与创意的火花——点亮你心中永恒的灯塔。</em></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/locale.js"></script>
+    <script src="scripts/masters.js"></script>
+    <script src="scripts/applogic.js"></script>
+    
+    <footer>
+        <p data-i18n-key="footerRight">© 2025 AI范式进化. 保留所有权利。</p>
+    </footer>
+    <script>
+        // --- 宣言模态框控制逻辑 (与您提供的示例脚本一致) ---
+        const manifestoModal = document.getElementById('manifestoModal');
+        
+        function openManifestoModal() {
+            if (manifestoModal) {
+                manifestoModal.style.display = 'block';
+            }
+        }
+        
+        function closeManifestoModal() {
+            if (manifestoModal) {
+                manifestoModal.style.display = 'none';
+            }
+        }
+        
+        // 在 DOM 完全加载后，为按钮绑定事件 (这是更可靠的方法)
+        document.addEventListener('DOMContentLoaded', () => {
+            const openBtn = document.querySelector('.about-us-button'); // 使用class选择器
+            if (openBtn) {
+                openBtn.addEventListener('click', openManifestoModal);
+            }
+        });
+        
+        // 点击模态框外部区域也可以关闭
+        window.addEventListener('click', function(event) {
+            if (manifestoModal && event.target == manifestoModal) {
+                closeManifestoModal();
+            }
+        });      
+
+    </script>
+</body>
+</html>
