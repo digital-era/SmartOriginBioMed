@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- title will be set by JavaScript -->
-    <title data-i18n-key="pageTitle" data-i18n-target="title">对话北极星</title>
+    <title data-i18n-key="pageTitle" data-i18n-target="title">智源生医</title>
     <!-- 引入 Google Font "Poppins" -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -793,10 +793,10 @@
     <div class="container">
         <!-- ... rest of the body is unchanged ... -->
         <div class="tabs">
-            <button class="tab-button active" onclick="openTab(event, 'TCM')" data-i18n-key="tabAi">中医</button>
-            <button class="tab-button" onclick="openTab(event, 'WM')" data-i18n-key="tabFinance">西医</button>
-            <button class="tab-button" onclick="openTab(event, 'MultiOmics')" data-i18n-key="tabLiterature">多组学</button>
-            <button class="tab-button" onclick="openTab(event, 'NeuralLink')" data-i18n-key="tabArt">脑机接口</button>
+            <button class="tab-button active" onclick="openTab(event, 'TCM')" data-i18n-key="tabTCM">中医</button>
+            <button class="tab-button" onclick="openTab(event, 'WM')" data-i18n-key="tabWM">西医</button>
+            <button class="tab-button" onclick="openTab(event, 'MultiOmics')" data-i18n-key="tabMO">多组学</button>
+            <button class="tab-button" onclick="openTab(event, 'NeuralLink')" data-i18n-key="tabNL">脑机接口</button>
         </div>
 
         <div id="TCM" class="tab-content active">
@@ -818,7 +818,7 @@
         </div>
 
         <div id="MultiOmics" class="tab-content">
-            <h2 data-i18n-key="selecMultiOmicsExpert">选择一位多组学专家</h2>
+            <h2 data-i18n-key="selectMOExpert">选择一位多组学专家</h2>
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="MultiOmicsGrid"></div>
@@ -827,7 +827,7 @@
         </div>
 
        <div id="NeuralLink" class="tab-content">
-            <h2 data-i18n-key="selectNeuralLinkExpert">选择一位脑机接口专家</h2>
+            <h2 data-i18n-key="selectNLExpert">选择一位脑机接口专家</h2>
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="NeuralLinkGrid"></div>
@@ -836,23 +836,23 @@
         </div>
         
         <div class="interaction-area">
-            <h2 data-i18n-key="interactWithLeader">与北极星对话</h2>
+            <h2 data-i18n-key="interactWithLeader">与专家对话</h2>
             <div id="selected-leader-info">
-                <span data-i18n-key="currentSelectedLeaderPrefix">当前选择的北极星: </span><span id="selectedLeaderName" data-i18n-key="noLeaderSelectedInitial">无</span>
+                <span data-i18n-key="currentSelectedLeaderPrefix">当前选择的专家: </span><span id="selectedLeaderName" data-i18n-key="noLeaderSelectedInitial">无</span>
             </div>
             <textarea id="userQuestion" data-i18n-key="placeholderUserQuestion" data-i18n-target="placeholder"></textarea>
             
             <div class="interaction-buttons">
                 <button onclick="generateAndShowPrompt()" data-i18n-key="btnGeneratePrompt">1. 生成 问题</button>
                 <button id="getAIResponseButton" onclick="getAIResponse()">
-                    <span data-i18n-key="btnGetAiResponse">2. 获取 北极星 回复</span>
+                    <span data-i18n-key="btnGetAiResponse">2. 获取 专家 回复</span>
                     <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
                 </button>
                 <button id="copyToClipboardButton" onclick="copyContentToClipboard()" data-i18n-key="btnCopyToClipboard">拷贝到粘贴板</button>
             </div>
 
             <div id="prompt-display-area" class="response-display" style="display:none;">
-                <h4 data-i18n-key="generatedPromptTitle">生成的 问题 (对选择北极星):</h4>
+                <h4 data-i18n-key="generatedPromptTitle">生成的 问题 (对选择的专家):</h4>
                 <!-- === MODIFICATION START === -->
                 <textarea id="generatedPromptText"></textarea>
                 <!-- === MODIFICATION END === -->
