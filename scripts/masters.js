@@ -327,6 +327,23 @@
 
 
         const MultiOmicsMasters = [
+           {
+                id: "eric_lander",
+                name: "Eric Lander",
+                contribution: {
+                    "zh-CN": "人类基因组计划主要领导者，开发多组学计算框架整合基因组、转录组与表观组数据，揭示复杂疾病遗传与调控网络，推动癌症与心血管精准诊疗。",
+                    "en": "Principal leader of the Human Genome Project, develops multi-omics computational frameworks integrating genomics, transcriptomics, and epigenomics data, elucidates genetic and regulatory networks in complex diseases, advancing precision diagnostics in cancer and cardiovascular conditions."
+                },
+                field: {
+                    "zh-CN": "基因组学、多组学计算生物学、复杂疾病遗传学。",
+                    "en": "Genomics, Multi-omics Computational Biology, Complex Disease Genetics."
+                },
+                remarks: {
+                    "zh-CN": "Broad研究所创始主任，发表Nature/Science系列突破性论文，获美国国家科学奖章，奠定现代基因组医学基础。",
+                    "en": "Founding Director of the Broad Institute, published landmark papers in Nature/Science series, recipient of the National Medal of Science, established foundations of modern genomic medicine."
+                }
+            },
+                
             {
                 id: "adriana_huertas_vazquez",
                 name: "Adriana Huertas-Vazquez",
@@ -390,25 +407,8 @@
                     "zh-CN": "UCLA终身教授，发表Cell/Nature系列论文，奠定复杂疾病遗传架构研究范式。",
                     "en": "Tenured Professor at UCLA, published in Cell/Nature series, established paradigm for complex disease genetic architecture research."
                 }
-            },
-
-            {
-                id: "eric_lander",
-                name: "Eric Lander",
-                contribution: {
-                    "zh-CN": "人类基因组计划主要领导者，开发多组学计算框架整合基因组、转录组与表观组数据，揭示复杂疾病遗传与调控网络，推动癌症与心血管精准诊疗。",
-                    "en": "Principal leader of the Human Genome Project, develops multi-omics computational frameworks integrating genomics, transcriptomics, and epigenomics data, elucidates genetic and regulatory networks in complex diseases, advancing precision diagnostics in cancer and cardiovascular conditions."
-                },
-                field: {
-                    "zh-CN": "基因组学、多组学计算生物学、复杂疾病遗传学。",
-                    "en": "Genomics, Multi-omics Computational Biology, Complex Disease Genetics."
-                },
-                remarks: {
-                    "zh-CN": "Broad研究所创始主任，发表Nature/Science系列突破性论文，获美国国家科学奖章，奠定现代基因组医学基础。",
-                    "en": "Founding Director of the Broad Institute, published landmark papers in Nature/Science series, recipient of the National Medal of Science, established foundations of modern genomic medicine."
-                }
-            },
-                
+             },
+   
             {
                 id: "patricia_munroe",
                 name: "Patricia B. Munroe",
@@ -541,6 +541,24 @@
                     "en": "Professor at Duke University; 2014 World Cup BCI kickoff was the world's first demonstration, ushering in the era of neural prosthetics."
                 }
             },
+
+           {
+                id: "philip_sabes",
+                name: "Philip Sabes",
+                contribution: {
+                    "zh-CN": "Neuralink联合创始人和神经科学主任，领导灵长类运动解码研究，开发高通道数线程电极系统，实现瘫痪患者高精度脑控植入，推动2025年多例人类试验。",
+                    "en": "Neuralink co-founder and neuroscience director, leads primate motor decoding research, developed high-channel thread electrode systems, enabling high-precision brain-controlled implants for paralyzed patients, advancing 2025 multi-human trials."
+                },
+                field: {
+                    "zh-CN": "运动神经解码、高密度电极植入、灵长类BCI。",
+                    "en": "Motor Neural Decoding, High-Density Electrode Implantation, Primate BCI."
+                },
+                remarks: {
+                    "zh-CN": "前UCSF教授，领导DARPA RE-NET项目，奠定Neuralink临床转化基础，获多项NIH资助。",
+                    "en": "Former UCSF professor, led DARPA RE-NET project, established Neuralink's clinical translation foundation, recipient of multiple NIH grants."
+                }
+            },
+                
             {
                 id: "andrew_schwartz",
                 name: "Andrew Schwartz",
@@ -571,23 +589,6 @@
                 remarks: {
                     "zh-CN": "卡内基梅隆大学教授，发表Nature系列论文，推动无创BCI临床普及。",
                     "en": "Professor at Carnegie Mellon University, published in Nature series, promoting clinical adoption of non-invasive BCI."
-                }
-            },
-
-           {
-                id: "philip_sabes",
-                name: "Philip Sabes",
-                contribution: {
-                    "zh-CN": "Neuralink联合创始人和神经科学主任，领导灵长类运动解码研究，开发高通道数线程电极系统，实现瘫痪患者高精度脑控植入，推动2025年多例人类试验。",
-                    "en": "Neuralink co-founder and neuroscience director, leads primate motor decoding research, developed high-channel thread electrode systems, enabling high-precision brain-controlled implants for paralyzed patients, advancing 2025 multi-human trials."
-                },
-                field: {
-                    "zh-CN": "运动神经解码、高密度电极植入、灵长类BCI。",
-                    "en": "Motor Neural Decoding, High-Density Electrode Implantation, Primate BCI."
-                },
-                remarks: {
-                    "zh-CN": "前UCSF教授，领导DARPA RE-NET项目，奠定Neuralink临床转化基础，获多项NIH资助。",
-                    "en": "Former UCSF professor, led DARPA RE-NET project, established Neuralink's clinical translation foundation, recipient of multiple NIH grants."
                 }
             },
                 
