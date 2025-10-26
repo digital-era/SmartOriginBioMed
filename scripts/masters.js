@@ -111,6 +111,22 @@
                     "en": "Beijing Famous TCM Physician; remarkable clinical efficacy, inheritor of He's acupuncture lineage."
                 }
             },
+           {
+                id: "huang_yong",
+                name: "黄泳 (Huang Yong)",
+                contribution: {
+                    "zh-CN": "中西医结合神经病学专家，擅长针药并用治疗脑血管疾病、帕金森病及神经退行性疾患。",
+                    "en": "Expert in integrated Chinese-Western neurology, excels in combined acupuncture and herbal therapy for cerebrovascular diseases, Parkinson's disease, and neurodegenerative disorders."
+                },
+                field: {
+                    "zh-CN": "中西医结合神经病学、脑血管疾病、神经康复。",
+                    "en": "Integrated Chinese-Western Neurology, Cerebrovascular Diseases, Neurological Rehabilitation."
+                },
+                remarks: {
+                    "zh-CN": "南方医科大学教授，临床研究注重循证医学与中医现代化。",
+                    "en": "Professor at Southern Medical University; clinical research emphasizes evidence-based medicine and modernization of TCM."
+                }
+            },                
             {
                 id: "jia_haizhong",
                 name: "贾海忠 (Jia Haizhong)",
