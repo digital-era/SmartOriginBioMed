@@ -523,7 +523,6 @@
             }
         ];
 
-
         const NeuralLinkMasters = [
             {
                 id: "john_donoghue",
@@ -708,6 +707,70 @@
 
         const AIDrugDiscoveryMasters = [
             {
+                id: "bighat_biosciences",
+                name: "BigHat Biosciences",
+                contribution: {
+                    "zh-CN": "开发Milliner AI/ML平台整合机器学习与合成生物学，设计下一代抗体疗法，提升安全性与疗效，支持Eli Lilly合作开发抗体药物偶联物，推进胃肠癌临床试验至2026年。",
+                    "en": "Developed Milliner AI/ML platform integrating machine learning and synthetic biology to design next-generation antibody therapies, enhancing safety and efficacy, supporting Eli Lilly collaboration for antibody-drug conjugates advancing GI cancer trials to 2026."
+                },
+                field: {
+                    "zh-CN": "AI抗体设计、药物偶联物、肿瘤免疫学。",
+                    "en": "AI Antibody Design, Antibody-Drug Conjugates, Oncology Immunology."
+                },
+                remarks: {
+                    "zh-CN": "2025年获Eli Lilly股权投资与Catalyze360支持，推进内部ADC管线，获多项战略合作包括Merck与AbbVie。",
+                    "en": "Secured Eli Lilly equity investment and Catalyze360 support in 2025, advancing internal ADC pipeline, with strategic collaborations including Merck and AbbVie."
+                }
+            },
+            {
+                id: "deepcell",
+                name: "DeepCell",
+                contribution: {
+                    "zh-CN": "推出REM-i AI平台利用高分辨率光学与微流控实现无标记单细胞形态分析，加速表型筛选与功能结果链接，支持再生医学与移植监测。",
+                    "en": "Launched REM-i AI platform using high-resolution optics and microfluidics for label-free single-cell morphology analysis, accelerating phenotypic screening and functional outcome linkage, supporting regenerative medicine and transplant monitoring."
+                },
+                field: {
+                    "zh-CN": "单细胞形态组学、AI细胞分类、生物发现。",
+                    "en": "Single-Cell Morpholomics, AI Cell Sorting, Biological Discovery."
+                },
+                remarks: {
+                    "zh-CN": "2025年扩展NVIDIA合作推进生成AI在细胞生物学应用，发表SLAS与AGBT会议海报验证高维形态分析。",
+                    "en": "Expanded NVIDIA collaboration in 2025 to advance generative AI in cell biology, presented posters at SLAS and AGBT validating high-dimensional morphology analysis."
+                }
+            },
+            {
+                id: "dyno_therapeutics",
+                name: "Dyno Therapeutics",
+                contribution: {
+                    "zh-CN": "利用AI设计新型AAV衣壳载体Dyno-4z2、Dyno-3hv与Dyno-ahq，提升眼部、肌肉与CNS基因递送效率与特异性，在非人灵长类中验证疗效。",
+                    "en": "Utilized AI to design novel AAV capsids Dyno-4z2, Dyno-3hv, and Dyno-ahq, improving gene delivery efficiency and specificity to eye, muscle, and CNS, validated in non-human primates."
+                },
+                field: {
+                    "zh-CN": "AI AAV设计、基因疗法递送、神经肌肉靶向。",
+                    "en": "AI AAV Design, Gene Therapy Delivery, Neuromuscular Targeting."
+                },
+                remarks: {
+                    "zh-CN": "2025年ASGCT会议发布突破数据，Roche行使选项许可神经病学载体，启动Dyno Frontiers程序。",
+                    "en": "Released breakthrough data at 2025 ASGCT meeting, Roche exercised option for neurological vector, launched Dyno Frontiers Program."
+                }
+            },
+            {
+                id: "genesis_therapeutics",
+                name: "Genesis Therapeutics",
+                contribution: {
+                    "zh-CN": "开发GEMS生成与预测AI平台整合语言模型与物理模拟，针对复杂靶点生成高亲和力小分子药物，支持Incyte合作发现突破性疗法。",
+                    "en": "Developed GEMS generative and predictive AI platform integrating language models and physical simulations to generate high-affinity small molecules for complex targets, supporting Incyte collaboration for breakthrough therapeutics."
+                },
+                field: {
+                    "zh-CN": "分子空间探索、物理AI药设计、小分子优化。",
+                    "en": "Molecular Space Exploration, Physics-AI Drug Design, Small Molecule Optimization."
+                },
+                remarks: {
+                    "zh-CN": "2025年获NVIDIA股权投资与合作优化计算方法，筹资超3亿美元，推进多靶点管线。",
+                    "en": "Secured NVIDIA equity investment and collaboration in 2025 to optimize computational methods, raised over $300M, advancing multi-target pipeline."
+                }
+            },
+            {
                 id: "daphne_koller",
                 name: "Daphne Koller",
                 contribution: {
@@ -804,7 +867,7 @@
                 }
             },
             {
-                id: "david baker",
+                id: "david_baker",
                 name: "David Baker",
                 contribution: {
                     "zh-CN": "华盛顿大学教授，领导RosettaFold AI蛋白设计工具，生成新型酶用于药物合成，革命化生物催化在制药中的应用。",
@@ -900,8 +963,135 @@
                 }
             }
         ];
-        
         const AIHealthcareMasters = [
+            {
+                id: "abridge_ai",
+                name: "Abridge AI",
+                contribution: {
+                    "zh-CN": "开发生成式AI平台自动化临床笔记生成，从患者对话中提取可计费笔记，部署于150多家医疗系统，减少临床医生文书负担达55%，提升患者互动时间。",
+                    "en": "Developed generative AI platform automating clinical note generation from patient conversations, extracting billable notes, deployed in over 150 health systems, reducing clinician documentation burden by 55% and enhancing patient interaction time."
+                },
+                field: {
+                    "zh-CN": "环境AI文档、生成式临床笔记、收入周期自动化。",
+                    "en": "Ambient AI Documentation, Generative Clinical Notes, Revenue Cycle Automation."
+                },
+                remarks: {
+                    "zh-CN": "2025年获3亿美元E轮融资，估值53亿美元，获Fast Company年度最具创新公司第一名。",
+                    "en": "Secured $300M Series E in 2025 at $5.3B valuation; named #1 Most Innovative Company in Healthcare by Fast Company."
+                }
+            },
+            {
+                id: "ambience_healthcare",
+                name: "Ambience Healthcare",
+                contribution: {
+                    "zh-CN": "构建环境AI平台自动化文档、编码和临床文档完整性，支持200多个专科，部署于40多家医疗系统，提升编码准确性和合规性。",
+                    "en": "Built ambient AI platform automating documentation, coding, and clinical documentation integrity across 200+ specialties, deployed in over 40 health systems, improving coding accuracy and compliance."
+                },
+                field: {
+                    "zh-CN": "临床编码AI、文档完整性、专科工作流优化。",
+                    "en": "Clinical Coding AI, Documentation Integrity, Specialty Workflow Optimization."
+                },
+                remarks: {
+                    "zh-CN": "2025年获2.43亿美元C轮融资，估值12.5亿美元，获KLAS 97.7分客户满意度最高分。",
+                    "en": "Raised $243M Series C in 2025 at $1.25B valuation; earned top KLAS score of 97.7 for customer satisfaction."
+                }
+            },
+            {
+                id: "hippocratic_ai",
+                name: "Hippocratic AI",
+                contribution: {
+                    "zh-CN": "开创安全优先生成式AI医疗代理，进行非诊断患者互动如药物管理和随访，完成数十万患者互动，满意度达8.7/10，缓解全球医疗人力短缺。",
+                    "en": "Pioneered safety-first generative AI healthcare agents for non-diagnostic patient interactions like medication management and follow-ups, completing hundreds of thousands of interactions with 8.7/10 satisfaction, addressing global healthcare staffing shortages."
+                },
+                field: {
+                    "zh-CN": "患者面对AI代理、慢性护理管理、安全LLM。",
+                    "en": "Patient-Facing AI Agents, Chronic Care Management, Safety-First LLMs."
+                },
+                remarks: {
+                    "zh-CN": "2025年获1.41亿美元B轮融资，估值16.4亿美元，推出AI代理应用商店。",
+                    "en": "Raised $141M Series B in 2025 at $1.64B valuation; launched AI Agent App Store."
+                }
+            },
+            {
+                id: "eliseai",
+                name: "EliseAI",
+                contribution: {
+                    "zh-CN": "开发AI自动化平台处理医疗调度、预授权和患者摄入，减少行政成本25%，降低等待时间，覆盖多专科实践。",
+                    "en": "Developed AI automation platform handling healthcare scheduling, prior authorizations, and patient intake, reducing administrative costs by 25% and wait times, across multiple specialty practices."
+                },
+                field: {
+                    "zh-CN": "医疗工作流自动化、呼叫中心AI、患者摄入优化。",
+                    "en": "Healthcare Workflow Automation, Call Center AI, Patient Intake Optimization."
+                },
+                remarks: {
+                    "zh-CN": "2025年获2.5亿美元E轮融资，ARR超1亿美元，员工翻番至300人。",
+                    "en": "Raised $250M Series E in 2025, surpassing $100M ARR, doubling workforce to 300+."
+                }
+            },
+            {
+                id: "benchling",
+                name: "Benchling",
+                contribution: {
+                    "zh-CN": "提供云基生命科学平台整合AI代理和数据基础，支持抗体发现和自动化，服务1300多家生物技术公司，加速R&D周期。",
+                    "en": "Provided cloud-based life sciences platform integrating AI agents and data foundations for antibody discovery and automation, serving 1,300+ biotech companies, accelerating R&D timelines."
+                },
+                field: {
+                    "zh-CN": "生物技术R&D AI、实验数据管理、计算生物学。",
+                    "en": "Biotech R&D AI, Experiment Data Management, Computational Biology."
+                },
+                remarks: {
+                    "zh-CN": "2025年与Anthropic合作Claude生命科学生态，推出Benchling AI嵌入工作流。",
+                    "en": "Partnered with Anthropic in 2025 for Claude Life Sciences Ecosystem, launched embedded Benchling AI workflows."
+                }
+            },
+            {
+                id: "freenome",
+                name: "Freenome",
+                contribution: {
+                    "zh-CN": "构建多组学AI平台通过血液测试检测早期结肠直肠癌，灵敏度82%特异度85%，与Exact Sciences独家许可商业化。",
+                    "en": "Built multiomics AI platform for early colorectal cancer detection via blood test, 82% sensitivity at 85% specificity, exclusive license with Exact Sciences for commercialization."
+                },
+                field: {
+                    "zh-CN": "液体活检AI、癌症多组学筛查、cfDNA分析。",
+                    "en": "Liquid Biopsy AI, Cancer Multiomics Screening, cfDNA Analysis."
+                },
+                remarks: {
+                    "zh-CN": "2025年获8.85亿美元许可协议，启动PROACT LUNG肺癌研究。",
+                    "en": "Secured up to $885M license deal in 2025, initiated PROACT LUNG for lung cancer."
+                }
+            },
+            {
+                id: "komodo_health",
+                name: "Komodo Health",
+                contribution: {
+                    "zh-CN": "利用Healthcare Map AI引擎分析3.3亿患者数据，提供患者旅程洞见，支持250多项同行评审研究和ISPOR 2025 31项演示。",
+                    "en": "Leveraged Healthcare Map AI engine analyzing 330M patient data for journey insights, powering 250+ peer-reviewed studies and 31 ISPOR 2025 presentations."
+                },
+                field: {
+                    "zh-CN": "真实世界证据AI、患者旅程分析、医疗情报。",
+                    "en": "Real-World Evidence AI, Patient Journey Analysis, Healthcare Intelligence."
+                },
+                remarks: {
+                    "zh-CN": "2025年入选Forbes Cloud 100、TIME顶级健康科技公司，推出MapLab Enterprise平台。",
+                    "en": "Named to 2025 Forbes Cloud 100 and TIME Top HealthTech; launched MapLab Enterprise platform."
+                }
+            },
+            {
+                id: "valar_labs",
+                name: "Valar Labs",
+                contribution: {
+                    "zh-CN": "开发Vesta AI平台从组织学图像预测膀胱癌治疗响应，优于指南风险分层，支持精准肿瘤学决策。",
+                    "en": "Developed Vesta AI platform predicting bladder cancer treatment response from histology images, outperforming guideline risk stratification for precision oncology decisions."
+                },
+                field: {
+                    "zh-CN": "计算组织学AI、肿瘤微环境分析、治疗响应预测。",
+                    "en": "Computational Histology AI, Tumor Microenvironment Analysis, Treatment Response Prediction."
+                },
+                remarks: {
+                    "zh-CN": "2025年获2200万美元A轮融资，发表European Urology验证CHAI生物标志物。",
+                    "en": "Raised $22M Series A in 2025; published CHAI biomarker validation in European Urology."
+                }
+            },
             {
                 id: "regina_barzilay",
                 name: "Regina Barzilay",
