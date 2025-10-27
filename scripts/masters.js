@@ -710,5 +710,7 @@
             TCM: TCMMasters,
             WM: WMMasters,
             MultiOmics: MultiOmicsMasters,
-            NeuralLink: NeuralLinkMasters
+            NeuralLink: NeuralLinkMasters,
+            AIDrugDiscovery: AIDrugDiscoveryMasters
+            AIHealthcare: AIHealthcareMasters,
         };
