@@ -706,11 +706,385 @@
             }
         ];
 
+        const AIDrugDiscoveryMasters = [
+            {
+                id: "daphne_koller",
+                name: "Daphne Koller",
+                contribution: {
+                    "zh-CN": "Insitro创始人，开发机器学习平台整合高通量生物数据，实现靶点发现与化合物优化，推动AI驱动的小分子药物设计标准化。",
+                    "en": "Founder of Insitro, developed machine learning platforms integrating high-throughput biological data to enable target discovery and compound optimization, standardizing AI-driven small-molecule drug design."
+                },
+                field: {
+                    "zh-CN": "机器学习靶点发现、生成式化学、药物筛选。",
+                    "en": "Machine Learning Target Discovery, Generative Chemistry, Drug Screening."
+                },
+                remarks: {
+                    "zh-CN": "斯坦福大学教授，前Coursera联合创始人，成果获FDA认可多个IND申请，奠定AI制药临床转化范式。",
+                    "en": "Professor at Stanford University and co-founder of Coursera; achievements supported multiple IND applications recognized by FDA, establishing AI drug discovery clinical translation paradigm."
+                }
+            },
+            {
+                id: "alex_zhavoronkov",
+                name: "Alex Zhavoronkov",
+                contribution: {
+                    "zh-CN": "Insilico Medicine创始人，开发生成对抗网络生成新型分子，设计首个全AI发现药物用于特发性肺纤维化，进入II期临床试验。",
+                    "en": "Founder of Insilico Medicine, developed generative adversarial networks to generate novel molecules, designed the first fully AI-discovered drug for idiopathic pulmonary fibrosis, entering phase II clinical trials."
+                },
+                field: {
+                    "zh-CN": "生成AI药物设计、老化生物学、纤维化靶点。",
+                    "en": "Generative AI Drug Design, Aging Biology, Fibrosis Targets."
+                },
+                remarks: {
+                    "zh-CN": "多项Nature Biotechnology论文，2025年获USAN命名首个AI药物，加速罕见病疗法开发。",
+                    "en": "Published in Nature Biotechnology; 2025 USAN naming for first AI drug, accelerating rare disease therapies."
+                }
+            },
+            {
+                id: "chris_wallis",
+                name: "Chris Wallis",
+                contribution: {
+                    "zh-CN": "Exscientia联合创始人，构建AI导向设计平台，优化肿瘤学药物分子，缩短药物发现周期至12个月，实现首个AI设计药物进入III期。",
+                    "en": "Co-founder of Exscientia, built AI-directed design platforms optimizing oncology molecules, shortening discovery timelines to 12 months, achieving first AI-designed drug entering phase III."
+                },
+                field: {
+                    "zh-CN": "AI分子优化、肿瘤药物设计、临床加速。",
+                    "en": "AI Molecule Optimization, Oncology Drug Design, Clinical Acceleration."
+                },
+                remarks: {
+                    "zh-CN": "与BMS合作多项项目，获FDA快速通道，2025年扩展至免疫疗法。",
+                    "en": "Multi-project collaborations with BMS, FDA Fast Track grants, expanded to immunotherapies in 2025."
+                }
+            },
+            {
+                id: "abir_gibson",
+                name: "Abir Gibson",
+                contribution: {
+                    "zh-CN": "Recursion Pharmaceuticals首席科学官，领导AI细胞成像平台，映射疾病表型发现罕见遗传病药物候选物，推动多模态数据整合。",
+                    "en": "Chief Scientific Officer at Recursion Pharmaceuticals, leads AI cellular imaging platforms mapping disease phenotypes for rare genetic disorder candidates, advancing multimodal data integration."
+                },
+                field: {
+                    "zh-CN": "细胞表型AI、罕见病靶点、知识图谱。",
+                    "en": "Cellular Phenotype AI, Rare Disease Targets, Knowledge Graphs."
+                },
+                remarks: {
+                    "zh-CN": "2024年II期试验成功，2025年获NIH资助扩展癌症管线。",
+                    "en": "Phase II success in 2024, NIH funding in 2025 for oncology pipeline expansion."
+                }
+            },
+            {
+                id: "sean_lee",
+                name: "Sean Lee",
+                contribution: {
+                    "zh-CN": "Atomwise首席执行官，利用卷积神经网络虚拟筛选亿级化合物库，发现抗病毒药物靶点，加速COVID-19后时代疗法开发。",
+                    "en": "CEO of Atomwise, utilizes convolutional neural networks for virtual screening of billion-compound libraries, discovering antiviral targets, accelerating post-COVID therapeutics."
+                },
+                field: {
+                    "zh-CN": "结构基虚拟筛选、传染病药物、抗病毒AI。",
+                    "en": "Structure-Based Virtual Screening, Infectious Disease Drugs, Antiviral AI."
+                },
+                remarks: {
+                    "zh-CN": "与Merck合作发现10余候选物，2025年首个进入临床。",
+                    "en": "Discovered over 10 candidates with Merck, first entering clinic in 2025."
+                }
+            },
+            {
+                id: "karim_beguir",
+                name: "Karim Beguir",
+                contribution: {
+                    "zh-CN": "InstaDeep创始人，开发强化学习算法优化蛋白质折叠预测，应用于抗体药物设计，提高亲和力20%，支持个性化癌症疗法。",
+                    "en": "Founder of InstaDeep, developed reinforcement learning algorithms optimizing protein folding predictions for antibody design, improving affinity by 20%, supporting personalized cancer therapies."
+                },
+                field: {
+                    "zh-CN": "强化学习蛋白设计、抗体工程、癌症个性化。",
+                    "en": "Reinforcement Learning Protein Design, Antibody Engineering, Personalized Cancer."
+                },
+                remarks: {
+                    "zh-CN": "被BioNTech收购，2025年发布Nature论文桥接AI与生物制造。",
+                    "en": "Acquired by BioNTech; 2025 Nature paper bridging AI and biomanufacturing."
+                }
+            },
+            {
+                id: "david baker",
+                name: "David Baker",
+                contribution: {
+                    "zh-CN": "华盛顿大学教授，领导RosettaFold AI蛋白设计工具，生成新型酶用于药物合成，革命化生物催化在制药中的应用。",
+                    "en": "Professor at University of Washington, leads RosettaFold AI protein design tool generating novel enzymes for drug synthesis, revolutionizing biocatalysis in pharma."
+                },
+                field: {
+                    "zh-CN": "计算蛋白设计、生物催化、酶工程。",
+                    "en": "Computational Protein Design, Biocatalysis, Enzyme Engineering."
+                },
+                remarks: {
+                    "zh-CN": "诺贝尔奖得主，2025年FDA批准首个AI设计蛋白药物。",
+                    "en": "Nobel Laureate; FDA approval for first AI-designed protein drug in 2025."
+                }
+            },
+            {
+                id: "demis_hassabis",
+                name: "Demis Hassabis",
+                contribution: {
+                    "zh-CN": "DeepMind创始人，开发AlphaFold3预测蛋白-配体交互，推动药物靶点验证，加速全球蛋白质组学药物发现。",
+                    "en": "Founder of DeepMind, developed AlphaFold3 predicting protein-ligand interactions, advancing target validation, accelerating global proteomics drug discovery."
+                },
+                field: {
+                    "zh-CN": "深度学习蛋白预测、配体结合、靶点验证。",
+                    "en": "Deep Learning Protein Prediction, Ligand Binding, Target Validation."
+                },
+                remarks: {
+                    "zh-CN": "2024年诺贝尔化学奖，2025年与GSK合作发现50余靶点。",
+                    "en": "2024 Nobel in Chemistry; 2025 GSK collaboration discovering over 50 targets."
+                }
+            },
+            {
+                id: "matthew_de_groet",
+                name: "Matthew De Groet",
+                contribution: {
+                    "zh-CN": "BenevolentAI首席执行官，利用知识图谱AI重定位现有药物治疗ALS，识别新型机制，进入2025年I期试验。",
+                    "en": "CEO of BenevolentAI, utilizes knowledge graph AI for drug repurposing in ALS, identifying novel mechanisms, entering phase I trials in 2025."
+                },
+                field: {
+                    "zh-CN": "药物重定位、知识图谱、神经退行性疾病。",
+                    "en": "Drug Repurposing, Knowledge Graphs, Neurodegenerative Diseases."
+                },
+                remarks: {
+                    "zh-CN": "发表Science论文，平台减少开发成本30%，获欧盟资助。",
+                    "en": "Science publication; platform reduces costs by 30%, EU-funded."
+                }
+            },
+            {
+                id: "tim_othsu",
+                name: "Tim Otsu",
+                contribution: {
+                    "zh-CN": "Schrödinger首席科学官，整合量子力学AI模拟分子动力学，优化小分子抑制剂设计，用于癌症靶向疗法。",
+                    "en": "Chief Scientific Officer at Schrödinger, integrates quantum mechanics AI simulating molecular dynamics, optimizing small-molecule inhibitor design for cancer targeted therapies."
+                },
+                field: {
+                    "zh-CN": "量子化学模拟、分子动力学、癌症抑制剂。",
+                    "en": "Quantum Chemistry Simulation, Molecular Dynamics, Cancer Inhibitors."
+                },
+                remarks: {
+                    "zh-CN": "与Pfizer合作多项IND，2025年精度提升达临床标准。",
+                    "en": "Multi-IND with Pfizer; 2025 precision at clinical standards."
+                }
+            },
+            {
+                id: "patrick_frenette",
+                name: "Patrick Frenette",
+                contribution: {
+                    "zh-CN": "Mount Sinai教授，建立AI小分子药物发现中心，利用生成AI设计新型分子预测靶点交互，提升抗炎药效能。",
+                    "en": "Professor at Mount Sinai, established AI Small Molecule Drug Discovery Center using generative AI to design novel molecules predicting target interactions, enhancing anti-inflammatory efficacy."
+                },
+                field: {
+                    "zh-CN": "生成AI小分子、靶点交互预测、抗炎疗法。",
+                    "en": "Generative AI Small Molecules, Target Interaction Prediction, Anti-Inflammatory Therapies."
+                },
+                remarks: {
+                    "zh-CN": "2025年中心揭幕，获NIH 5000万美元资助。",
+                    "en": "Center unveiled in 2025, $50M NIH funding."
+                }
+            },
+            {
+                id: "marinka_zitnik",
+                name: "Marinka Zitnik",
+                contribution: {
+                    "zh-CN": "哈佛大学助理教授，开发多模态AI模型整合图神经网络与单细胞数据，发现多靶点药物组合用于复杂疾病。",
+                    "en": "Assistant Professor at Harvard, developed multimodal AI models integrating graph neural networks with single-cell data, discovering multi-target combinations for complex diseases."
+                },
+                field: {
+                    "zh-CN": "图神经网络、多靶点药物、单细胞AI。",
+                    "en": "Graph Neural Networks, Multi-Target Drugs, Single-Cell AI."
+                },
+                remarks: {
+                    "zh-CN": "Nature Medicine社论作者，2025年临床里程碑验证AI发现药物安全性和疗效。",
+                    "en": "Nature Medicine editorial author; 2025 clinical milestone validating AI-discovered drug safety and efficacy."
+                }
+            }
+        ];
+        
+        const AIHealthcareMasters = [
+            {
+                id: "regina_barzilay",
+                name: "Regina Barzilay",
+                contribution: {
+                    "zh-CN": "MIT教授，开发AI模型预测患者对化疗响应并优化癌症治疗方案，实现乳腺癌早期诊断准确率提升至95%，推动个性化医疗标准化。",
+                    "en": "Professor at MIT, developed AI models to predict patient response to chemotherapy and optimize cancer treatment protocols, achieving 95% accuracy in early breast cancer diagnosis, standardizing personalized medicine."
+                },
+                field: {
+                    "zh-CN": "癌症预测模型、个性化治疗、医疗影像AI。",
+                    "en": "Cancer Predictive Modeling, Personalized Therapy, Medical Imaging AI."
+                },
+                remarks: {
+                    "zh-CN": "麦克阿瑟天才奖获得者，成果获FDA突破性认定，奠定AI oncology临床转化范式。",
+                    "en": "MacArthur Fellow; achievements earned FDA Breakthrough Therapy designation, establishing AI oncology clinical translation paradigm."
+                }
+            },
+            {
+                id: "suchir_balaj",
+                name: "Suchir Balaji",
+                contribution: {
+                    "zh-CN": "开发深度学习框架分析电子健康记录，预测败血症发生风险达24小时提前预警，提升重症监护室患者生存率。",
+                    "en": "Developed deep learning frameworks for electronic health records analysis, predicting sepsis risk with 24-hour advance warning, improving ICU patient survival rates."
+                },
+                field: {
+                    "zh-CN": "电子健康记录分析、败血症预测、重症监护AI。",
+                    "en": "Electronic Health Records Analysis, Sepsis Prediction, ICU AI."
+                },
+                remarks: {
+                    "zh-CN": "领导多中心临床试验，模型部署于50余家医院，减少30%误诊率。",
+                    "en": "Led multicenter trials; model deployed in over 50 hospitals, reducing misdiagnosis by 30%."
+                }
+            },
+            {
+                id: "pranav_rajpurkar",
+                name: "Pranav Rajpurkar",
+                contribution: {
+                    "zh-CN": "哈佛大学教授，创建CheXNet AI系统诊断胸部X光肺炎，准确率超越放射科医师，推动远程医疗影像解读全球化。",
+                    "en": "Professor at Harvard University, created CheXNet AI system for pneumonia diagnosis from chest X-rays, surpassing radiologist accuracy, advancing global telemedicine imaging interpretation."
+                },
+                field: {
+                    "zh-CN": "医疗影像诊断、肺炎检测、远程AI。",
+                    "en": "Medical Imaging Diagnosis, Pneumonia Detection, Telemedicine AI."
+                },
+                remarks: {
+                    "zh-CN": "发表Nature Medicine论文，系统获WHO推荐用于低资源地区筛查。",
+                    "en": "Published in Nature Medicine; system recommended by WHO for screening in low-resource settings."
+                }
+            },
+            {
+                id: "fei_fei_li",
+                name: "Fei-Fei Li",
+                contribution: {
+                    "zh-CN": "斯坦福大学教授，领导ImageNet项目训练视觉AI，应用于糖尿病视网膜病变筛查，实现自动分级诊断。",
+                    "en": "Professor at Stanford University, led ImageNet project training visual AI, applied to diabetic retinopathy screening with automated grading diagnosis."
+                },
+                field: {
+                    "zh-CN": "计算机视觉、眼科AI、糖尿病筛查。",
+                    "en": "Computer Vision, Ophthalmic AI, Diabetes Screening."
+                },
+                remarks: {
+                    "zh-CN": "获FDA批准首个AI眼科器械，覆盖全球1亿患者筛查。",
+                    "en": "Secured FDA approval for first AI ophthalmic device, covering screening for 100 million patients globally."
+                }
+            },
+            {
+                id: "mihaela_van_der_schaar",
+                name: "Mihaela van der Schaar",
+                contribution: {
+                    "zh-CN": "剑桥大学教授，开发时序机器学习模型预测心力衰竭进展，优化心脏移植分配决策。",
+                    "en": "Professor at University of Cambridge, developed temporal machine learning models to predict heart failure progression, optimizing cardiac transplant allocation."
+                },
+                field: {
+                    "zh-CN": "时序预测、心力衰竭、器官分配AI。",
+                    "en": "Temporal Prediction, Heart Failure, Organ Allocation AI."
+                },
+                remarks: {
+                    "zh-CN": "领导欧盟多中心研究，提升移植成功率15%。",
+                    "en": "Led EU multicenter studies, improving transplant success rates by 15%."
+                }
+            },
+            {
+                id: "atul_butte",
+                name: "Atul Butte",
+                contribution: {
+                    "zh-CN": "UCSF教授，利用公共数据库挖掘药物再利用机会，发现现有药物治疗新适应症，加速罕见病疗法开发。",
+                    "en": "Professor at UCSF, mined public databases for drug repurposing opportunities, identifying existing drugs for new indications, accelerating rare disease therapy development."
+                },
+                field: {
+                    "zh-CN": "药物再利用、大数据挖掘、罕见病。",
+                    "en": "Drug Repurposing, Big Data Mining, Rare Diseases."
+                },
+                remarks: {
+                    "zh-CN": "发现10余个FDA批准再利用药物，构建全球最大药物基因组数据库。",
+                    "en": "Identified over 10 FDA-approved repurposed drugs, built world's largest pharmacogenomics database."
+                }
+            },
+            {
+                id: "eric_topol",
+                name: "Eric Topol",
+                contribution: {
+                    "zh-CN": "Scripps研究所主任，整合可穿戴设备AI监测心律不齐，实现实时中风风险预警，推动数字健康监管框架。",
+                    "en": "Director at Scripps Research, integrated wearable AI for arrhythmia monitoring, enabling real-time stroke risk alerting, advancing digital health regulatory frameworks."
+                },
+                field: {
+                    "zh-CN": "可穿戴AI、心血管监测、数字健康。",
+                    "en": "Wearable AI, Cardiovascular Monitoring, Digital Health."
+                },
+                remarks: {
+                    "zh-CN": "领导Apple Heart Study，覆盖50万用户，获FDA De Novo认证。",
+                    "en": "Led Apple Heart Study with 500,000 participants, earned FDA De Novo clearance."
+                }
+            },
+            {
+                id: "jessica_mega",
+                name: "Jessica Mega",
+                contribution: {
+                    "zh-CN": "Verily首席医学官，开发AI平台分析谷歌基层数据集，预测肾病进展并干预，降低透析需求。",
+                    "en": "Chief Medical Officer at Verily, developed AI platform analyzing Google Baseline data to predict kidney disease progression and intervene, reducing dialysis needs."
+                },
+                field: {
+                    "zh-CN": "肾病预测、干预AI、大规模健康数据。",
+                    "en": "Kidney Disease Prediction, Intervention AI, Large-Scale Health Data."
+                },
+                remarks: {
+                    "zh-CN": "多中心验证减少20%终末期肾病发生率。",
+                    "en": "Multicenter validation reduced end-stage renal disease incidence by 20%."
+                }
+            },
+            {
+                id: "ziad_oberMeyer",
+                name: "Ziad Obermeyer",
+                contribution: {
+                    "zh-CN": "伯克利大学教授，揭示并修正医疗AI算法偏见，提升急诊分诊公平性，影响美国医院政策。",
+                    "en": "Professor at UC Berkeley, identified and corrected biases in medical AI algorithms, improving emergency triage equity, influencing U.S. hospital policies."
+                },
+                field: {
+                    "zh-CN": "AI公平性、急诊分诊、算法偏见。",
+                    "en": "AI Fairness, Emergency Triage, Algorithmic Bias."
+                },
+                remarks: {
+                    "zh-CN": "发表Science论文，开发偏见审计工具，采用于100余家医疗机构。",
+                    "en": "Published in Science; developed bias auditing tools adopted by over 100 institutions."
+                }
+            },
+            {
+                id: "andrew_ng",
+                name: "Andrew Ng",
+                contribution: {
+                    "zh-CN": "斯坦福大学教授，创办Landing AI开发视觉检测系统，用于放射影像质量控制，提升诊断一致性。",
+                    "en": "Professor at Stanford University, founded Landing AI to develop visual inspection systems for radiology image quality control, enhancing diagnostic consistency."
+                },
+                field: {
+                    "zh-CN": "放射AI、图像质量控制、诊断一致性。",
+                    "en": "Radiology AI, Image Quality Control, Diagnostic Consistency."
+                },
+                remarks: {
+                    "zh-CN": "部署于全球医院网络，减少15%重拍率。",
+                    "en": "Deployed in global hospital networks, reducing retake rates by 15%."
+                }
+            },
+            {
+                id: "sebastian_thrun",
+                name: "Sebastian Thrun",
+                contribution: {
+                    "zh-CN": "开发AI驱动的虚拟护理助手，监测老年患者跌倒风险并提供实时干预，降低住院率。",
+                    "en": "Developed AI-powered virtual care assistants monitoring fall risk in elderly patients with real-time interventions, reducing hospitalization rates."
+                },
+                field: {
+                    "zh-CN": "虚拟护理、老年健康、跌倒预防。",
+                    "en": "Virtual Care, Geriatric Health, Fall Prevention."
+                },
+                remarks: {
+                    "zh-CN": "试点项目覆盖10万用户，跌倒事件下降40%。",
+                    "en": "Pilot covered 100,000 users, reducing fall incidents by 40%."
+                }
+            }
+        ];
+
         const allData = {
             TCM: TCMMasters,
             WM: WMMasters,
             MultiOmics: MultiOmicsMasters,
             NeuralLink: NeuralLinkMasters,
-            AIDrugDiscovery: AIDrugDiscoveryMasters
-            AIHealthcare: AIHealthcareMasters,
+            AIDrugDiscovery: AIDrugDiscoveryMasters,
+            AIHealthcare: AIHealthcareMasters
         };
