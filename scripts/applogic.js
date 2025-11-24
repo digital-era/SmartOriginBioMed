@@ -518,6 +518,52 @@ async function copyContentToClipboard() {
     }
 }
 
+// --- 新增功能：合并拷贝用户问题和AI回答 ---
+function copyConversationToClipboard() {
+    // 1. 获取内容
+    // 优先获取生成的 Prompt，如果没有则获取用户输入的原始问题
+    const generatedPrompt = document.getElementById('generatedPromptText').value;
+    const userQuestion = document.getElementById('userQuestion').value;
+    const finalQuestion = generatedPrompt ? generatedPrompt : userQuestion;
+    
+    // 获取 AI 回复内容 (innerText 获取纯文本)
+    const aiResponse = document.getElementById('aiResponseText').innerText;
+
+    // 2. 检查是否有内容
+    if (!finalQuestion && !aiResponse) {
+        // 如果没有任何内容，可以在这里处理，或者直接返回
+        return; 
+    }
+
+    // 3. 格式化合并文本
+    const clipboardText = `【问题 / Question】:\n${finalQuestion}\n\n【北极星答复 / NorthStar Answer】:\n${aiResponse}`;
+
+    // 4. 写入剪贴板
+    navigator.clipboard.writeText(clipboardText).then(() => {
+        // 5. 获取当前的成功提示语 (支持 i18n)
+        // 假设你有一个全局的 translations 对象存储了所有翻译
+        // 或者我们可以直接通过一个隐藏元素或者手动判断来获取文本
+        
+        let successMsg = "已拷贝到粘贴板！"; // 默认中文
+        
+        // 尝试从翻译对象中获取 (假设 locale.js 定义了 translations 变量和 currentLanguage 变量)
+        if (typeof translations !== 'undefined' && typeof currentLanguage !== 'undefined') {
+            if (translations[currentLanguage] && translations[currentLanguage]['msgCopySuccess']) {
+                successMsg = translations[currentLanguage]['msgCopySuccess'];
+            }
+        } else {
+             // 简单的回退机制：如果检测到 html lang 不是 zh-CN，则显示英文
+             const lang = document.documentElement.lang || 'zh-CN';
+             if (lang !== 'zh-CN') {
+                 successMsg = "Merged Copy [Question] & [NorthStar Answer] to Clipboard!";
+             }
+        }
+        alert(successMsg);
+    }).catch(err => {
+        console.error('无法拷贝文本: ', err);
+    });
+}
+
 const endpointModelMap = {
     "https://api.deepseek.com": [
         { value: "deepseek-chat", labelKey: "modelDeepSeekV3" }
