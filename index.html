@@ -556,6 +556,7 @@
             cursor: not-allowed;
         }
         
+        /* --- 修改开始：调整选中北极星信息的样式支持 Flex 布局 --- */
         #selected-leader-info {
             margin-bottom: 15px;
             padding: 10px;
@@ -563,7 +564,27 @@
             border-radius: 4px;
             font-weight: bold;
             color: var(--dark-text-primary);
+            /* 新增 Flex 布局以实现左右对齐 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        /* 新增：右侧拷贝小图标的样式 */
+        .copy-leader-btn {
+            cursor: pointer;
+            color: var(--dark-text-secondary);
+            font-size: 1.1em;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .copy-leader-btn:hover {
+            color: var(--dark-accent);
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+        /* --- 修改结束 --- */
     
         .response-display {
             margin-top: 20px;
@@ -880,7 +901,7 @@
                     <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
                 </button>
                 <!-- --- 修改开始：按钮改名，移除原有 onclick --- -->
-                <button id="immersiveModeButton" style="cursor: default; opacity: 0.8;" data-i18n-key="btnImmersiveMode"> </button>
+                <button id="angelModeButton" style="cursor: default; opacity: 0.8;" data-i18n-key="btnAngelMode"> </button>
                 <!-- --- 修改结束 --- -->
             </div>
 
