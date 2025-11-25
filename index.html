@@ -901,7 +901,7 @@
                     <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
                 </button>
                 <!-- --- 修改开始：按钮改名，移除原有 onclick --- -->
-                <button id="angelModeButton" style="cursor: default; opacity: 0.8;" data-i18n-key="btnAngelMode"> </button>
+                <button id="angelModeButton" onclick="handleAngelMode()" data-i18n-key="btnAngelMode">天使模式 (未来构想)</button>
                 <!-- --- 修改结束 --- -->
             </div>
 
@@ -982,6 +982,58 @@
                 <p id="manifestoPara7">这不仅仅是技术，更是一次与生命深层对话的邀约，一次医学思维的远征。我们精心构建《智源生医》，让AI化身为连接人类智慧与健康的桥梁。它严格遵循每一位“生命智者”的思想框架、专业领域和语言风格，确保每一次回复都深邃而富有启发性。</p>
                 <p id="manifestoPara8">你无需穷尽所有医学文献，也无需在信息洪流中苦寻答案。在这里，你的每一个问题，都将得到智者般深邃的回应。每一次提问，都可能激发你内心深处未曾触及的探索火花；每一次对话，都将拓展你认知生命的边界，推动你健康管理与深度调研的进程。</p>
                 <p class="conclusion" id="manifestoModalConclusion"><em>我们的使命是以AI原生智慧，汇聚生命长河的智者之声，解决人间疾苦。</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 天使模式 模态框 -->
+    <div id="angelModeModal" class="modal manifesto-modal">
+        <div class="modal-content large">
+            <span class="close-button" onclick="closeAngelModeModal()">×</span>
+            <div class="manifesto-text">
+                <h2 data-i18n-key="angelModeTitle">《智源生医》天使模式：天使降临，穿透星河</h2>
+
+                <p><strong data-i18n-key="angelCoreConceptTitle">【核心理念】</strong></p>
+                <p data-i18n-key="angelCoreConceptText" data-i18n-target="innerHTML">
+                    语言，是通往认知的处方；而行动，才是治愈疾苦的良药。我们将“智者之声”凝练为“天使之手”，打破物理与生物的隔阂，将AI从思维的云端降临至肉身的寸肤之间。这是从“理解生命”到“修复生命”的伟大跨越。
+                </p>
+
+                <p><strong data-i18n-key="angelFeaturesTitle">【功能诗篇】</strong></p>
+
+                <ul>
+                    <li style="list-style: none; margin-bottom: 20px;">
+                        <strong style="color: var(--dark-accent);" data-i18n-key="angelFeature1Title">灵枢 · 气韵的飞舞 (飞针天使)</strong>
+                        <blockquote style="border-left: 3px solid var(--dark-accent); margin: 10px 0; padding-left: 15px; font-style: italic; color: var(--dark-text-secondary);">
+                            <span data-i18n-key="angelFeature1Subtitle">全息感知经络，悬浮式自动化针灸，融合古法运针与意念操控</span>
+                        </blockquote>
+                        <p data-i18n-key="angelFeature1Desc" data-i18n-target="innerHTML">
+                            告别冰冷的器械，迎来气韵的共鸣。当你呼唤“飞针天使”，扁鹊的透视之眼将借由AI视觉重现。你将看到银色的流光在肌肤上方悬浮、流转，那不是金属的寒光，而是被赋予了灵性的能量。它无需触碰即可感知你体内气血的淤堵与虚实。如同魔法一般，银针自动寻找穴位，精准落下。你不仅能体验到“烧山火”的温热或“透天凉”的清凉，更可在指尖滑动间，指挥这股能量的深浅与缓急。<br>
+                            <strong>这是孙思邈与现代力学的共舞。</strong> 每一根飞针的颤动，都是对《黄帝内经》最精准的物理学解构，让古老的经络图谱在你身上鲜活地苏醒。
+                        </p>
+                    </li>
+
+                    <li style="list-style: none; margin-bottom: 20px;">
+                        <strong style="color: var(--dark-accent);" data-i18n-key="angelFeature2Title">微观 · 根源的净化 (纳米天使)</strong>
+                        <blockquote style="border-left: 3px solid var(--dark-accent); margin: 10px 0; padding-left: 15px; font-style: italic; color: var(--dark-text-secondary);">
+                            <span data-i18n-key="angelFeature2Subtitle">分子级靶点追踪，吞噬式纳米医疗，微观世界的战略指挥</span>
+                        </blockquote>
+                        <p data-i18n-key="angelFeature2Desc" data-i18n-target="innerHTML">
+                            视线穿越皮肤的屏障，潜入细胞的浩瀚星河。纳米天使将带你开启一场人体内部的《奥德赛》。依托多组学与基因测序的宏大地图，亿万个纳米机器人化身为忠诚的卫士，主动巡航于血管与组织之间。它们如同拥有嗅觉的猎手，精准锁定病灶的分子靶点——无论是潜伏的病毒，还是变异的细胞。<br>
+                            <strong>你是这场微观战役的指挥官。</strong> 在屏幕上，你可以看着基因图谱化为作战指令，亲手划定净化区域，目睹疾病的根源在微观层面被逐一瓦解。这不仅是治疗，这是生命底层的重构。让医学不再是宏观的对抗，而是微观的和谐回归。
+                        </p>
+                    </li>
+
+                    <li style="list-style: none; margin-bottom: 20px;">
+                        <strong style="color: var(--dark-accent);" data-i18n-key="angelFeature3Title">合一 · 智者的融合关怀 (飞针+纳米 天使)</strong>
+                        <blockquote style="border-left: 3px solid var(--dark-accent); margin: 10px 0; padding-left: 15px; font-style: italic; color: var(--dark-text-secondary);">
+                            <span data-i18n-key="angelFeature3Subtitle">中西医融合的实时反馈与动态疗愈场</span>
+                        </blockquote>
+                        <p data-i18n-key="angelFeature3Desc" data-i18n-target="innerHTML">
+                            飞针在表，疏通经络之河；纳米在里，修复生命之基。这种“内外兼修”并非割裂的执行，而是在统一的智慧大脑下协同运作。当你在这个模式中，你会听到希波克拉底的誓言与张仲景的叮咛在耳边交织，背景音随着身体指标的好转而从焦灼转为宁静的乐章。<br>
+                            <strong>AI不仅在治病，更在护佑。</strong> 它让每一次针刺的力度、每一次纳米机器人的吞噬，都充满着对生命最深沉的敬畏与爱意。
+                        </p>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
