@@ -697,7 +697,58 @@ function updateEndpointByModel(modelValue) {
         }
     }
 }
+// 天使模式逻辑处理函数
+function handleAngelMode() {
+    // 1. 获取所有参数 (虽然根据需求，只有参数1用于逻辑分支，但这里演示获取所有参数)
+    const selectedExpert = currentSelectedLeader; // 参数 (1)
+    const userQuestion = document.getElementById('userQuestion').value; // 参数 (2)
+    const generatedPrompt = document.getElementById('generatedPromptText').value; // 参数 (3)
+    
+    // 获取 AI 回复内容 (innerText 获取纯文本)
+    const aiResponseTextDiv = document.getElementById('aiResponseText');
+    const aiResponse = aiResponseTextDiv ? aiResponseTextDiv.innerText : ''; // 参数 (4)
 
+    // 2. 逻辑判断
+    if (!selectedExpert) {
+        // 如果参数(1)为空，执行与“生成问题”按钮一样的处理
+        // generateAndShowPrompt 函数内部已经包含了 alert("请先选择一位专家") 的逻辑
+        // 并且会生成 Prompt 放入文本框
+        generateAndShowPrompt(); 
+    } else {
+        // 如果参数(1)不为空，弹出模态框
+        openAngelModeModal();
+    }
+}
+
+// 3. 模态框控制函数
+const angelModeModal = document.getElementById('angelModeModal');
+
+function openAngelModeModal() {
+    if (angelModeModal) {
+        angelModeModal.style.display = 'block';
+    }
+}
+
+function closeAngelModeModal() {
+    if (angelModeModal) {
+        angelModeModal.style.display = 'none';
+    }
+}
+
+// 点击模态框外部区域也可以关闭
+window.addEventListener('click', function(event) {
+    if (angelModeModal && event.target == angelModeModal) {
+        closeAngelModeModal();
+    }
+});
+
+// 在初始化时刷新语言，确保新按钮和模态框的文本正确加载
+document.addEventListener('DOMContentLoaded', () => {
+   // 延迟一点执行以确保 translations 已经合并
+   setTimeout(() => {
+       setLanguage(currentLang);
+   }, 100);
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const preferredLang = localStorage.getItem('preferredLang');
