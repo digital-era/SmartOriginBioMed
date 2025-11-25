@@ -105,6 +105,20 @@
                 "manifestoPara7": "这不仅仅是技术，更是一次与生命深层对话的邀约，一次医学思维的远征。我们精心构建《智源生医》，让AI化身为连接人类智慧与健康的桥梁。它严格遵循每一位“生命智者”的思想框架、专业领域和语言风格，确保每一次回复都深邃而富有启发性。",
                 "manifestoPara8": "你无需穷尽所有医学文献，也无需在信息洪流中苦寻答案。在这里，你的每一个问题，都将得到智者般深邃的回应。每一次提问，都可能激发你内心深处未曾触及的探索火花；每一次对话，都将拓展你认知生命的边界，推动你健康管理与深度调研进程。",
                 "manifestoConclusion": "我们的使命是以AI原生智慧，汇聚生命长河智者之声，解决人间疾苦。",
+
+                "angelModeTitle": "《智源生医》天使模式：天使降临，穿透星河",
+                "angelCoreConceptTitle": "【核心理念】",
+                "angelCoreConceptText": "语言，是通往认知的处方；而行动，才是治愈疾苦的良药。我们将“智者之声”凝练为“天使之手”，打破物理与生物的隔阂，将AI从思维的云端降临至肉身的寸肤之间。这是从“理解生命”到“修复生命”的伟大跨越。",
+                "angelFeaturesTitle": "【功能诗篇】",
+                "angelFeature1Title": "灵枢 · 气韵的飞舞 (飞针天使)",
+                "angelFeature1Subtitle": "全息感知经络，悬浮式自动化针灸，融合古法运针与意念操控",
+                "angelFeature1Desc": "告别冰冷的器械，迎来气韵的共鸣。当你呼唤“飞针天使”，扁鹊的透视之眼将借由AI视觉重现。你将看到银色的流光在肌肤上方悬浮、流转，那不是金属的寒光，而是被赋予了灵性的能量。它无需触碰即可感知你体内气血的淤堵与虚实。如同魔法一般，银针自动寻找穴位，精准落下。你不仅能体验到“烧山火”的温热或“透天凉”的清凉，更可在指尖滑动间，指挥这股能量的深浅与缓急。<br><strong>这是孙思邈与现代力学的共舞。</strong> 每一根飞针的颤动，都是对《黄帝内经》最精准的物理学解构，让古老的经络图谱在你身上鲜活地苏醒。",
+                "angelFeature2Title": "微观 · 根源的净化 (纳米天使)",
+                "angelFeature2Subtitle": "分子级靶点追踪，吞噬式纳米医疗，微观世界的战略指挥",
+                "angelFeature2Desc": "视线穿越皮肤的屏障，潜入细胞的浩瀚星河。纳米天使将带你开启一场人体内部的《奥德赛》。依托多组学与基因测序的宏大地图，亿万个纳米机器人化身为忠诚的卫士，主动巡航于血管与组织之间。它们如同拥有嗅觉的猎手，精准锁定病灶的分子靶点——无论是潜伏的病毒，还是变异的细胞。<br><strong>你是这场微观战役的指挥官。</strong> 在屏幕上，你可以看着基因图谱化为作战指令，亲手划定净化区域，目睹疾病的根源在微观层面被逐一瓦解。这不仅是治疗，这是生命底层的重构。让医学不再是宏观的对抗，而是微观的和谐回归。",
+                "angelFeature3Title": "合一 · 智者的融合关怀 (飞针+纳米 天使)",
+                "angelFeature3Subtitle": "中西医融合的实时反馈与动态疗愈场",
+                "angelFeature3Desc": "飞针在表，疏通经络之河；纳米在里，修复生命之基。这种“内外兼修”并非割裂的执行，而是在统一的智慧大脑下协同运作。当你在这个模式中，你会听到希波克拉底的誓言与张仲景的叮咛在耳边交织，背景音随着身体指标的好转而从焦灼转为宁静的乐章。<br><strong>AI不仅在治病，更在护佑。</strong> 它让每一次针刺的力度、每一次纳米机器人的吞噬，都充满着对生命最深沉的敬畏与爱意。",
                  "footerRight": "© 2025 AI范式进化. 保留所有权利。",
             },
             "en": {
@@ -212,6 +226,20 @@
                 "manifestoPara7": "This is not just technology; it is an invitation for a deep dialogue with life, an expedition of medical thought. We meticulously built 'Origin Medical AI' to let AI serve as a bridge connecting human wisdom and health. It strictly adheres to the thought framework, professional field, and linguistic style of each 'Life Sage,' ensuring every response is profound and inspiring.",
                 "manifestoPara8": "You don't need to exhaust all medical literature, nor search tirelessly for answers amidst the information deluge. Here, every question you ask will receive a profound response like that of a sage. Every inquiry may spark exploration fires previously untouched deep within you; every dialogue will expand the boundaries of your understanding of life and propel your progress in health management and deep research.",
                 "manifestoConclusion": "Our mission is to harness AI-native intelligence to converge the voices of wisdom from the river of life, thereby alleviating human suffering.",
+
+                "angelModeTitle": "SmartOrigin BioMed Angel Mode: Angels Descend, Piercing the Galaxy",
+                "angelCoreConceptTitle": "【Core Philosophy】",
+                "angelCoreConceptText": "Language is the prescription for cognition, but action is the medicine that cures suffering. We condense the 'Voice of the Wise' into the 'Hand of the Angel', breaking the barrier between physics and biology, bringing AI down from the clouds of thought to the very inch of skin. This is the great leap from 'Understanding Life' to 'Repairing Life'.",
+                "angelFeaturesTitle": "【Functional Psalms】",
+                "angelFeature1Title": "Ling Shu · The Dance of Qi (Flying Needle Angel)",
+                "angelFeature1Subtitle": "Holographic meridian perception, levitating automated acupuncture, fusing ancient techniques with mind control",
+                "angelFeature1Desc": "Bid farewell to cold instruments and welcome the resonance of Qi. When you call upon the 'Flying Needle Angel', Bian Que's perspective eyes reappear through AI vision. You will see silver streamers floating and flowing above the skin; it is not the cold light of metal, but energy endowed with spirituality. It senses the blockage and deficiency of Qi and blood in your body without touch. Like magic, the silver needle automatically finds the acupoint and falls precisely. You can not only experience the warmth of 'Burning Mountain Fire' or the coolness of 'Penetrating Heaven Cool', but also command the depth and urgency of this energy with a swipe of your fingertips.<br><strong>This is the dance between Sun Simiao and modern mechanics.</strong> The vibration of every flying needle is the most precise physical deconstruction of the 'Yellow Emperor's Inner Canon', awakening the ancient meridian map vividly on your body.",
+                "angelFeature2Title": "Microscopic · Purification of the Source (Nano Angel)",
+                "angelFeature2Subtitle": "Molecular-level target tracking, phagocytic nano-medical treatment, strategic command of the microscopic world",
+                "angelFeature2Desc": "Sight pierces the barrier of the skin and dives into the vast galaxy of cells. The Nano Angel will take you on an 'Odyssey' inside the human body. Relying on the grand map of multi-omics and gene sequencing, billions of nanobots transform into loyal guards, actively cruising between blood vessels and tissues. They are like hunters with a sense of smell, precisely locking onto molecular targets of lesions—whether latent viruses or mutated cells.<br><strong>You are the commander of this microscopic battle.</strong> On the screen, you can watch the gene map turn into combat orders, manually designate purification zones, and witness the root of the disease being disintegrated one by one at the microscopic level. This is not just treatment; it is the restructuring of the underlying layer of life. Making medicine no longer a macroscopic confrontation, but a microscopic return to harmony.",
+                "angelFeature3Title": "Unity · The Fusion of Wisdom (Flying Needle + Nano Angel)",
+                "angelFeature3Subtitle": "Real-time feedback and dynamic healing field of integrated Chinese and Western medicine",
+                "angelFeature3Desc": "Flying needles on the surface dredge the river of meridians; nanobots inside repair the foundation of life. This 'internal and external cultivation' is not a fragmented execution, but a coordinated operation under a unified wisdom brain. When you are in this mode, you will hear the Hippocratic Oath and Zhang Zhongjing's exhortations intertwining in your ear, and the background sound turns from anxious to a serene movement as your body indicators improve.<br><strong>AI is not only treating diseases but also protecting.</strong> It makes the intensity of every acupuncture and every phagocytosis of nanobots full of the deepest awe and love for life."
                 "footerRight": "© 2025 AI Paradigm Evolution. All rights reserved.",
             }
         };
