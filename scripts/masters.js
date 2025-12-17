@@ -159,6 +159,22 @@
                     "en": "Swift and efficient clinical operations; inherits and innovates acupuncture techniques."
                 }
             },
+           {
+                id: "chen_yuqin",
+                name: "陈玉琴 (Chen Yuqin)",
+                contribution: {
+                    "zh-CN": "民间中医保健专家，自学中医治愈自身重疾后创立循经指压健康疗法（以敲胆经、早睡、按压心包经为核心的三式疗法），强调经络疏通与人体自愈，惠及众多疑难杂症患者，并影响现代养生著作。",
+                    "en": "Folk TCM health expert who, after self-studying TCM and curing her own serious illness, founded the Meridian Acupressure Health Therapy (centered on the three methods of tapping the gallbladder meridian, early sleep, and pressing the pericardium meridian), emphasizing meridian dredging and human self-healing, benefiting numerous patients with difficult conditions and influencing modern health preservation works."
+                },
+                field: {
+                    "zh-CN": "中医养生学、经络调理、指压推拿、自愈疗法。",
+                    "en": "TCM Health Preservation, Meridian Regulation, Acupressure and Tuina, Self-Healing Therapy."
+                },
+                remarks: {
+                    "zh-CN": "当代民间中医大师，其疗法简便易行、广受欢迎，应邀赴多国讲座，对《人体使用手册》作者吴清忠养生理念产生重要影响。",
+                    "en": "Contemporary folk TCM master; her simple and accessible therapy is widely popular, invited to lecture in multiple countries, and significantly influenced the health concepts of Wu Qingzhong, author of *The User's Manual of the Human Body*."
+                }
+            },
             {
                 id: "shang_dejun",
                 name: "尚德俊 (Shang Dejun)",
