@@ -198,6 +198,9 @@ function clearSelection() {
     document.getElementById('selectedLeaderName').textContent = translations[currentLang].noLeaderSelected;
     currentGeneratedPrompt = '';
     document.getElementById('prompt-display-area').style.display = 'none';
+    // --- 新增：重置折叠状态 ---
+    document.getElementById('prompt-collapsible-content').style.display = 'none';
+    document.getElementById('prompt-toggle-icon').classList.remove('icon-rotated');
     document.getElementById('ai-response-area').style.display = 'none';
     document.getElementById('generatedPromptText').value = '';
     document.getElementById('aiResponseText').textContent = '';
@@ -217,6 +220,10 @@ function selectLeader(leader, category, cardElement) {
     cardElement.classList.add('selected');
     currentGeneratedPrompt = '';
     document.getElementById('prompt-display-area').style.display = 'none';
+    // --- 新增：重置折叠状态 ---
+    document.getElementById('prompt-collapsible-content').style.display = 'none';
+    const toggleIcon = document.getElementById('prompt-toggle-icon');
+    if(toggleIcon) toggleIcon.classList.remove('icon-rotated');
     document.getElementById('ai-response-area').style.display = 'none';
     document.getElementById('generatedPromptText').value = '';
     document.getElementById('aiResponseText').textContent = '';
@@ -342,14 +349,34 @@ ${translations[lang].promptAs} ${currentSelectedLeader.name}, ${translations[lan
 `;
 }
 
+// --- 新增：控制 Prompt 区域折叠与展开 ---
+function togglePromptCollapse() {
+    const content = document.getElementById('prompt-collapsible-content');
+    const icon = document.getElementById('prompt-toggle-icon');
+    
+    if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        icon.classList.add('icon-rotated'); // 旋转箭头
+    } else {
+        content.style.display = 'none';
+        icon.classList.remove('icon-rotated'); // 恢复箭头
+    }
+}
+
 function generateAndShowPrompt() {
     currentGeneratedPrompt = generateBasePrompt();
     const promptDisplayArea = document.getElementById('prompt-display-area');
     const promptTextElement = document.getElementById('generatedPromptText');
+    // 获取内容区和图标，用于重置状态
+    const content = document.getElementById('prompt-collapsible-content');
+    const icon = document.getElementById('prompt-toggle-icon');
 
     if (currentGeneratedPrompt) {
         promptTextElement.value = currentGeneratedPrompt.trim();
-        promptDisplayArea.style.display = 'block';
+        promptDisplayArea.style.display = 'block'; // 显示整个提示词区域        
+        // 建议：点击“生成”后，默认仍保持折叠状态（如需自动展开，请把下面设为 'block' 并 add class）
+        content.style.display = 'none'; 
+        icon.classList.remove('icon-rotated');
         document.getElementById('ai-response-area').style.display = 'none';
         document.getElementById('aiResponseText').textContent = '';
     } else {
@@ -369,7 +396,9 @@ async function getAIResponse() {
     // Get current settings from UI (which should be populated by loadApiSettings)
     const apiBaseUrl = apiEndpointSelect.value;
     const apiKey = apiKeyInput.value;
-    const model = apiModelSelect.value;
+    const modelWithSuffix = apiModelSelect.value; // 这是带后缀的名字，如 gemini-1.5-flash@proxy
+    // 【新增这一行】：去掉 @ 符号及其后面的内容，恢复成 Google 认识的真实名称
+    const model = modelWithSuffix.split('@')[0]; 
 
     const aiResponseArea = document.getElementById('ai-response-area');
     const aiResponseTextElement = document.getElementById('aiResponseText');
@@ -567,6 +596,10 @@ function copyConversationToClipboard() {
 const endpointModelMap = {
     "https://api.deepseek.com": [
         { value: "deepseek-chat", labelKey: "modelDeepSeekV3" }
+    ],
+    // 新增：你的自定义 Cloudflare Gemin代理接入点
+    "https://api.aivibeinvest.com": [
+        { value: "gemini-2.5-flash@proxy", labelKey: "modelGeminiFlash" },
     ],
     "https://generativelanguage.googleapis.com": [
         { value: "gemini-2.5-flash", labelKey: "modelGeminiFlash" }
