@@ -419,35 +419,40 @@ async function getAIResponse() {
         return;
     }
 
+    // 1. 预设 Header
+    const headers = { 'Content-Type': 'application/json' };
+    const isGeminiModel = model.toLowerCase().includes("gemini");
 
-    let fullApiUrl = (apiBaseUrl.endsWith('/') ? apiBaseUrl.slice(0, -1) : apiBaseUrl) + "/v1/chat/completions";
+    let fullApiUrl ;
+    if (isGeminiModel) {
+        const baseUrl = apiBaseUrl.endsWith('/') ? apiBaseUrl.slice(0, -1) : apiBaseUrl;
+        fullApiUrl = `${baseUrl}/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    } else {
+        fullApiUrl = (apiBaseUrl.endsWith('/') ? apiBaseUrl.slice(0, -1) : apiBaseUrl) + "/v1/chat/completions";
+        // 非 Gemini 模型需要在 Header 里传 Key
+        headers['Authorization'] = `Bearer ${apiKey}`;
+    }
 
-    if(apiBaseUrl == "https://generativelanguage.googleapis.com") {
-        fullApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    
+    let requestBody;
+    if (isGeminiModel) {
+        requestBody = {
+            contents: [{ role: "user", parts: [{ text: promptText }] }],
+            generationConfig: { temperature: 0.7 }
+        };
+    } else {
+        requestBody = {
+            model: model,
+            messages: [{ role: "user", content: promptText }],
+            use_web_search: true,  /*修改增加*/
+            temperature: 0.7,
+        };
     }
 
     aiResponseTextElement.textContent = ''; // 使用 textContent 清空以防注入
     aiResponseArea.style.display = 'block';
     loadingIndicator.style.display = 'inline-block';
     getAIResponseButton.disabled = true;
-    let requestBody;
-
-    if (model.toLowerCase().includes("gpt") || model.toLowerCase().includes("deepseek")) {
-        requestBody = {
-            model: model,
-            messages: [ { role: "user", content: promptText } ],
-            use_web_search: true,  /*修改增加*/
-            temperature: 0.7,
-        };
-    } else if (model.toLowerCase().includes("gemini")) {
-        requestBody = {
-            contents: [ { role: "user", parts: [ { text: promptText } ] } ],
-            generationConfig: { temperature: 0.7 }
-        };
-    }
-
-    const headers = { 'Content-Type': 'application/json', };
-    if (!model.toLowerCase().includes("gemini"))  { headers['Authorization'] = `Bearer ${apiKey}`; }
 
     let response;
     let errorData;
@@ -466,7 +471,7 @@ async function getAIResponse() {
         }
         data = await response.json();
 
-        if (model.toLowerCase().includes("gemini")) {
+        if (isGeminiModel) {
             if (data.candidates && data.candidates.length > 0 &&
                 data.candidates[0].content && data.candidates[0].content.parts &&
                 data.candidates[0].content.parts.length > 0 && data.candidates[0].content.parts[0].text) {
