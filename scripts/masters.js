@@ -717,7 +717,7 @@ const NeuralLinkMasters = [
 const AIDrugDiscoveryMasters = [
     {
         id: "bighat_biosciences",
-        name: "BigHat Biosciences (BigHat Biosciences)",
+        name: "BigHat Biosciences",
         contribution: {
             "zh-CN": "开发Milliner AI/ML平台整合机器学习与合成生物学，设计下一代抗体疗法，提升安全性与疗效，支持Eli Lilly合作开发抗体药物偶联物，推进胃肠癌临床试验至2026年。",
             "en": "Developed Milliner AI/ML platform integrating machine learning and synthetic biology to design next-generation antibody therapies, enhancing safety and efficacy, supporting Eli Lilly collaboration for antibody-drug conjugates advancing GI cancer trials to 2026."
@@ -733,7 +733,7 @@ const AIDrugDiscoveryMasters = [
     },
     {
         id: "deepcell",
-        name: "DeepCell (DeepCell)",
+        name: "DeepCell",
         contribution: {
             "zh-CN": "推出REM-i AI平台利用高分辨率光学与微流控实现无标记单细胞形态分析，加速表型筛选与功能结果链接，支持再生医学与移植监测。",
             "en": "Launched REM-i AI platform using high-resolution optics and microfluidics for label-free single-cell morphology analysis, accelerating phenotypic screening and functional outcome linkage, supporting regenerative medicine and transplant monitoring."
@@ -749,7 +749,7 @@ const AIDrugDiscoveryMasters = [
     },
     {
         id: "dyno_therapeutics",
-        name: "Dyno Therapeutics (Dyno Therapeutics)",
+        name: "Dyno Therapeutics",
         contribution: {
             "zh-CN": "利用AI设计新型AAV衣壳载体Dyno-4z2、Dyno-3hv与Dyno-ahq，提升眼部、肌肉与CNS基因递送效率与特异性，在非人灵长类中验证疗效。",
             "en": "Utilized AI to design novel AAV capsids Dyno-4z2, Dyno-3hv, and Dyno-ahq, improving gene delivery efficiency and specificity to eye, muscle, and CNS, validated in non-human primates."
@@ -765,7 +765,7 @@ const AIDrugDiscoveryMasters = [
     },
     {
         id: "genesis_therapeutics",
-        name: "Genesis Therapeutics (Genesis Therapeutics)",
+        name: "Genesis Therapeutics",
         contribution: {
             "zh-CN": "开发GEMS生成与预测AI平台整合语言模型与物理模拟，针对复杂靶点生成高亲和力小分子药物，支持Incyte合作发现突破性疗法。",
             "en": "Developed GEMS generative and predictive AI platform integrating language models and physical simulations to generate high-affinity small molecules for complex targets, supporting Incyte collaboration for breakthrough therapeutics."
@@ -976,7 +976,7 @@ const AIDrugDiscoveryMasters = [
 const AIHealthcareMasters = [
     {
         id: "abridge_ai",
-        name: "Abridge AI (Abridge AI)",
+        name: "Abridge AI",
         contribution: {
             "zh-CN": "开发生成式AI平台自动化临床笔记生成，从患者对话中提取可计费笔记，部署于150多家医疗系统，减少临床医生文书负担达55%，提升患者互动时间。",
             "en": "Developed generative AI platform automating clinical note generation from patient conversations, extracting billable notes, deployed in over 150 health systems, reducing clinician documentation burden by 55% and enhancing patient interaction time."
@@ -992,7 +992,7 @@ const AIHealthcareMasters = [
     },
     {
         id: "ambience_healthcare",
-        name: "Ambience Healthcare (Ambience Healthcare)",
+        name: "Ambience Healthcare",
         contribution: {
             "zh-CN": "构建环境AI平台自动化文档、编码和临床文档完整性，支持200多个专科，部署于40多家医疗系统，提升编码准确性和合规性。",
             "en": "Built ambient AI platform automating documentation, coding, and clinical documentation integrity across 200+ specialties, deployed in over 40 health systems, improving coding accuracy and compliance."
@@ -1008,7 +1008,7 @@ const AIHealthcareMasters = [
     },
     {
         id: "hippocratic_ai",
-        name: "Hippocratic AI (Hippocratic AI)",
+        name: "Hippocratic AI",
         contribution: {
             "zh-CN": "开创安全优先生成式AI医疗代理，进行非诊断患者互动如药物管理和随访，完成数十万患者互动，满意度达8.7/10，缓解全球医疗人力短缺。",
             "en": "Pioneered safety-first generative AI healthcare agents for non-diagnostic patient interactions like medication management and follow-ups, completing hundreds of thousands of interactions with 8.7/10 satisfaction, addressing global healthcare staffing shortages."
@@ -1024,7 +1024,7 @@ const AIHealthcareMasters = [
     },
     {
         id: "eliseai",
-        name: "EliseAI (EliseAI)",
+        name: "EliseAI",
         contribution: {
             "zh-CN": "开发AI自动化平台处理医疗调度、预授权和患者摄入，减少行政成本25%，降低等待时间，覆盖多专科实践。",
             "en": "Developed AI automation platform handling healthcare scheduling, prior authorizations, and patient intake, reducing administrative costs by 25% and wait times, across multiple specialty practices."
@@ -1040,7 +1040,7 @@ const AIHealthcareMasters = [
     },
     {
         id: "benchling",
-        name: "Benchling (Benchling)",
+        name: "Benchling",
         contribution: {
             "zh-CN": "提供云基生命科学平台整合AI代理和数据基础，支持抗体发现和自动化，服务1300多家生物技术公司，加速R&D周期。",
             "en": "Provided cloud-based life sciences platform integrating AI agents and data foundations for antibody discovery and automation, serving 1,300+ biotech companies, accelerating R&D timelines."
@@ -1056,7 +1056,7 @@ const AIHealthcareMasters = [
     },
     {
         id: "freenome",
-        name: "Freenome (Freenome)",
+        name: "Freenome",
         contribution: {
             "zh-CN": "构建多组学AI平台通过血液测试检测早期结肠直肠癌，灵敏度82%特异度85%，与Exact Sciences独家许可商业化。",
             "en": "Built multiomics AI platform for early colorectal cancer detection via blood test, 82% sensitivity at 85% specificity, exclusive license with Exact Sciences for commercialization."
@@ -1072,7 +1072,7 @@ const AIHealthcareMasters = [
     },
     {
         id: "komodo_health",
-        name: "Komodo Health (Komodo Health)",
+        name: "Komodo Health",
         contribution: {
             "zh-CN": "利用Healthcare Map AI引擎分析3.3亿患者数据，提供患者旅程洞见，支持250多项同行评审研究和ISPOR 2025 31项演示。",
             "en": "Leveraged Healthcare Map AI engine analyzing 330M patient data for journey insights, powering 250+ peer-reviewed studies and 31 ISPOR 2025 presentations."
@@ -1088,7 +1088,7 @@ const AIHealthcareMasters = [
     },
     {
         id: "valar_labs",
-        name: "Valar Labs (Valar Labs)",
+        name: "Valar Labs",
         contribution: {
             "zh-CN": "开发Vesta AI平台从组织学图像预测膀胱癌治疗响应，优于指南风险分层，支持精准肿瘤学决策。",
             "en": "Developed Vesta AI platform predicting bladder cancer treatment response from histology images, outperforming guideline risk stratification for precision oncology decisions."
