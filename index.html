@@ -316,9 +316,54 @@
         .manifesto-text::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 3px; }
         .manifesto-text::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
         .manifesto-text::-webkit-scrollbar-thumb:hover { background: var(--dark-accent); }
+
+        .settings-form .form-group {
+            margin-bottom: 20px;
+        }
+        .settings-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--dark-text-primary);
+        }
+        .settings-form select, .settings-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--dark-input-bg);
+            border: 1px solid var(--dark-input-border);
+            border-radius: 4px;
+            color: var(--dark-text-primary);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .settings-form select:focus, .settings-form input[type="password"]:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
     
-        /* === 设置模态框样式重构 === */
-       
+        .settings-form .save-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            background-color: var(--dark-accent);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .settings-form .save-btn:hover {
+            background-color: var(--dark-accent-hover);
+        }
+    
+        /* === 设置模态框样式重构 === */       
         /* ===#apiSettingsModal (API设置) 样式重构，与整体保持一致=== */
         /* 1. 容器：深色磨砂玻璃 + 呼吸感光晕 */
         #apiSettingsModal .modal-content {
