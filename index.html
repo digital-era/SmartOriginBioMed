@@ -906,6 +906,118 @@
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
         }
 
+        /* --- [新增] 统一输入框与答复框为小说阅读字体风格 --- */
+        #userQuestion, 
+        #generatedPromptText, 
+        #aiResponseText {
+            font-family: var(--font-family-novel);
+            font-size: 1.05rem; /* 稍大字体 */
+            line-height: 1.7;   /* 更宽松的行高 */
+            text-align: justify;/* 两端对齐 */
+            color: var(--dark-text-primary); /* 确保文字颜色为主要文字颜色 */
+        }
+        /* Make the prompt textarea taller */
+        /* 调整提示词文本框，确保在展开时显示正确 */
+        #generatedPromptText {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 200px; /* Increased height for better editing */
+        }
+        /* --- [新增] 结束 --- */
+
+                  /* 2. 标题 H2：复刻流光渐变艺术字 */
+        #angelModeModalh2 {
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            font-size: 2em;
+            text-align: center;
+            
+            /* 间距控制 */
+            margin-top: 6px;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            
+            font-weight: 700;
+            
+            /* 使用您标志性的渐变色 */
+            background: linear-gradient(90deg, #00DFD8, #7928CA);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            
+            /* 增加文字发光，增加神圣感 */
+            filter: drop-shadow(0 0 5px rgba(0, 223, 216, 0.3));
+            
+            animation: colorWave 7s linear infinite;
+            /* 6. 防干扰：确保没有普通文字阴影干扰发光效果 */
+            text-shadow: none; 
+        }
+        
+        /* 3. 正文容器：复刻小说排版 */
+        #angelModeModal.manifesto-text {
+            /*font-family: 'LXGW WenKai Screen', 'KaiTi', 'STKaiti', 'Playfair Display', serif;*/
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            
+            /* 关键：使用 300 字重，配合抗锯齿，实现“清冷”质感 */
+            -webkit-font-smoothing: antialiased;
+            
+            color: #e0e0e0;     /* 稍微柔和的白色 */
+            font-size: 1.15em;
+            line-height: 1.9;   /* 大行高，呼吸感 */
+            text-align: justify;
+            
+            /* 滚动区域控制 */
+            padding: 0 10px; /* 稍微给滚动条留点位置 */
+            max-height: 65vh;
+            overflow-y: auto;
+            
+            /* 微弱文字阴影增加清晰度 */
+            text-shadow: 0 0 1px rgba(0,0,0,0.3);
+        }
+        
+        /* 4. 强制覆盖内部段落样式 (防止被之前的 Segoe UI 权重覆盖) */
+        #angelModeModal.manifesto-text p {
+            font-family: inherit; /* 继承上面的 Noto Serif SC */
+            font-size: inherit;
+            line-height: inherit;
+            margin-bottom: 1.5em;
+            text-align: justify;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* 增加文字立体感 */
+        }
+        
+        /* 5. 优化引用块 (Blockquote) - 使其更具文学感 */
+        #angelModeModal.manifesto-text blockquote {
+            /* 引用文字建议用楷体，与正文宋体区分，更有笔记感 */
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            
+            font-size: 1.05em; 
+            line-height: 1.8; 
+            text-align: left; 
+            
+            /* 样式：透明背景 + 左侧亮条 */
+            background-color: rgba(255, 255, 255, 0.03); 
+            border-left: 3px solid var(--dark-accent); 
+            
+            padding: 15px 20px; 
+            margin: 20px 0; 
+            border-radius: 0 6px 6px 0;
+            color: #d0d0d0;
+        }
+        
+        /* 6. 优化内部小标题 (H3/H4) */
+        #angelModeModal.manifesto-text h3,
+        #angelModeModal.manifesto-text h4 {
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            color: var(--dark-accent);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 400; /* 宋体标题不宜太粗 */
+            font-size: 1.3em;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
         .loading-spinner {
             border: 4px solid #555;
             border-top: 4px solid var(--dark-accent);
