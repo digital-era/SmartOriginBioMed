@@ -1197,6 +1197,66 @@
         ::-webkit-scrollbar-thumb:hover { background-color: var(--dark-accent); border-width: 1px; }
         ::-webkit-scrollbar-corner { background: transparent; }
         * { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.15) transparent; }
+
+        /* --- 音乐播放器样式 --- */
+        /* 1. 音乐按钮容器 */
+        .music-wrapper {
+            position: relative; /* 为绝对定位的小标记做参照 */
+            overflow: visible;  /* 允许小标记超出圆圈边界 */
+        }        
+        /* 2. 随机播放小标记 (右上角的小圆点) */
+        .random-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            
+            /* === 修改 1: 暂时隐藏 === */
+            /* === display: none;  /* <--- 加上这一行，图标就会消失 */=== */
+        
+            /* === 修改 2: 优化颜色 (未来启用时请使用下方样式，替代原来的金色渐变) === */
+            /* 原来的金色太亮，改为深色半透明风格，更显高级且不抢眼 */
+            background: rgba(255, 255, 255, 0.15); /* 低调的半透明白 */
+            backdrop-filter: blur(2px);            /* 磨砂感 */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);       /* 文字颜色柔和一点 */
+            /* ------------------------------------------------------- */
+        
+            border-radius: 50%;
+            /* display: flex; <--- 未来启用时，记得把上面的 display: none 去掉，恢复这行 display: flex */
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 5;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .random-badge:hover {
+            transform: scale(1.1);
+            /* 悬停时稍微亮一点，提示可点击 */
+            background: var(--dark-accent); 
+            color: #fff;
+            border-color: var(--dark-accent);
+        }
+        /* 3. 播放时的动画效果 */
+        .music-playing .main-music-icon {
+            animation: musicRotate 3s linear infinite; /* 图标旋转 */
+            color: var(--dark-accent); /* 变成主题色 */
+        }        
+        /* 音乐图标旋转动画 */
+        @keyframes musicRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }        
+        /* 手机端适配：防止小标记被切掉 */
+        @media (max-width: 480px) {
+            .top-right-controls {
+                padding-right: 5px; /* 给右侧留一点空间防止溢出 */
+            }
+        }
     </style>
 </head>
 <body>
