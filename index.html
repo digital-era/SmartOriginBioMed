@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- title will be set by JavaScript -->
     <title data-i18n-key="pageTitle" data-i18n-target="title">智源生医</title>
-    <!-- 引入 Google Font "Poppins" -->
+    
+    <!-- 引入艺术字体 (参照代码2) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <!-- 引入 Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -39,27 +42,26 @@
 
 
     <style>
-        /* (CSS 部分保持不变) */
         /* --- DARK THEME VARIABLES --- */
         :root {
-            --dark-bg: #1e1e1e; /* 更深的背景 */
-            --dark-surface: #2a2a2a; /* 容器、卡片等表面 */
-            --dark-surface-light: #333333; /* 卡片等稍亮一点的表面 */
-            --dark-text-primary: #e0e0e0; /* 主要文字颜色 */
-            --dark-text-secondary: #b0b0b0; /* 次要文字颜色 */
-            --dark-border: #444444; /* 边框颜色 */
-            --dark-accent: #4a90e2; /* 强调色，蓝色 */
-            --dark-accent-hover: #3a7bc8; /* 强调色悬停 */
-            --dark-selected-bg: #004a8e; /* 选中项背景 */
-            --dark-field-text: #4a90e2; /* 领域文本颜色 (原绿色系66bb6a调整为蓝色，调整亮度) */
-            --dark-remarks-border: #00DFD8; /* 备注边框 (原黄色系#ffca28，修改为#00DFD8 Bright Cyan, 调整亮度 ) */
-            --dark-remarks-text: #bdbdbd; /* 备注文本 */
-            --dark-input-bg: #3a3a3a; /* 输入框背景 */
-            --dark-input-border: #555555; /* 输入框边框 */
-            --dark-pre-bg: #1c1c1c; /* pre标签背景 */
-            --dark-pre-border: #383838; /* pre标签边框 */
+            --dark-bg: #1e1e1e; 
+            --dark-surface: #2a2a2a; 
+            --dark-surface-light: #333333; 
+            --dark-text-primary: #e0e0e0; 
+            --dark-text-secondary: #b0b0b0; 
+            --dark-border: #444444; 
+            --dark-accent: #4a90e2; 
+            --dark-accent-hover: #3a7bc8; 
+            --dark-selected-bg: #004a8e; 
+            --dark-field-text: #4a90e2; 
+            --dark-remarks-border: #00DFD8; 
+            --dark-remarks-text: #bdbdbd; 
+            --dark-input-bg: #3a3a3a; 
+            --dark-input-border: #555555; 
+            --dark-pre-bg: #1c1c1c; 
+            --dark-pre-border: #383838; 
             
-            /* --- [新增] 定义小说风格的字体变量 --- */
+            /* --- 定义小说风格的字体变量 --- */
             --font-family-novel: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
         }
     
@@ -67,15 +69,21 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--dark-bg); /* DARK */
-            color: var(--dark-text-primary);   /* DARK */
+            color: var(--dark-text-primary);
             line-height: 1.6;
+            
+            /* === 修改背景：极光风格 === */
+            background-color: #121212; 
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 223, 216, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(121, 40, 202, 0.06) 0%, transparent 30%);
+            background-attachment: fixed;
         }
         
         /* --- Header & Controls --- */
         header {
-            text-align: center;
-            padding: 20px 0; /* 保持原有的垂直内边距 */
+            text-align: center;              
+            padding: 20px 0 5px 0;
             margin: 0 auto;
             position: relative;
             max-width: 1200px;
@@ -84,10 +92,10 @@
         /* --- Logo Styles --- */
         .logo-container {
             position: absolute;
-            top: 1px; /* 调整 Logo 的 top 值从20-》1，使其与按钮的底部对齐 */
-            left: 20px; /* 左侧距离 */
-            z-index: 20; /* 确保在其他内容之上 */
-            display: flex; /* 让logo内部的img居中 */
+            top: 1px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
             align-items: center; 
             justify-content: center;
         }
@@ -97,15 +105,15 @@
             border-radius: 5px;
         }
         
-        /* 标题现在独立于 Logo 容器，并使用 h1 标签 */
+        /* 标题样式：艺术字体 + 流光渐变 */
         h1 {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Playfair Display', 'Ma Shan Zheng', cursive, serif; 
             text-align: center;
-            margin-top: 80px; /* 根据实际 Logo 和按钮高度调整，从100-》80 */
-            margin-bottom: 1px; /* 增加一点底部边距，与下方内容隔开，从20-》1 */
-            font-size: 2.4em;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            margin-top: 30px;
+            margin-bottom: 5px;
+            font-size: 2.8em;
+            font-weight: 400;
+            letter-spacing: 1.5px;
             line-height: 1.3;
             background: linear-gradient(
                 90deg,               
@@ -122,74 +130,66 @@
     
         .top-right-controls {
             position: absolute;
-            top: 20px; /* 保持与原代码一致 */
-            right: 20px; /* 保持与原代码一致 */
-            display: flex; /* 改回 flex，因为按钮要水平对齐 */
+            top: 20px;
+            right: 20px;
+            display: flex;
             align-items: center;
-            gap: 15px; /* 按钮之间间距 */
+            gap: 15px;
             z-index: 10;
         }
-        /* 修改：了解我们按钮样式，与其他按钮保持一致 */
-        .about-us-button {
-            color: var(--dark-text-secondary); /* 文本颜色 */
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
-            background-color: var(--dark-surface-light); /* 背景色 */
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: 1px solid var(--dark-border); /* 边框 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer; /* 添加指针样式 */
-        }
 
-        .about-us-button:hover {
-            color: var(--dark-accent); /* 悬停时强调色 */
-            border-color: var(--dark-accent); /* 悬停时边框颜色 */
-            background-color: var(--dark-surface-light); /* 保持背景色不变或微调 */
-            transform: none; /* 移除原来的 translateY 效果 */
-        }
-    
-       .settings-link {
+        /* --- 统一的圆形图标按钮样式 (Glass Style) --- */
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: var(--dark-text-secondary);
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
-            background-color: var(--dark-surface-light);
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: 1px solid var(--dark-border);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        .settings-link:hover {
-            color: var(--dark-accent);
-            border-color: var(--dark-accent);
-        }
-        .settings-link .fa-cog {
-            margin-right: 6px;
-        }
-        
-         .language-selector {
-            padding: 8px;
-            background-color: var(--dark-input-bg);
-            color: var(--dark-text-primary);
-            border: 1px solid var(--dark-border);
-            border-radius: 5px;
-            font-size: 0.9rem;
             cursor: pointer;
-            box-sizing: border-box;
-            width: auto;
-        }
-        .language-selector:hover {
-            border-color: var(--dark-accent);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0;
+            position: relative;
         }
         
-        /* --- Modal Styles (No changes below this point) --- */
+        .icon-btn:hover {
+            color: #fff;
+            background-color: var(--dark-accent);
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 15px var(--dark-accent);
+            transform: rotate(15deg);
+        }
+        
+        /* --- 语言选择器处理 --- */
+        .language-wrapper select {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            z-index: 2;
+        }
+        
+        #languageSelector {
+            color-scheme: dark;
+        }
+        #languageSelector option {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            padding: 10px;
+        }
+     
+        /* --- Modal Styles --- */
         .modal {
             display: none;
             position: fixed;
@@ -202,6 +202,7 @@
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     
+        /* === 通用模态框内容样式 === */
         .modal-content {
             background-color: var(--dark-surface);
             margin: 15% auto;
@@ -213,123 +214,196 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             position: relative;
         }
-        /* 新增：了解我们模态框的特定样式 */
+
+        /* === 宣言/天使模式模态框：水晶铭牌风格 === */
         .manifesto-modal .modal-content {
-            max-width: 700px; /* 宣言模态框可以更宽 */
-            margin: 8% auto; /* 稍微向上移动，并居中 */
-            background-color: var(--dark-surface-light); /* 稍亮的背景 */
-            border: 1px solid var(--dark-border); /* 修改边框颜色 */
+            background: rgba(25, 25, 25, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.8), 
+                0 0 0 1px rgba(0, 223, 216, 0.1); 
+            border-radius: 12px;
+            max-width: 700px; /* 稍微宽一点以容纳长文本 */
+            margin: 3% auto;
+            padding: 6px 40px 40px;
+            position: relative;
         }
-        .manifesto-modal .manifesto-text {
-            font-family: var(--font-family-novel); /* 使用小说风格字体 */
-            color: var(--dark-text-primary);
-            font-size: 1.1em;
-            line-height: 1.8;
-            padding: 10px;
-            max-height: 70vh; /* 限制高度并允许滚动 */
-            overflow-y: auto;
-            text-align: justify; /* 两端对齐 */
-        }
+        
+        /* 标题样式 */
         .manifesto-modal h2 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--dark-accent);
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            font-size: 2em;
             text-align: center;
+            font-weight: 700;
+            margin-top: 6px;
             margin-bottom: 25px;
-            font-size: 1.8em;
-            letter-spacing: 0.8px;
-            line-height: 1.4;
-            background: linear-gradient(
-                90deg,               
-                #00DFD8, /* 亮青色 */
-                #7928CA  /* 紫色 */
-            );
+            line-height: 1.3;
+            background: linear-gradient(90deg, #00DFD8, #7928CA);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
+            filter: drop-shadow(0 0 5px rgba(0, 223, 216, 0.3));
             animation: colorWave 7s linear infinite;
-            -webkit-animation: colorWave 7s linear infinite;
         }
+        
+        /* 正文样式 */
+        .manifesto-modal .manifesto-text {
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            color: #e0e0e0;
+            font-size: 1.15em;
+            line-height: 1.9;
+            text-align: justify;
+            padding: 0 10px;
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+        
         .manifesto-modal p {
-            margin-bottom: 1.2em;
+            margin-bottom: 1.5em;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
+        
+        /* 结语 */
         .manifesto-modal p.conclusion {
             text-align: center;
-            font-style: italic;
-            font-weight: bold;
-            color: var(--dark-remarks-border); /* 使用备注边框的颜色作为强调 */
-            margin-top: 30px;
-            font-size: 1.2em;
-        }
-
-
-        .close-button {
-            color: var(--dark-text-secondary);
-            position: absolute;
-            top: 0px; 
-            right: 5px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .close-button:hover { color: var(--dark-text-primary); }
-    
-        .modal h2 {
-            margin-top: 0;
-            margin-bottom: 25px;
+            font-style: normal;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.4em;
             color: var(--dark-accent);
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 天使模式列表优化 */
+        .manifesto-modal ul {
+            padding-left: 0;
+        }
+        .manifesto-modal li blockquote {
+             border-left: 3px solid var(--dark-accent);
+             margin: 10px 0;
+             padding-left: 15px;
+             font-style: italic;
+             color: #d0d0d0;
+             background: rgba(255,255,255,0.03);
+             padding: 10px 15px;
+             border-radius: 0 6px 6px 0;
+        }
+        
+        .close-button {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 32px;
+            position: absolute; /* 确保绝对定位 */
+            top: 15px;
+            right: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .close-button:hover {
+            color: var(--dark-accent);
+            transform: rotate(90deg);
+        }
+        
+        /* 滚动条美化 (模态框内) */
+        .manifesto-text::-webkit-scrollbar { width: 6px; }
+        .manifesto-text::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 3px; }
+        .manifesto-text::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        .manifesto-text::-webkit-scrollbar-thumb:hover { background: var(--dark-accent); }
+    
+        /* === 设置模态框样式重构 === */
+        #apiSettingsModal .modal-content {
+            background: rgba(25, 25, 25, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 223, 216, 0.1);
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 3% auto;
+            padding: 6px 40px 40px;
+        }
+        #apiSettingsModal h2 {
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            font-size: 1.6em;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #00DFD8, #7928CA);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: drop-shadow(0 0 5px rgba(0, 223, 216, 0.4));
+            animation: colorWave 7s linear infinite;
             display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        .modal h2 .fa-cog {
-            margin-right: 12px;
+        #apiSettingsModal h2 i {
+             background: inherit; -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-    
-        .settings-form .form-group {
-            margin-bottom: 20px;
-        }
+        
         .settings-form label {
+            font-family: 'Noto Serif SC', 'Playfair Display', serif;
+            font-size: 1.1em;
+            color: #d0d0d0;
+            margin-bottom: 10px;
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--dark-text-primary);
+            font-weight: 500;
         }
+        .settings-form label i { color: var(--dark-accent); width: 20px; text-align: center; }
+
         .settings-form select, .settings-form input[type="password"] {
             width: 100%;
-            padding: 10px;
-            background-color: var(--dark-input-bg);
-            border: 1px solid var(--dark-input-border);
-            border-radius: 4px;
-            color: var(--dark-text-primary);
+            padding: 12px 15px;
+            font-family: 'Noto Serif SC', sans-serif;
             font-size: 1rem;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s ease;
             box-sizing: border-box;
-            transition: border-color 0.3s, box-shadow 0.3s;
         }
         .settings-form select:focus, .settings-form input[type="password"]:focus {
             outline: none;
-            border-color: var(--dark-accent);
-            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+            border-color: #00DFD8;
+            box-shadow: 0 0 10px rgba(0, 223, 216, 0.15);
+            background-color: rgba(0, 0, 0, 0.5);
         }
     
         .settings-form .save-btn {
             width: 100%;
+            margin-top: 15px;
             padding: 12px;
+            background: linear-gradient(135deg, #00DFD8 0%, #4a90e2 100%);
+            color: #000;
+            font-weight: 700;
+            font-size: 1.1em;
+            font-family: 'Playfair Display', sans-serif;
+            letter-spacing: 1px;
             border: none;
-            border-radius: 4px;
-            color: #ffffff;
-            background-color: var(--dark-accent);
-            font-size: 1rem;
-            font-weight: bold;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 223, 216, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
         .settings-form .save-btn:hover {
-            background-color: var(--dark-accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 223, 216, 0.5);
+            filter: brightness(1.1);
         }
     
         @keyframes colorWave {
@@ -337,55 +411,70 @@
             100% { background-position: 100% 50%; }
         }
     
+        /* === 主容器：磨砂玻璃风格 === */
         .container {
             width: 90%;
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 0 auto 20px auto;
             padding: 20px;
-            background-color: var(--dark-surface);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-        }
-    
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid var(--dark-accent);
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-    
-        .tab-button {
-            padding: 10px 20px;
-            cursor: pointer;
-            border: none;
-            background-color: transparent;
-            color: var(--dark-text-secondary);
-            font-size: 16px;
-            margin-right: 5px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-            margin-bottom: 5px;
-        }
-    
-        .tab-button:hover {
-            background-color: var(--dark-surface-light);
+            background: rgba(30, 30, 30, 0.6); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 223, 216, 0.05);
             color: var(--dark-text-primary);
         }
     
+        /* 标签栏 */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+    
+        .tab-button {
+            padding: 5px 20px;
+            cursor: pointer;
+            background-color: transparent;
+            color: var(--dark-text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+    
+        .tab-button:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    
         .tab-button.active {
-            border-bottom-color: var(--dark-accent);
-            font-weight: bold;
-            color: var(--dark-accent);
+            color: #fff;
+            font-weight: 600;
+            background: linear-gradient(90deg, rgba(0, 223, 216, 0.15) 0%, rgba(74, 144, 226, 0.15) 100%);
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 12px rgba(0, 223, 216, 0.15);
+            border-bottom: 1px solid var(--dark-accent); 
         }
     
         .tab-content { display: none; }
         .tab-content.active { display: block; }
     
-        .tab-content h2 {
+        .tab-content h2, 
+        .interaction-area h2 {
             color: var(--dark-accent);
             margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+            font-size: 1.3em;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
     
         .leader-scroll-container {
@@ -398,7 +487,7 @@
             display: flex;
             overflow-x: auto;
             overflow-y: hidden;
-            padding: 10px 0;
+            padding: 20px 20px; 
             gap: 20px;
             border-radius: 4px;
             scroll-behavior: smooth;
@@ -408,14 +497,14 @@
         .leader-grid::-webkit-scrollbar { display: none; }
     
         .leader-card {
-            border: 1px solid var(--dark-border);
+            background: rgba(0, 0, 0, 0.2);          
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 15px;
-            background-color: var(--dark-surface-light);
             color: var(--dark-text-primary);
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             flex: 0 0 300px;
             min-height: 280px;
             display: flex;
@@ -423,13 +512,53 @@
             justify-content: space-between;
         }
     
-        .leader-card:hover, .leader-card.selected {
+        .leader-card:hover {
+            background: rgba(255, 255, 255, 0.05);
             border-color: var(--dark-accent);
-            box-shadow: 0 4px 10px rgba(0, 149, 255, 0.3);
             transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
+        
+        /* 选中卡片的样式升级 */
         .leader-card.selected {
-                background-color: var(--dark-selected-bg);
+            background: linear-gradient(
+                135deg, 
+                rgba(0, 223, 216, 0.15) 0%,
+                rgba(30, 30, 30, 0.8) 60%,
+                rgba(74, 144, 226, 0.05) 100%
+            );
+            border-color: #00DFD8;
+            box-shadow: 
+                0 0 20px rgba(0, 223, 216, 0.2),
+                inset 0 0 15px rgba(0, 223, 216, 0.05);
+            transform: scale(1.02) translateY(-3px);
+            position: relative; 
+            overflow: hidden;
+        }
+        
+        /* 右上角闪烁的星星 */
+        .leader-card.selected::after {
+            content: "\f005"; 
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            color: #FFD700; 
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            animation: starTwinkle 2s infinite ease-in-out;
+        }
+        
+        @keyframes starTwinkle {
+            0% { opacity: 0.6; transform: scale(0.9) rotate(0deg); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            50% { opacity: 1; transform: scale(1.1) rotate(5deg); text-shadow: 0 0 15px rgba(255, 215, 0, 1); }
+            100% { opacity: 0.6; transform: scale(0.9) rotate(0deg); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+        }
+    
+        .leader-card.selected h3 {
+            color: #00DFD8;
+            text-shadow: 0 0 5px rgba(0, 223, 216, 0.3);
         }
     
         .leader-card h3 {
@@ -461,31 +590,31 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(50, 50, 50, 0.8);
+            background-color: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(4px);
             color: var(--dark-text-primary);
-            border: 1px solid var(--dark-border);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.3s, box-shadow 0.3s, width 0.3s, height 0.3s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .scroll-button:hover {
             background-color: var(--dark-accent);
-            color: var(--dark-bg);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            color: #fff;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 15px var(--dark-accent);
+            transform: translateY(-50%) scale(1.1);
         }
-        .scroll-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .scroll-button:disabled { opacity: 0.5; cursor: not-allowed; }
         .scroll-button.left { left: 0px; }
         .scroll-button.right { right: 0px; }
     
@@ -501,77 +630,131 @@
             font-size: 1.5em;
         }
         
-        /* Shared styles for textareas */
-        .interaction-area textarea {
+        .interaction-area textarea, 
+        #generatedPromptText {
             width: 100%;
             box-sizing: border-box;
             min-height: 80px;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid var(--dark-input-border);
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.25); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--dark-text-primary);
+            transition: border-color 0.3s, box-shadow 0.3s;
             margin-bottom: 15px;
             font-size: 1em;
-            background-color: var(--dark-input-bg);
-            color: var(--dark-text-primary);
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-            line-height: 1.5;
+            font-family: var(--font-family-novel);
+        }
+        .interaction-area textarea::placeholder { color: var(--dark-text-secondary); }
+        .interaction-area textarea:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            background-color: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.15);
         }
 
-        .interaction-area textarea::placeholder {
-            color: var(--dark-text-secondary);
+        /* 调整提示词文本框 */
+        #generatedPromptText {
+            min-height: 200px; 
+            font-family: var(--font-family-novel);
         }
     
         .interaction-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 15px;
             flex-wrap: wrap;
-            justify-content: center; /* 让按钮在容器中居中 */
+            justify-content: center;
         }
     
         .interaction-area button {
-            padding: 10px 15px;
-            background-color: var(--dark-accent);
-            color: var(--dark-bg);
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #3a7bc8 0%, #4a90e2 100%);
+            color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 0.95em;
-            transition: background-color 0.3s ease;
-            flex: 1 1 200px; /* 确保宽度一致性 */
-            box-sizing: border-box;
-            max-width: 250px; /* 增加一个最大宽度，防止按钮在宽屏上过长 */
-            text-align: center; /* 文本居中 */
-            display: flex; /* 让按钮内容（文本和loading）也使用flex布局 */
-            align-items: center; /* 垂直居中 */
-            justify-content: center; /* 水平居中 */
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            flex: 1 1 200px;
+            max-width: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         .interaction-area button:hover {
-            background-color: var(--dark-accent-hover);
-        }
-        .interaction-area button:disabled {
-            background-color: #555;
-            color: #999;
-            cursor: not-allowed;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            background: linear-gradient(135deg, #4a90e2 0%, #6ab0ff 100%);
         }
         
-        /* --- 修改开始：调整选中北极星信息的样式支持 Flex 布局 --- */
+        /* 针对“天使模式”按钮，做差异化处理（幽灵按钮风格） */
+        .interaction-area button#angelModeButton {
+            background: transparent;
+            border: 1px solid var(--dark-accent);
+            color: var(--dark-accent);
+            box-shadow: none;
+        }
+        .interaction-area button#angelModeButton:hover {
+            background: rgba(74, 144, 226, 0.1);
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.2);
+        }
+
+        /* 针对“获取专家回复”按钮，做强调处理 */
+        .interaction-area button#getAIResponseButton {
+            background: linear-gradient(135deg, #00DFD8 0%, #007cf0 100%);
+            color: #000;
+            font-weight: 700;
+        }
+        .interaction-area button#getAIResponseButton:hover {
+            box-shadow: 0 6px 25px rgba(0, 223, 216, 0.5);
+        }
+        
+        .interaction-area button:disabled {
+            background: #444; color: #888; transform: none; box-shadow: none; cursor: not-allowed;
+        }
+        
+        /* 覆盖第一个按钮样式 */
+        .interaction-buttons button:first-child {
+            background: rgba(74, 144, 226, 0.15) !important; 
+            border: 1px solid rgba(74, 144, 226, 0.5) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.1), inset 0 0 5px rgba(255, 255, 255, 0.05) !important;
+            font-weight: 600;
+        }
+        .interaction-buttons button:first-child:hover {
+            background: rgba(74, 144, 226, 0.3) !important;
+            border-color: #4a90e2 !important;
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.3) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* 选中专家信息条 */
         #selected-leader-info {
             margin-bottom: 15px;
-            padding: 10px;
-            background-color: var(--dark-surface-light);
-            border-radius: 4px;
-            font-weight: bold;
-            color: var(--dark-text-primary);
-            /* 新增 Flex 布局以实现左右对齐 */
+            padding: 12px 10px;
+            background: linear-gradient(90deg, rgba(0, 223, 216, 0.08) 0%, rgba(0, 0, 0, 0) 80%);
+            border-radius: 0 4px 4px 0;
+            border-left: 3px solid var(--dark-accent);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--dark-text-secondary);
+            font-size: 0.95em;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        #selectedLeaderName {
+            color: #fff;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            margin-left: 5px;
+            font-size: 1.1em;
+            text-shadow: 0 0 10px rgba(0, 223, 216, 0.3);
+        }
 
-        /* 新增：右侧拷贝小图标的样式 */
         .copy-leader-btn {
             cursor: pointer;
             color: var(--dark-text-secondary);
@@ -585,21 +768,34 @@
             background-color: rgba(255, 255, 255, 0.1);
             transform: scale(1.1);
         }
-        /* --- 修改结束 --- */
     
         .response-display {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: var(--dark-surface);
-            border: 1px solid var(--dark-border);
-            border-radius: 4px;
+            margin-top: 25px;
+            padding: 0;
+            background-color: transparent; 
+            border: none;
+            border-radius: 0;
         }
-        .response-display h4 {
+        .response-display h4, 
+        .collapsible-header h4 {
             margin-top:0;
-            color: var(--dark-text-primary);
+            margin-bottom: 15px;
+            color: var(--dark-accent);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 223, 216, 0.2);
+            display: flex;
+            align-items: center;
         }
         
-        /* --- MODIFICATION START: Styles for aiResponseText (was pre) --- */
+        .collapsible-header { cursor: pointer; padding: 5px 0; transition: opacity 0.3s; }
+        .collapsible-header:hover { opacity: 0.8; }
+        .collapsible-header:hover #prompt-toggle-icon { color: var(--dark-accent); }
+        .icon-rotated { transform: rotate(180deg); }
+
         #aiResponseText {
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -607,52 +803,15 @@
             padding: 10px;
             border: 1px solid var(--dark-pre-border);
             border-radius: 4px;
-            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-            font-size: 0.9em;
-            color: var(--dark-text-secondary);
+            font-family: var(--font-family-novel);
+            font-size: 1.05rem; 
+            line-height: 1.7; 
+            text-align: justify;
+            color: var(--dark-text-primary);
             max-height: 300px;
             overflow-y: auto;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
         }
-        /* --- MODIFICATION END --- */
-
-        /* 提示词区域的头部悬停效果 */
-        .collapsible-header:hover h4 {
-            color: var(--dark-accent);
-        }
-        
-        .collapsible-header:hover #prompt-toggle-icon {
-            color: var(--dark-accent);
-        }
-        
-        /* 箭头旋转动画类 */
-        .icon-rotated {
-            transform: rotate(180deg);
-        }
-
-        /* --- [新增] 统一输入框与答复框为小说阅读字体风格 --- */
-        #userQuestion, 
-        #generatedPromptText, 
-        #aiResponseText {
-            font-family: var(--font-family-novel);
-            font-size: 1.05rem; /* 稍大字体 */
-            line-height: 1.7;   /* 更宽松的行高 */
-            text-align: justify;/* 两端对齐 */
-            color: var(--dark-text-primary); /* 确保文字颜色为主要文字颜色 */
-        }
-        /* Make the prompt textarea taller */
-        #generatedPromptText {
-            min-height: 200px; /* Increased height for better editing */
-        }
-        
-        /* Make the prompt textarea taller */
-        /* 调整提示词文本框，确保在展开时显示正确 */
-        #generatedPromptText {
-            width: 100%;
-            box-sizing: border-box;
-            min-height: 200px; /* Increased height for better editing */
-        }
-        /* --- [新增] 结束 --- */
-
 
         .loading-spinner {
             border: 4px solid #555;
@@ -678,42 +837,32 @@
     
         /* 媒体查询，在小屏幕上调整布局 */
         @media (max-width: 768px) {
-             header {
-                padding-top: 15px; /* 适当减少顶部内边距 */
-            }
-            .logo-container {
-                top: 15px;
-                left: 15px;
-            }
-            .logo-container img {
-                height: 50px;
-            }
+             header { padding-top: 15px; }
+            .logo-container { top: 15px; left: 15px; }
+            .logo-container img { height: 50px; }
             h1 {
-                /* 调整移动端的 h1 margin-top */
-                margin-top: 64px; /* 根据实际情况调整，确保不被 Logo 遮挡，从80—》64 */
+                margin-top: 64px;
                 font-size: 2em; 
-                margin-bottom: 1px; /* 增加一点底部边距，从15-》1 */
+                margin-bottom: 1px;
                 line-height: 1.25;
-                text-wrap: balance; /* 新增此行 */
+                text-wrap: balance;
             }
-            .top-right-controls { 
-                /* 相应调整移动端按钮位置 */
-                top: 15px;
-                right: 15px; 
-                gap: 10px;
-            }
-            .about-us-button {
-                font-size: 0.9rem; /* 恢复自动宽度 */
-                padding: 6px 12px;
-            }
-            .settings-link { font-size: 0.9rem; padding: 6px 12px;}
-            .language-selector { font-size: 0.8rem; padding: 7px; }
+            .top-right-controls { top: 15px; right: 15px; gap: 10px; }
+            
+            .icon-btn { width: 34px; height: 34px; font-size: 0.95rem; }
     
             body { line-height: 1.55; }
-            .container { width: 92%; padding: 15px; margin-top: 15px; }
+            .container { width: 92%; padding: 15px; margin-top: 0px; }
             .tabs { justify-content: flex-start; margin-bottom: 15px; }
-            .tab-button { padding: 9px 14px; font-size: 10px; margin-right: 4px; margin-bottom: 4px; }
-            .tab-content h2, .interaction-area h2 { font-size: 0.9em; margin-bottom: 12px; }
+            .tab-button { padding: 5px 14px; font-size: 11px; margin-right: 4px; margin-bottom: 4px; min-width: 30px; }
+            
+            .tab-content h2, 
+            .interaction-area h2 { 
+                font-size: 1.2em; 
+                margin-bottom: 15px; 
+                font-family: 'Playfair Display', 'Ma Shan Zheng', serif;
+                padding-left: 2px;
+            }
             .leader-scroll-container { padding: 0 35px; }
             .leader-grid { gap: 15px; }
             .leader-card { flex: 0 0 250px; min-height: 260px; padding: 12px; }
@@ -727,97 +876,77 @@
             .interaction-area button { width: 100%; font-size: 0.92em; padding: 12px 15px; flex-grow: 0; flex-basis: auto; max-width: none; }
             .interaction-area textarea { font-size: 0.95em; min-height: 75px; padding: 9px; }
             #selected-leader-info { font-size: 0.95em; padding: 9px; }
-            #aiResponseText { font-size: 0.95em; } /* MODIFIED: was pre */
+            #aiResponseText { font-size: 0.95em; } 
 
-            .manifesto-modal .modal-content {
-                margin: 5% auto;
-                max-width: 95%;
-            }
-            .manifesto-modal h2 {
-                font-size: 1.5em;
-                margin-bottom: 15px;
-            }
-            .manifesto-modal .manifesto-text {
-                font-size: 0.95em;
-                line-height: 1.7;
-            }
-            .manifesto-modal p.conclusion {
-                font-size: 1.05em;
-                margin-top: 20px;
-            }
+            .manifesto-modal .modal-content { margin: 5% auto; max-width: 95%; }
+            .manifesto-modal h2 { font-size: 1.5em; margin-bottom: 15px; }
+            .manifesto-modal .manifesto-text { font-size: 0.95em; line-height: 1.7; }
+            .manifesto-modal p.conclusion { font-size: 1.05em; margin-top: 20px; }
         }
     
         @media (max-width: 480px) {
-            header {
-                padding-top: 10px;
-            }
-            .logo-container {
-                top: 10px;
-                left: 10px;
-            }
-            .logo-container img {
-                height: 45px;
-            }
+            header { padding-top: 10px; }
+            .logo-container { top: 10px; left: 10px; }
+            .logo-container img { height: 45px; }
             h1 {
-                /* 调整更小屏幕的 h1 margin-top */
-                margin-top: 56px; /* 进一步调整，适应更小屏幕，从70-》56 */
-                font-size: 1.6em; /*1.8-》1.6*/
-                letter-spacing: 0px; /*0.1-》0*/
+                margin-top: 56px;
+                font-size: 1.6em;
+                letter-spacing: 0px;
                 line-height: 1.2; 
-                text-wrap: balance; /* 新增此行 */
+                text-wrap: balance; 
             }
-             .top-right-controls { 
-                right: 10px; 
-                gap: 8px;
-            }
-            .about-us-button {
-                font-size: 0.8rem; 
-                padding: 5px 10px;
-            }
-            .settings-link { font-size: 0.8rem; padding: 5px 10px;}
-            .language-selector { font-size: 0.75rem; padding: 6px; }
+             .top-right-controls { right: 10px; gap: 8px; }
+            
+            .icon-btn { width: 30px; height: 30px; font-size: 0.85rem; border-width: 0.5px; }
 
-            .container { width: 95%; padding: 10px; margin-top: 10px; }
+            .container { width: 95%; padding: 10px; margin-top: 0px; }
             .tab-content h2, .interaction-area h2 { font-size: 0.9em; margin-bottom: 10px; }
-            .tab-button { font-size: 10px; padding: 8px 10px; margin-right: 3px; margin-bottom: 3px; }
-            .leader-scroll-container { padding: 0 28px; }
-            .leader-grid{ gap: 12px; }
-            .leader-card { flex: 0 0 78vw; min-height: auto; padding: 10px; }
+            
+            .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
+            .tab-button { font-size: 11px; padding: 4px 4px; margin-right: 2px; margin-bottom: 3px; min-width: 30px; flex: 0 0 auto; }
+            
+            /* 手机端卡片修复 */
+            .scroll-button { display: none !important; }
+            .leader-scroll-container { padding: 0 !important; margin-bottom: 20px; }
+            .leader-grid { 
+                display: flex; overflow-x: auto; gap: 15px; 
+                padding: 25px 10px; scroll-padding-left: 10px; 
+            }
+            .leader-card { flex: 0 0 83vw; min-height: auto; padding: 10px; position: relative; }
             .leader-card h3 { font-size: 1em; }
             .leader-card p { font-size: 0.82em; }
             .leader-card .remarks { font-size: 0.75em; }
-            .scroll-button { width: 28px; height: 28px; font-size: 16px; }
-            .scroll-button.left { left: 2px; }
-            .scroll-button.right { right: 2px; }
+            .leader-card.selected::after { top: 8px; right: 8px; }
+            
             .interaction-area button { font-size: 0.88em; padding: 10px 12px; }
             #selected-leader-info { font-size: 0.9em; padding: 8px; }
             .interaction-area textarea { min-height: 65px; font-size: 0.9em; padding: 8px; }
             .response-display { padding: 10px; }
-            #aiResponseText { font-size: 0.9em; padding: 8px; } /* MODIFIED: was pre */
+            #aiResponseText { font-size: 0.9em; padding: 8px; } 
 
-            /* --- 只需要在你的 480px 媒体查询里加上这一段 --- */
             .manifesto-modal .modal-content {
-                width: 94%;          /* 显式设置宽度，留出左右边距 */
-                margin: 20px auto;   /* auto 确保左右绝对居中 */
-                padding: 15px;       /* 缩小内边距，防止撑开容器 */
-                box-sizing: border-box; /* 核心：让宽度包含内边距，防止向右溢出 */
+                width: 94%; margin: 20px auto; padding: 15px; box-sizing: border-box; 
             }
-            .close-button {
-                right: 10px;         /* 确保按钮离边缘有距离 */
-                top: 5px;
-            }
+            .close-button { right: 10px; top: 5px; }
+            .manifesto-modal h2 { font-size: 1.3em; }
+            .manifesto-modal .manifesto-text { font-size: 0.9em; line-height: 1.6; }
             
-            .manifesto-modal h2 {
-                font-size: 1.3em;
-            }
-            .manifesto-modal .manifesto-text {
-                font-size: 0.9em;
-                line-height: 1.6;
-            }
-            .manifesto-modal p.conclusion {
-                font-size: 1em;
-            }
+            #apiSettingsModal .modal-content { width: 80%; margin: 3% auto; padding: 4px 20px; }
+            #apiSettingsModal h2 { font-size: 1.5em; }
         }
+        
+        /* === 全局滚动条美化 === */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }     
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 5px;
+            border: 2px solid transparent; 
+            background-clip: content-box; 
+        }
+        ::-webkit-scrollbar-thumb:hover { background-color: var(--dark-accent); border-width: 1px; }
+        ::-webkit-scrollbar-corner { background: transparent; }
+        * { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.15) transparent; }
     </style>
 </head>
 <body>
@@ -827,27 +956,30 @@
             <img src="images/TalktoNorthStarIcon.png" alt="Talk to NorthStar Logo">
         </div>
         <div class="top-right-controls">
-            <!-- “了解我们”按钮现在在这里，并放在最左边 -->
-            <button class="about-us-button" onclick="openManifestoModal()">
+            <!-- 1. 了解我们：圆形图标按钮 -->
+            <button class="icon-btn" onclick="openManifestoModal()" title="了解我们">
                 <i class="fas fa-book-open"></i>                 
-                <span data-i18n-key="aboutBtnText">了解我们</span>
             </button>
-            <a href="#" onclick="openApiSettingsModal(event)" class="settings-link">
+            <!-- 2. 设置：圆形图标按钮 -->
+            <a href="#" onclick="openApiSettingsModal(event)" class="icon-btn" title="设置">
                 <i class="fas fa-cog"></i>
-                <span data-i18n-key="settingsBtnText">设置</span>
             </a>
-            <select id="languageSelector" class="language-selector" onchange="setLanguage(this.value)">
-                <option value="zh-CN">简体中文</option>
-                <option value="en">English</option>
-            </select>
+            <!-- 3. 语言：图标 + 透明下拉框组合 -->
+            <div class="icon-btn language-wrapper" title="切换语言">
+                <i class="fas fa-globe"></i>
+                <select id="languageSelector" onchange="setLanguage(this.value)">
+                    <option value="zh-CN">简体中文</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
         </div>
-        <!-- h1 保持原位，但会通过 margin-top 被向下推 -->
+        <!-- h1 艺术字体标题 -->
         <h1 data-i18n-key="headerTitleComplete" data-i18n-target="innerHTML">智源生医</h1>
         
     </header>
 
     <div class="container">
-        <!-- ... rest of the body is unchanged ... -->
+        <!-- ... rest of the body structure matches logic of Code 1 ... -->
         <div class="tabs">
             <button class="tab-button active" onclick="openTab(event, 'TCM')" data-i18n-key="tabTCM">中医</button>
             <button class="tab-button" onclick="openTab(event, 'WM')" data-i18n-key="tabWM">西医</button>
@@ -913,20 +1045,18 @@
         
         <div class="interaction-area">
             <h2 data-i18n-key="interactWithLeader">与专家对话</h2>
-            <!-- --- 修改开始：增加右侧小图标 --- -->
             <div id="selected-leader-info">
                 <div>
                     <span data-i18n-key="currentSelectedLeaderPrefix">当前选择的专家: </span>
                     <span id="selectedLeaderName" data-i18n-key="noLeaderSelectedInitial">无</span>
                 </div>
-                <!-- 点击此图标调用新的合并拷贝功能 -->
                 <i class="fas fa-copy copy-leader-btn"
                    onclick="copyConversationToClipboard()"
                    aria-label="Copy conversation"
                    data-i18n-key="tooltipCopyConversation"
                    data-i18n-target="aria-label"></i>
             </div>
-            <!-- --- 修改结束 --- -->
+            
             <textarea id="userQuestion" data-i18n-key="placeholderUserQuestion" data-i18n-target="placeholder"></textarea>
             
             <div class="interaction-buttons">
@@ -935,18 +1065,14 @@
                     <span data-i18n-key="btnGetAiResponse">2. 获取 专家 回复</span>
                     <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
                 </button>
-                <!-- --- 修改开始：按钮改名，移除原有 onclick --- -->
                 <button id="angelModeButton" onclick="handleAngelMode()" data-i18n-key="btnAngelMode">天使模式 (未来构想)</button>
-                <!-- --- 修改结束 --- -->
             </div>
 
             <div id="prompt-display-area" class="response-display" style="display:none;">
-                <!-- 头部：包含标题和旋转箭头 -->
                 <div class="collapsible-header" onclick="togglePromptCollapse()" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
                     <h4 data-i18n-key="generatedPromptTitle" style="margin: 0;">对选择的专家:</h4>
                     <i id="prompt-toggle-icon" class="fas fa-chevron-down" style="transition: transform 0.3s ease; color: var(--dark-text-secondary);"></i>
                 </div>
-                <!-- 内容区：默认隐藏 -->
                 <div id="prompt-collapsible-content" style="display: none; margin-top: 15px;">
                     <textarea id="generatedPromptText"></textarea>
                 </div>
@@ -954,9 +1080,7 @@
             
             <div id="ai-response-area" class="response-display" style="display:none;">
                 <h4 data-i18n-key="aiResponseTitle">AI 回复:</h4>
-                <!-- *** MODIFICATION START: Changed <pre> to <div> *** -->
                 <div id="aiResponseText"></div>
-                <!-- *** MODIFICATION END *** -->
             </div>
         </div>
     </div>
@@ -964,7 +1088,6 @@
     <div id="apiSettingsModal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="closeApiSettingsModal()">×</span>
-            <!-- 模态框标题的 data-i18n-key 应该在 h2 上，因为它可能没有内部的 span -->
             <h2 data-i18n-key="modalTitle"><i class="fas fa-cog"></i> API及模型设置</h2> 
             <div class="settings-form">
                 <div class="form-group">
@@ -990,9 +1113,8 @@
                     <select id="apiModel">
                     </select>
                 </div>
-                <!-- 设为默认模型选项 (这个已经正常显示，无需更改) -->
                 <div class="form-group">
-                    <label style="display: flex; align-items: center;">
+                    <label style="display: flex; align-items: center; cursor: pointer;">
                         <i class="fas fa-star" style="margin-right: 8px; color: gold;"></i> 
                         <span data-i18n-key="labelSetDefaultModel">设为默认模型</span>
                         <input type="checkbox" id="apiDefaultModelCheck" style="margin-left: 10px;">
@@ -1006,12 +1128,11 @@
         </div>
     </div>
 
-    <!-- 新增宣言模态框的HTML -->
+    <!-- 宣言模态框 -->
     <div id="manifestoModal" class="modal manifesto-modal">
         <div class="modal-content large">
             <span class="close-button" onclick="closeManifestoModal()">×</span>
             <div class="manifesto-text">
-                <!-- 调整标题和段落，以便通过 JS 更新内容 -->
                 <h2 id="manifestoModalTitle">《智源生医》——生命长河的智者之声</h2>
                 <p id="manifestoPara1">你是否曾凝视生命的潮汐，渴望洞悉疾病的缘起，探寻健康的真谛？</p>
                 <p id="manifestoPara2">在医学的浩瀚天地里，我们时常面临困惑，被繁杂的病症所扰，被前沿的理论所惑。我们渴望一份指引，一份能穿透迷雾、照亮前路的智慧之光。</p>
@@ -1078,6 +1199,7 @@
         </div>
     </div>
 
+    <!-- 保持原有的逻辑脚本引用 -->
     <script src="scripts/locale.js"></script>
     <script src="scripts/masters.js"></script>
     <script src="scripts/applogic.js"></script>
@@ -1086,7 +1208,7 @@
         <p data-i18n-key="footerRight">© 2025 AI范式进化. 保留所有权利。</p>
     </footer>
     <script>
-        // --- 宣言模态框控制逻辑 (与您提供的示例脚本一致) ---
+        // --- 宣言模态框控制逻辑 (保持不变) ---
         const manifestoModal = document.getElementById('manifestoModal');
         
         function openManifestoModal() {
@@ -1101,12 +1223,11 @@
             }
         }
         
-        // 在 DOM 完全加载后，为按钮绑定事件 (这是更可靠的方法)
+        // 使用 class 选择器绑定 .icon-btn 中的 title 为“了解我们”的按钮，或者直接通过 onclick (已经在HTML中绑定)
+        // 此处保留 DOMContentLoaded 以防万一
         document.addEventListener('DOMContentLoaded', () => {
-            const openBtn = document.querySelector('.about-us-button'); // 使用class选择器
-            if (openBtn) {
-                openBtn.addEventListener('click', openManifestoModal);
-            }
+            // 注意：因为改用了 icon-btn，原有的 querySelector('.about-us-button') 可能失效
+            // 但我们在 HTML 中已经直接写了 onclick="openManifestoModal()"，所以功能是正常的
         });
         
         // 点击模态框外部区域也可以关闭
