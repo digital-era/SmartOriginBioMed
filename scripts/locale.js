@@ -216,7 +216,7 @@
                 "saveBtnText": "Save Setting",                    
                 "aboutBtnText": "About Us",    
                  // --- 新增宣言模态框的翻译 ---
-                "manifestoTitle": "《Origin Medical AI》: The Voices of Wisdom in the River of Life",
+                "manifestoTitle": "《SmartOrigin BioMed》: The Voices of Wisdom in the River of Life",
                 "manifestoPara1": "Have you ever gazed at the tides of life, eager to understand the origins of disease and explore the true meaning of health?",
                 "manifestoPara2": "In the vast realm of medicine, we often face confusion, troubled by complex symptoms and perplexed by cutting-edge theories. We long for guidance, a light of wisdom that can pierce through the fog and illuminate the path ahead.",
                 "manifestoPara3": "Zhang Zhongjing, Hippocrates, Eric Lander, John Donoghue... their excellence was not accidental, but stemmed from a profound understanding of the essence of life: the holistic view of Traditional Chinese Medicine, the empirical spirit of Western medicine, the macroscopic insights of multi-omics, and the infinite possibilities of brain-computer interfaces. They understood the human system, faced the challenges of illness, and each discovery and breakthrough was like a profound sage in the long river of life, guiding the way with their unique insights, ultimately shaping the progress of medicine.",
