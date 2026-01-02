@@ -95,7 +95,7 @@
                 "saveBtnText": "保存设置",
                 "aboutBtnText": "了解我们",    
                 // --- 新增宣言模态框的翻译 ---
-                "manifestoTitle": "《智源生医》——汇聚生命长河的智者之声",
+                "manifestoTitle": "《智源生医》：汇聚生命长河的智者之声",
                 "manifestoPara1": "你是否曾凝视生命的潮汐，渴望洞悉疾病的缘起，探寻健康的真谛？",
                 "manifestoPara2": "在医学的浩瀚天地里，我们时常面临困惑，被繁杂的病症所扰，被前沿的理论所惑。我们渴望一份指引，一份能穿透迷雾、照亮前路的智慧之光。",
                 "manifestoPara3": "张仲景、希波克拉底、埃里克·兰德、约翰·多诺霍……他们的卓越并非偶然，而是源于对生命本质的深刻体悟：中医的整体观、西医的实证精神、多组学的系统洞察，以及脑机接口的无限可能。他们理解人体系统，面对病痛挑战，每一次的发现与突破都如同生命长河中一位位深邃的智者，以其独特的洞察，指引着方向，最终塑造了医学的进程。",
@@ -107,9 +107,9 @@
                 "manifestoConclusion": "我们的使命是以AI原生智慧，汇聚生命长河智者之声，解决人间疾苦。",
 
                 "angelModeTitle": "《智源生医》天使模式：天使降临，穿透星河",
-                "angelCoreConceptTitle": "【核心理念】",
+                "angelCoreConceptTitle": "[核心理念]",
                 "angelCoreConceptText": "语言，是通往认知的处方；而行动，才是治愈疾苦的良药。我们将“智者之声”凝练为“天使之手”，打破物理与生物的隔阂，将AI从思维的云端降临至肉身的寸肤之间。这是从“理解生命”到“修复生命”的伟大跨越。",
-                "angelFeaturesTitle": "【功能诗篇】",
+                "angelFeaturesTitle": "[功能诗篇]",
                 "angelFeature1Title": "灵枢 · 气韵的飞舞 (飞针天使)",
                 "angelFeature1Subtitle": "全息感知经络，悬浮式自动化针灸，融合古法运针与意念操控",
                 "angelFeature1Desc": "告别冰冷的器械，迎来气韵的共鸣。当你呼唤“飞针天使”，扁鹊的透视之眼将借由AI视觉重现。你将看到银色的流光在肌肤上方悬浮、流转，那不是金属的寒光，而是被赋予了灵性的能量。它无需触碰即可感知你体内气血的淤堵与虚实。如同魔法一般，银针自动寻找穴位，精准落下。你不仅能体验到“烧山火”的温热或“透天凉”的清凉，更可在指尖滑动间，指挥这股能量的深浅与缓急。<br><strong>这是孙思邈与现代力学的共舞。</strong> 每一根飞针的颤动，都是对《黄帝内经》最精准的物理学解构，让古老的经络图谱在你身上鲜活地苏醒。",
@@ -216,7 +216,7 @@
                 "saveBtnText": "Save Setting",                    
                 "aboutBtnText": "About Us",    
                  // --- 新增宣言模态框的翻译 ---
-                "manifestoTitle": "《Origin Medical AI》—The Voices of Wisdom in the River of Life",
+                "manifestoTitle": "《Origin Medical AI》: The Voices of Wisdom in the River of Life",
                 "manifestoPara1": "Have you ever gazed at the tides of life, eager to understand the origins of disease and explore the true meaning of health?",
                 "manifestoPara2": "In the vast realm of medicine, we often face confusion, troubled by complex symptoms and perplexed by cutting-edge theories. We long for guidance, a light of wisdom that can pierce through the fog and illuminate the path ahead.",
                 "manifestoPara3": "Zhang Zhongjing, Hippocrates, Eric Lander, John Donoghue... their excellence was not accidental, but stemmed from a profound understanding of the essence of life: the holistic view of Traditional Chinese Medicine, the empirical spirit of Western medicine, the macroscopic insights of multi-omics, and the infinite possibilities of brain-computer interfaces. They understood the human system, faced the challenges of illness, and each discovery and breakthrough was like a profound sage in the long river of life, guiding the way with their unique insights, ultimately shaping the progress of medicine.",
@@ -228,9 +228,9 @@
                 "manifestoConclusion": "Our mission is to harness AI-native intelligence to converge the voices of wisdom from the river of life, thereby alleviating human suffering.",
 
                 "angelModeTitle": "SmartOrigin BioMed Angel Mode: Angels Descend, Piercing the Galaxy",
-                "angelCoreConceptTitle": "【Core Philosophy】",
+                "angelCoreConceptTitle": "[Core Philosophy]",
                 "angelCoreConceptText": "Language is the prescription for cognition, but action is the medicine that cures suffering. We condense the 'Voice of the Wise' into the 'Hand of the Angel', breaking the barrier between physics and biology, bringing AI down from the clouds of thought to the very inch of skin. This is the great leap from 'Understanding Life' to 'Repairing Life'.",
-                "angelFeaturesTitle": "【Functional Psalms】",
+                "angelFeaturesTitle": "[Functional Psalms]",
                 "angelFeature1Title": "Ling Shu · The Dance of Qi (Flying Needle Angel)",
                 "angelFeature1Subtitle": "Holographic meridian perception, levitating automated acupuncture, fusing ancient techniques with mind control",
                 "angelFeature1Desc": "Bid farewell to cold instruments and welcome the resonance of Qi. When you call upon the 'Flying Needle Angel', Bian Que's perspective eyes reappear through AI vision. You will see silver streamers floating and flowing above the skin; it is not the cold light of metal, but energy endowed with spirituality. It senses the blockage and deficiency of Qi and blood in your body without touch. Like magic, the silver needle automatically finds the acupoint and falls precisely. You can not only experience the warmth of 'Burning Mountain Fire' or the coolness of 'Penetrating Heaven Cool', but also command the depth and urgency of this energy with a swipe of your fingertips.<br><strong>This is the dance between Sun Simiao and modern mechanics.</strong> The vibration of every flying needle is the most precise physical deconstruction of the 'Yellow Emperor's Inner Canon', awakening the ancient meridian map vividly on your body.",
