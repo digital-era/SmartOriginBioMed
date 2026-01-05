@@ -863,3 +863,152 @@ function playRandomMusic(event) {
     // audio.src = randomSong;
     // audio.play();
 }
+
+
+/* --- [新增] 优雅阅读模式逻辑 --- */
+// 【新增辅助函数】安全解析 Markdown，保护数学公式不被 marked.js 破坏
+function renderMarkdownWithMath(rawText) {
+    if (!rawText) return '';
+
+    // 1. 临时占位符数组
+    const mathBlocks = [];
+    
+    // 2. 正则匹配 LaTeX 公式：
+    // 匹配 $$...$$, \[...\], \(...\), $...$
+    // 注意：这就要求 AI 返回标准的 LaTeX 格式
+    const protectMath = (text) => {
+        return text.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\(.*?\\\)|(?<!\\)\$.*?(?<!\\)\$)/gm, (match) => {
+            mathBlocks.push(match); // 存入数组
+            return `__MATH_BLOCK_${mathBlocks.length - 1}__`; // 用占位符替换
+        });
+    };
+
+    // 3. 恢复公式
+    const restoreMath = (text) => {
+        return text.replace(/__MATH_BLOCK_(\d+)__/g, (match, index) => {
+            return mathBlocks[index];
+        });
+    };
+
+    // 4. 执行流程
+    let protectedText = protectMath(rawText);
+    
+    let html = '';
+    // 如果引入了 marked.js 则使用，否则简单换行
+    if (typeof marked !== 'undefined') {
+        html = marked.parse(protectedText);
+    } else {
+        html = protectedText.replace(/\n/g, '<br>');
+    }
+
+    // 5. 恢复公式并返回
+    return restoreMath(html);
+}
+
+function parseMarkdownWithMath(rawText) {
+    if (!rawText) return "";
+
+    // 1. 存储公式的临时数组
+    const mathSegments = [];
+    
+    // 2. 保护公式：将 LaTeX 内容替换为占位符
+    // 使用 @@ 而不是 __，避免被 marked 解析为粗体/斜体
+    const protectedText = rawText.replace(
+        /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\(.*?\\\)|(?<!\\)\$.*?(?<!\\)\$)/gm, 
+        (match) => {
+            mathSegments.push(match);
+            // 【修改点1】使用 @@ 包裹，或者其他不会触发 Markdown 渲染的字符
+            return `@@MATH_PLACEHOLDER_${mathSegments.length - 1}@@`;
+        }
+    );
+
+    // 3. Markdown 转换
+    let htmlContent = "";
+    if (typeof marked !== 'undefined') {
+        htmlContent = marked.parse(protectedText);
+    } else {
+        htmlContent = protectedText.replace(/\n/g, "<br>");
+    }
+
+    // 4. 还原公式
+    // 【修改点2】正则匹配 @@...@@
+    const finalHtml = htmlContent.replace(/@@MATH_PLACEHOLDER_(\d+)@@/g, (match, index) => {
+        // 【优化】防止公式中的 < > 等符号被浏览器当作 HTML 标签解析错误
+        // 如果你的公式里包含 a < b，直接 innerHTML 会出问题
+        return escapeHtml(mathSegments[index]); 
+    });
+
+    return finalHtml;
+}
+
+// 辅助函数：防止 LaTeX 中的 < 和 > 破坏 HTML 结构
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function openElegantMode() {
+    // 1. 获取元素
+    const userQuestion = document.getElementById('userQuestion').value;
+    const aiResponseEl = document.getElementById('aiResponseText');
+    
+    // 【关键】必须从 dataset.raw 获取原始纯文本
+    // 如果 dataset.raw 为空（修正前的代码会导致为空），逻辑就无法进行
+    const rawAiContent = aiResponseEl.dataset.raw; 
+
+    // 2. 校验
+    if (!rawAiContent) {
+        // 如果 raw 为空，说明还没生成，或者生成函数没保存 raw
+        // 尝试回退读取 innerText，但效果可能不好
+        if (aiResponseEl.innerText.trim() === "") {
+             alert("请先获取北极星的回复，才能开启沉浸阅读模式。");
+             return;
+        }
+    }
+
+    // 3. 填充问题
+    document.getElementById('elegantQuestionText').innerText = userQuestion || "（北极星指引）";
+
+    // 4. 填充答案 (使用保护函数)
+    const elegantAnswerBox = document.getElementById('elegantAnswerText');
+    
+    // 这里传入原始文本，先保护公式，再转 MD，再恢复公式
+    elegantAnswerBox.innerHTML = parseMarkdownWithMath(rawAiContent || aiResponseEl.innerText);
+
+    // 5. 显示模态框
+    const modal = document.getElementById('elegantModal');
+    modal.style.display = 'block';
+    modal.offsetHeight; // 强制重绘
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+
+    // 6. 触发 MathJax 渲染
+    if (window.MathJax) {
+        // 针对模态框区域重新渲染
+        MathJax.typesetPromise([elegantAnswerBox]).catch(err => console.error('Modal MathJax error:', err));
+    }
+}
+
+function closeElegantMode() {
+    const modal = document.getElementById('elegantModal');
+    modal.classList.remove('show');
+    
+    // 等待动画结束后隐藏
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // 恢复滚动
+    }, 400);
+}
+
+// 点击模态框背景关闭
+document.getElementById('elegantModal').addEventListener('click', function(e) {
+    // 如果点击的是背景（elegantModal）或 container 外部区域，则关闭
+    // 注意：点击 .elegant-content 内部不应关闭
+    if (e.target === this) {
+        closeElegantMode();
+    }
+});
