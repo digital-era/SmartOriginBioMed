@@ -136,6 +136,7 @@ function loadApiSettings() {
 }
 
 
+
 function openTab(evt, tabName) {
     let i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tab-content");
@@ -393,10 +394,9 @@ async function getAIResponse() {
         return;
     }
 
-    // Get current settings from UI (which should be populated by loadApiSettings)
     const apiBaseUrl = apiEndpointSelect.value;
     const apiKey = apiKeyInput.value;
-    const modelWithSuffix = apiModelSelect.value; // 这是带后缀的名字，如 gemini-1.5-flash@proxy
+     const modelWithSuffix = apiModelSelect.value; // 这是带后缀的名字，如 gemini-1.5-flash@proxy
     // 【新增这一行】：去掉 @ 符号及其后面的内容，恢复成 Google 认识的真实名称
     const model = modelWithSuffix.split('@')[0]; 
 
@@ -405,17 +405,8 @@ async function getAIResponse() {
     const getAIResponseButton = document.getElementById('getAIResponseButton');
     const loadingIndicator = document.getElementById('loadingIndicator');
 
-    if (!apiBaseUrl) {
-        alert(translations[currentLang].alertEnterApiUrl);
-        return;
-    }
-
-    if (!apiKey) {
-        alert(translations[currentLang].alertEnterApiKey);
-        return;
-    }
-    if (!model) {
-        alert(translations[currentLang].alertSelectModel); // Ensure this translation key exists
+    if (!apiBaseUrl || !apiKey || !model) {
+        alert("请确保 API 设置完整（接入点、Key、模型）");
         return;
     }
 
@@ -423,98 +414,168 @@ async function getAIResponse() {
     const headers = { 'Content-Type': 'application/json' };
     const isGeminiModel = model.toLowerCase().includes("gemini");
 
-    let fullApiUrl ;
+    //修改 getAIResponse() 中的 Qwen 判断逻辑
+    const isQwenModel = apiBaseUrl === "https://qwenapi.aivibeinvest.com";
+
+    // 判断是否为 Qwen 模型（通过 endpoint 或 model 名）
+    //const isQwenModel = apiBaseUrl.includes("dashscope.aliyuncs.com") || 
+    //                model.startsWith("qwen-");
+ 
+    // 2. 构造 URL
+    let fullApiUrl;
     if (isGeminiModel) {
         const baseUrl = apiBaseUrl.endsWith('/') ? apiBaseUrl.slice(0, -1) : apiBaseUrl;
         fullApiUrl = `${baseUrl}/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    } else if (isQwenModel) {  // DashScope Qwen 的专属路径        
+        // 使用你的自定义代理，路径由 Worker 自动拼接
+        // 为了代理环境下可以执行所以固定赋值可以访问的地址
+        const baseUrl = "/api/qwenproxy"
+        //const baseUrl = apiBaseUrl.endsWith('/') ? apiBaseUrl.slice(0, -1) : apiBaseUrl;
+        
+        fullApiUrl = `${baseUrl}/api/v1/services/aigc/text-generation/generation`;
+        
+        // 【关键修改】使用 X-API-Key 而不是 Authorization
+        headers['X-API-Key'] = apiKey; // ← 不要加 Bearer
+        
+        // 可选：如果你的 Worker 需要 Content-Type（通常需要）
+        headers['Content-Type'] = 'application/json';
+        
+        // 注意：X-DashScope-Async 不再需要，因为你的 Worker 是通用代理
+        // 如果 DashScope 后端仍需要，可保留；否则建议移除
+        // headers['X-DashScope-Async'] = 'disable'; // 删除或注释掉
     } else {
         fullApiUrl = (apiBaseUrl.endsWith('/') ? apiBaseUrl.slice(0, -1) : apiBaseUrl) + "/v1/chat/completions";
         // 非 Gemini 模型需要在 Header 里传 Key
         headers['Authorization'] = `Bearer ${apiKey}`;
     }
 
-    
+    // 3. 构造 Body
     let requestBody;
     if (isGeminiModel) {
         requestBody = {
             contents: [{ role: "user", parts: [{ text: promptText }] }],
             generationConfig: { temperature: 0.7 }
         };
-    } else {
+    }  else if (isQwenModel) {
+        // Qwen 请求体（支持插件）
+        requestBody = {
+            model: model,
+            input: {
+                messages: [{ role: "user", content: promptText }]
+            },
+            parameters: {
+                temperature: 0.7,
+                // 【关键】启用代搜索插件
+                // 【关键】plugins 必须是对象，不是数组
+                plugins: {
+                    web_search: {}  // 启用网络搜索插件
+                },
+                // 加上这一行！关键！
+                function_call: "auto"
+            }
+        };    
+   } else {
         requestBody = {
             model: model,
             messages: [{ role: "user", content: promptText }],
-            use_web_search: true,  /*修改增加*/
             temperature: 0.7,
         };
     }
 
-    aiResponseTextElement.textContent = ''; // 使用 textContent 清空以防注入
+    // UI 状态更新
+    aiResponseTextElement.textContent = ''; 
     aiResponseArea.style.display = 'block';
     loadingIndicator.style.display = 'inline-block';
     getAIResponseButton.disabled = true;
 
-    let response;
-    let errorData;
-    let data;
-
     try {
-        response = await fetch(fullApiUrl, {
+        const response = await fetch(fullApiUrl, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(requestBody)
         });
 
         if (!response.ok) {
-            errorData = await response.json().catch(() => ({ detail: response.statusText }));
+            const errorData = await response.json().catch(() => ({ detail: response.statusText }));
             throw new Error(`API Error: ${response.status} - ${errorData.error?.message || errorData.detail || 'Unknown error'}`);
         }
-        data = await response.json();
-
+        
+        const data = await response.json();
+        // 【修正 1】先定义变量，确保用来存储原始文本
+        let rawContent = "";
         if (isGeminiModel) {
-            if (data.candidates && data.candidates.length > 0 &&
-                data.candidates[0].content && data.candidates[0].content.parts &&
-                data.candidates[0].content.parts.length > 0 && data.candidates[0].content.parts[0].text) {
-                
-                // --- MODIFICATION START ---
-                // 使用 innerHTML 以便AI回复中的换行符等格式能正确显示
-                aiResponseTextElement.innerHTML = data.candidates[0].content.parts[0].text.trim();
-
-                // 添加此部分以渲染数学公式
-                if (window.MathJax) {
-                    MathJax.typesetPromise([aiResponseTextElement]).catch(function (err) {
-                        console.error('MathJax rendering error:', err);
-                    });
-                }
-                // --- MODIFICATION END ---
-
+            if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+                // 【修正 2】先赋值给变量，而不是直接操作 DOM
+                rawContent = data.candidates[0].content.parts[0].text.trim();
             } else {
-                aiResponseTextElement.textContent = translations[currentLang].apiNoValidResponse;
-                console.error("Unexpected API response structure for Gemini:", data);
+                throw new Error("Gemini 返回数据结构异常");
             }
-        } else { // For GPT, Deepseek, etc.
-            if (data.choices && data.choices.length > 0 && data.choices[0].message) {
-
-                // --- MODIFICATION START ---
-                // 使用 innerHTML 以便AI回复中的换行符等格式能正确显示
-                aiResponseTextElement.innerHTML = data.choices[0].message.content.trim();
-                
-                // 添加此部分以渲染数学公式
-                if (window.MathJax) {
-                    MathJax.typesetPromise([aiResponseTextElement]).catch(function (err) {
-                        console.error('MathJax rendering error:', err);
-                    });
-                }
-                // --- MODIFICATION END ---
-
+         } else if (isQwenModel) {
+            // Qwen 响应解析
+            if (data.output && data.output.text) {
+                rawContent = data.output.text.trim();
             } else {
-                aiResponseTextElement.textContent = translations[currentLang].apiNoValidResponse;
-                console.error("Unexpected API response structure:", data);
+                console.error("Qwen response:", data);
+                throw new Error("Qwen 返回数据结构异常或配额不足");
             }
+        } else {
+            if (data.choices && data.choices[0]?.message?.content) {
+                // 【修正 2】同上
+                rawContent = data.choices[0].message.content.trim();
+            } else {
+                throw new Error("API 返回数据结构异常");
+            }
+        } 
+
+        // 【修正 3】现在 rawContent 有值了，把它存入 dataset
+        aiResponseTextElement.dataset.raw = rawContent;
+
+        // 【修正 4】主界面显示：如果主界面也想支持 Markdown，可以在这里也用 marked.parse(rawContent)
+        // 这里为了保持和你原逻辑一致（可能主界面只需要简单显示），我们保留直接赋值，或者简单的换行处理
+        // 建议：如果主界面也想好看，也可以变成 aiResponseTextElement.innerHTML = marked.parse(rawContent);    
+        aiResponseTextElement.innerHTML = rawContent.replace(/\n/g, "<br>");
+        
+         // --- [新增]画布保存到对话历史 ---
+        // 1. 获取纯净的用户问题 (不带Prompt指令)
+        const rawUserQuestion = document.getElementById('userQuestion').value.trim();
+    
+        // 2. 准备北极星的元数据 (防止当前没选人报错)
+        const leaderMeta = currentSelectedLeader ? {
+            name: currentSelectedLeader.name,
+            field: currentSelectedLeader.field[currentLang] || currentSelectedLeader.field['zh-CN'],
+            contribution: currentSelectedLeader.contribution[currentLang] || currentSelectedLeader.contribution['zh-CN']
+        } : { name: 'North Star', field: 'General AI', contribution: '' };
+    
+        // 3. 存入历史 - 用户提问
+        conversationHistory.push({
+            id: Date.now() + '_user',
+            role: 'user',
+            text: rawUserQuestion || "（用户仅生成了提示词，未填写问题）", // 兜底
+            leaderInfo: null, // 用户不需要leader信息
+            timestamp: new Date()
+        });
+        
+        // 4. 存入历史 - AI回答
+        conversationHistory.push({
+            id: Date.now() + '_ai',
+            role: 'ai',
+            text: rawContent, 
+            leaderInfo: leaderMeta, // 保存这一刻的北极星状态
+            timestamp: new Date()
+        });
+        // 如果画布当前是打开的，实时刷新
+        if(isCanvasModeOpen) {
+            renderDialogueCanvas();
         }
+        
+        // 数学公式渲染
+        if (window.MathJax) {
+            MathJax.typesetPromise([aiResponseTextElement]).catch(err => console.error('MathJax error:', err));
+        }
+
     } catch (error) {
         console.error('Error calling API:', error);
-        aiResponseTextElement.textContent = `${translations[currentLang].apiErrorOccurred}${error.message}${translations[currentLang].apiErrorCheckConsole}`;
+        aiResponseTextElement.textContent = `发生错误: ${error.message}`;
     } finally {
         loadingIndicator.style.display = 'none';
         getAIResponseButton.disabled = false;
@@ -611,6 +672,11 @@ const endpointModelMap = {
     ],
     "https://api.openai.com": [
         { value: "gpt-4o-mini", labelKey: "modelGpt4oMini" }
+    ],
+    // 自定义 Qwen 代理（BYOK 模式）<- 新增：阿里云 DashScope - Qwen 系列
+    "https://qwenapi.aivibeinvest.com": [
+        { value: "qwen-max", labelKey: "modelQwenMax" },
+        { value: "qwen-plus", labelKey: "modelQwenPlus" }
     ]
 };
 
@@ -735,6 +801,8 @@ function updateEndpointByModel(modelValue) {
         }
     }
 }
+
+
 // 天使模式逻辑处理函数
 function handleAngelMode() {
     // 1. 获取所有参数 (虽然根据需求，只有参数1用于逻辑分支，但这里演示获取所有参数)
