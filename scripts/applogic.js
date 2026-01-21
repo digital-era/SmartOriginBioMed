@@ -1080,3 +1080,742 @@ document.getElementById('elegantModal').addEventListener('click', function(e) {
         closeElegantMode();
     }
 });
+
+
+/* --- 对话画布逻辑 (Dialogue Canvas Logic) --- */
+function openDialogueCanvas() {
+    isCanvasModeOpen = true;
+    const modal = document.getElementById('dialogueCanvasModal');
+    modal.style.display = 'block';
+    
+    // 延时一点渲染，确保DOM可见
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        renderDialogueCanvas();
+    }, 10);
+    
+    document.body.style.overflow = 'hidden'; // 锁定主页滚动
+}
+
+function closeDialogueCanvas() {
+    isCanvasModeOpen = false;
+    const modal = document.getElementById('dialogueCanvasModal');
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }, 500);
+}
+
+/**
+ * 合并导入历史与当前会话历史，返回用于渲染/导出/操作的完整数组
+ * @param {Array|null} imported - 从 MD 导入的历史（可能为 null）
+ * @param {Array} current - 当前会话的 conversationHistory
+ * @returns {Array} 合并后的完整历史数组（imported 在前，current 在后）
+ */
+function getMergedHistory(imported, current) {
+    const result = [];
+    
+    // 先放入导入的历史（如果存在）
+    if (imported && Array.isArray(imported) && imported.length > 0) {
+        result.push(...imported);
+    }
+    
+    // 再追加当前会话的新节点
+    if (current && Array.isArray(current) && current.length > 0) {
+        result.push(...current);
+    }
+    
+    return result;
+}
+
+function clearCanvasHistory() {
+    // 1. 判断当前是否有内容（考虑导入历史）
+    const currentHistory = getMergedHistory(importedHistory, conversationHistory);
+    if (!currentHistory || currentHistory.length === 0) {
+        alert("画布已经是空的了。");
+        return;
+    }
+
+    // 2. 提示语稍作调整，提醒用户会清空导入内容
+    const isConfirmed = confirm(
+        "⚠️ 高风险操作\n\n" +
+        "您确定要清空整个画布吗？\n" +
+        "此操作将移除所有当前的思维节点（包括任何从MD导入的历史内容），且无法恢复。\n" +
+        "(主界面的对话记录不会受影响)"
+    );
+
+    // 3. 执行清空
+    if (isConfirmed) {
+        conversationHistory = [];           // 清空原有对话历史
+        importedHistory = null;             // ★ 同时清除导入的历史
+        renderDialogueCanvas();             // 重绘
+        
+        // 可选：轻提示
+        // alert("画布已清空");
+    }
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('inspirationSidebar');
+    sidebar.classList.toggle('open');
+}
+
+/* --- 核心渲染函数 (renderDialogueCanvas) --- */
+function renderDialogueCanvas() {
+    const container = document.getElementById('thoughtStreamContent');
+    const svgEl = document.getElementById('thoughtTrailsSvg');
+    container.innerHTML = '';
+
+    // ★ 新增：统一取当前要渲染的数据源
+    const history = getMergedHistory(importedHistory, conversationHistory);
+    if (history.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:#888; margin-top:100px; font-family:'Ma Shan Zheng'">
+            暂无思想轨迹...<br>请先在主界面与北极星对话。
+        </div>`;
+        svgEl.innerHTML = '';
+        return;
+    }
+
+    history.forEach((item, index) => {
+        const node = document.createElement('div');
+        const isUser = item.role === 'user';
+        
+        node.className = `thought-node ${isUser ? 'question-node' : 'answer-node'}`;
+        node.id = `node-${index}`;
+        
+        // --- 新增：删除按钮 ---
+        // 注意：onclick 绑定了 deleteNode 并传入 index
+        const deleteBtnHTML = `
+            <button class="node-delete-btn" onclick="deleteNode(event, ${index})" title="删除此节点">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+
+        let contentHTML = '';
+
+        if (isUser) {
+            contentHTML = `
+                ${deleteBtnHTML} <!-- 插入删除按钮 -->
+                <div class="user-avatar-mark"><i class="fas fa-user-astronaut"></i></div>
+                <div class="node-content user-handwriting">${item.text}</div>
+            `;
+        } else {
+            let processedText = typeof parseMarkdownWithMath === 'function' 
+                ? parseMarkdownWithMath(item.text) 
+                : item.text.replace(/\n/g, '<br>');
+
+            const info = item.leaderInfo || { name: 'Unknown', field: '', contribution: '' };
+
+            contentHTML = `
+                ${deleteBtnHTML} <!-- 插入删除按钮 -->
+                <div class="star-decoration-top"><i class="fas fa-star-of-life"></i></div>
+                <div class="leader-header">
+                    <div class="leader-name">${info.name}</div>
+                    <div class="leader-badges">
+                        <span class="badge-field">${info.field}</span>
+                    </div>
+                </div>
+                <div class="leader-contribution-hint" title="${info.contribution}">
+                    <i class="fas fa-quote-left"></i> ${info.contribution.substring(0, 30)}...
+                </div>
+                <div class="node-divider"></div>
+                <div class="node-content star-content">${processedText}</div>
+                <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> North Star Insight</div>
+            `;
+        }
+        
+        node.innerHTML = contentHTML;
+        node.onclick = (e) => addToInspiration(e, item.text); 
+        
+        container.appendChild(node);
+    });
+
+    if (window.MathJax) {
+        MathJax.typesetPromise([container]).catch(err => {});
+    }
+
+    setTimeout(drawConnections, 300);
+}
+
+
+function drawConnections() {
+    const container = document.getElementById('thoughtStreamContent');
+    const svgEl = document.getElementById('thoughtTrailsSvg');
+    const nodes = container.querySelectorAll('.thought-node');
+    
+    // 调整SVG高度以匹配内容
+    svgEl.style.height = container.scrollHeight + 'px';
+    svgEl.innerHTML = ''; // 清除旧线
+
+    if (nodes.length < 2) return;
+
+    let pathD = '';
+    
+    // 遍历节点，连接 i 和 i+1
+    for (let i = 0; i < nodes.length - 1; i++) {
+        const current = nodes[i];
+        const next = nodes[i+1];
+        
+        // 获取相对坐标
+        const currentRect = current.getBoundingClientRect();
+        const nextRect = next.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect(); // 视口容器
+        
+        // 计算相对于 SVG 容器 (container) 的坐标
+        // 注意：因为 container 是 scrollable，这里需要加上 scrollTop 
+        // 但更简单的是利用 offsetTop/Left，因为 thought-node 是 relative 到 container 的
+        
+        const startX = current.offsetLeft + (current.offsetWidth / 2);
+        const startY = current.offsetTop + current.offsetHeight;
+        
+        const endX = next.offsetLeft + (next.offsetWidth / 2);
+        const endY = next.offsetTop;
+        
+        // 贝塞尔曲线控制点 (S型)
+        const controlY = (endY - startY) / 2;
+        
+        // 绘制路径 M(起点) C(控制点1) (控制点2) (终点)
+        // 路径颜色根据是 User->AI 还是 AI->User 变化
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", `M ${startX} ${startY} C ${startX} ${startY + controlY}, ${endX} ${endY - controlY}, ${endX} ${endY}`);
+        path.setAttribute("class", "trail-path");
+        
+        svgEl.appendChild(path);
+    }
+}
+
+// 将内容添加到手稿区
+function addToInspiration(event, text) {
+    if(event) event.stopPropagation();
+
+    const sidebar = document.getElementById('inspirationSidebar');
+    const notesDiv = document.getElementById('notesContainer');
+    console.log("笔记功能，未来考虑");
+    // // 1. 确保侧边栏滑出
+    // if(!sidebar.classList.contains('open')) {
+    //     sidebar.classList.add('open');
+    // }
+
+    // // 2. 创建精美的笔记块
+    // const noteBlock = document.createElement('div');
+    // noteBlock.className = 'inspiration-note-block'; // 对应上面的CSS
+    // noteBlock.contentEditable = "false"; // 建议设为 false，防止用户不小心把格式删乱了，用户可以在块外面打字
+    
+    // // 截取文本
+    // const snippet = text.length > 100 ? text.substring(0, 100) + "..." : text;
+    // noteBlock.innerText = snippet;
+    
+    // // 3. 处理 contenteditable 的插入逻辑
+    // // 如果容器是空的（显示placeholder），先清空内容
+    // if (notesDiv.innerText.trim() === "") {
+    //     notesDiv.innerHTML = "";
+    // }
+    
+    // // 插入笔记块
+    // notesDiv.appendChild(noteBlock);
+    
+    // // 4. 插入一个换行符，方便用户在引用后面打字
+    // const spacer = document.createElement('div');
+    // spacer.innerHTML = "<br>";
+    // notesDiv.appendChild(spacer);
+
+    // // 5. 滚动到底部
+    // notesDiv.scrollTop = notesDiv.scrollHeight;
+}
+
+// 监听窗口大小变化重绘连线
+window.addEventListener('resize', () => {
+    if(isCanvasModeOpen) drawConnections();
+});
+
+/* --- 新增功能逻辑 --- */
+
+// 1. 删除单个节点功能
+function deleteNode(event, index) {
+    // 1. 阻止事件冒泡 (防止误触其他功能)
+    if (event) {
+        event.stopPropagation();
+    }
+    
+    // 2. 弹出确认框
+    const isConfirmed = confirm("🗑️ 确认删除\n\n您确定要移除这个对话节点吗？\n删除后，画布上的连线将自动重新连接。");
+
+    // 3. 用户点击“确定”后执行
+    if (isConfirmed) {
+        // 获取导入历史的长度（防止为null报错，默认为0）
+        const importedLen = (importedHistory && Array.isArray(importedHistory)) ? importedHistory.length : 0;
+
+        // 【核心修复】判断 index 落在哪个数组里
+        if (index < importedLen) {
+            // 情况 A: 索引小于导入长度，说明点击的是【导入历史】里的节点
+            // 直接从 importedHistory 数组中移除该元素
+            importedHistory.splice(index, 1);
+        } else {
+            // 情况 B: 索引大于等于导入长度，说明点击的是【当前新对话】里的节点
+            // 计算它在 conversationHistory 中的相对位置
+            const relativeIndex = index - importedLen;
+            
+            // 安全检查并删除
+            if (conversationHistory && conversationHistory[relativeIndex]) {
+                conversationHistory.splice(relativeIndex, 1);
+            }
+        }
+        
+        // 4. 重新渲染画布 (这时候数据源已经真的变少了)
+        renderDialogueCanvas();
+    }
+}
+
+/* --- 辅助函数：生成文件名时间戳 --- */
+function getExportFileName() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hour = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+    const second = String(now.getSeconds()).padStart(2, '0');
+    
+    // 格式：TalkwithNorthStars20231027103000
+    return `TalkwithNorthStars${year}${month}${day}${hour}${minute}${second}`;
+}
+
+// 2. 导出为 Markdown
+function exportToMD() {
+    // ★ 新增：使用当前显示的历史
+    const history = getMergedHistory(importedHistory, conversationHistory);
+    
+    if (!history || history.length === 0) {
+        alert("画布为空，无法导出。");
+        return;
+    }
+
+    let mdContent = "# 对话北极星 (Talk with North Stars)\n\n";
+    const timestamp = new Date().toLocaleString();
+    mdContent += `> Exported on: ${timestamp}\n\n---\n\n`;
+
+    history.forEach((item, index) => {
+        // 以下保持原逻辑，只需把 conversationHistory 换成 history
+        const isUser = item.role === 'user';
+        const roleName = isUser ? "User" : (item.leaderInfo?.name || "North Star");
+        
+        // 引用格式化
+        let text = item.text.replace(/\n/g, '\n> '); 
+        
+        // --- 修改点：在 User 问题后增加北极星人物信息 ---
+        if (isUser) {
+            // 向后看一条
+            const nextItem = history[index + 1];
+            if (nextItem && nextItem.role !== 'user' && nextItem.leaderInfo) {
+                const info = nextItem.leaderInfo;
+                // 追加信息到 User 的文本块中
+                text += `\n\n> **🧩 关联北极星人物**：${info.name}`;
+                text += `\n> - 领域：${info.field}`;
+                text += `\n> - 贡献：${info.contribution}`;
+            }
+        }
+
+        mdContent += `### ${roleName}:\n${text}\n\n`;
+    });
+
+    // 创建 Blob 并下载
+    const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    
+    // --- 修改点：统一文件名 ---
+    a.download = `${getExportFileName()}.md`;
+    
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+/* --- 辅助函数：创建全屏封面页 (配合 Named Pages) --- */
+function createCoverPage(imagePath, type) {
+    const pageContainer = document.createElement('div');
+    pageContainer.className = 'print-cover-page';
+    
+    // 基础样式：Flex布局
+    pageContainer.style.display = 'flex';
+    pageContainer.style.width = '100%';
+    pageContainer.style.height = '100%'; 
+    
+    // 默认居中
+    pageContainer.style.justifyContent = 'center';
+    pageContainer.style.alignItems = 'center';
+
+    const img = document.createElement('img');
+    img.src = imagePath;
+    img.style.width = '100%'; 
+    img.style.objectFit = 'contain'; 
+    pageContainer.appendChild(img);
+
+    // --- 分页逻辑 ---
+    if (type === 'back') {
+        pageContainer.style.breakBefore = 'page';
+    } else {
+        pageContainer.style.breakAfter = 'page';
+    }
+    return pageContainer;
+}
+
+/* --- PDF导出最终版 --- */
+function exportToPDF() {
+    console.group("🚀 [PDF Export] Start");
+    
+    const source = document.getElementById('thoughtStreamContent');
+    if (!source) {
+        alert("无可导出内容");
+        return;
+    }
+
+    // --- 图片加载追踪器 ---
+    const imagePromises = [];
+    function trackImageLoad(img) {
+        return new Promise((resolve) => {
+            if (img.complete && img.naturalHeight !== 0) resolve();
+            else { img.onload = resolve; img.onerror = resolve; }
+        });
+    }
+
+    // 1. 清理旧层
+    let oldOverlay = document.getElementById('print-overlay');
+    if (oldOverlay) document.body.removeChild(oldOverlay);
+
+    // 2. 创建新层
+    const overlay = document.createElement('div');
+    overlay.id = 'print-overlay';
+
+    // --- 关键步骤 A: 注入 Named Page 样式 (CSS逻辑无误) ---
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @page cover-layout { margin: 0 !important; size: auto; }
+        @page { margin: 15mm 5mm; }
+
+        @media print {
+            html, body { height: auto !important; overflow: visible !important; margin: 0 !important; }
+            #print-overlay { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: auto !important; overflow: visible !important; display: block !important; }
+            .print-cover-page { page: cover-layout; width: 100vw !important; height: 100vh !important; margin: 0 !important; padding: 0 !important; position: relative !important; overflow: hidden !important; break-inside: avoid !important; break-after: page !important; }
+            #print-content-wrapper { page: auto; break-before: page; position: relative; width: 100%; height: auto !important; overflow: visible !important; display: block !important; }
+        }
+    `;
+    overlay.appendChild(style);
+
+    // --- 步骤 B: 第一页 (图1在上，图2在下) ---
+    const coverPage1 = document.createElement('div');
+    coverPage1.className = 'print-cover-page';
+    coverPage1.style.breakAfter = 'page'; 
+
+    const img1 = document.createElement('img');
+    img1.src = 'images/对话北极星Cover1.jpg'; 
+    img1.style.position = 'absolute'; img1.style.top = '0'; img1.style.left = '0';
+    img1.style.width = '100%'; img1.style.height = '48%'; 
+    img1.style.objectFit = 'contain'; img1.style.objectPosition = 'center 40%'; 
+    imagePromises.push(trackImageLoad(img1));
+    coverPage1.appendChild(img1);
+
+    const img2 = document.createElement('img');
+    img2.src = 'images/对话北极星Cover2.jpg'; 
+    img2.style.position = 'absolute'; img2.style.bottom = '0'; img2.style.left = '0';
+    img2.style.width = '100%'; img2.style.height = '48%'; 
+    img2.style.objectFit = 'contain'; img2.style.objectPosition = 'center 60%'; 
+    imagePromises.push(trackImageLoad(img2));
+    coverPage1.appendChild(img2);
+    overlay.appendChild(coverPage1);
+
+    // --- 步骤 C: 处理对话内容 ---
+    const contentWrapper = document.createElement('div');
+    contentWrapper.id = 'print-content-wrapper';
+    
+    const contentClone = source.cloneNode(true);
+    contentClone.removeAttribute('id');
+
+    const nodes = contentClone.children;
+    for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        if (!node.classList.contains('thought-node')) continue;
+
+        let roleTitle = document.createElement('div');
+        roleTitle.style.fontWeight = 'bold';
+        roleTitle.style.marginBottom = '2px';
+        roleTitle.style.fontSize = '12px';
+
+        if (node.classList.contains('question-node')) {
+            roleTitle.innerText = "🧑 User"; 
+            roleTitle.style.color = '#0056b3';
+            node.insertBefore(roleTitle, node.firstChild);
+        } else if (node.classList.contains('answer-node')) {
+            roleTitle.innerText = "🤖 North Star"; 
+            roleTitle.style.color = '#b8860b';
+            node.insertBefore(roleTitle, node.firstChild);
+        }
+    }
+    contentWrapper.appendChild(contentClone);
+    overlay.appendChild(contentWrapper);
+
+    // --- 步骤 D: 最后一页 (保留特殊排版) ---
+    const backCover = createCoverPage('images/对话北极星Cover3.jpg', 'back');
+    backCover.style.justifyContent = 'flex-start'; 
+    backCover.style.paddingTop = '10vh'; 
+    
+    const img3 = backCover.querySelector('img');
+    if (img3) {
+        img3.style.height = 'auto'; img3.style.maxHeight = '60vh'; 
+        imagePromises.push(trackImageLoad(img3));
+    }
+    overlay.appendChild(backCover);
+
+    // 3. 挂载
+    document.body.appendChild(overlay);
+
+    // 4. 执行打印 (核心修复：使用 onafterprint 事件)
+    console.log(`⏳ 等待 ${imagePromises.length} 张图片资源...`);
+    const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
+    
+    Promise.race([Promise.all(imagePromises), timeoutPromise]).then(() => {
+        
+        // 备份旧标题
+        const originalTitle = document.title;
+        
+        // --- 1. 计算新文件名 ---
+        // 确保 finalName 绝对不为空
+        let finalName = "对话记录";
+        if (typeof getExportFileName === 'function') {
+            finalName = getExportFileName();
+        } else {
+            const d = new Date();
+            const pad = (n) => String(n).padStart(2, '0');
+            finalName = `对话北极星_${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`;
+        }
+
+        // --- 2. 设置新标题 ---
+        document.title = finalName;
+        console.log("📄 文件名已设置为:", finalName);
+
+        // --- 3. 使用media query监听打印状态（修正版）---
+        // 创建媒体查询对象
+        const mediaQueryList = window.matchMedia('print');
+        
+        // --- 4. 添加备用清理机制（防止监听器不触发）---
+        const backupCleanup = setTimeout(() => {
+            console.log("⚠️ 备用清理机制触发");
+            document.title = originalTitle;
+            if (document.body.contains(overlay)) {
+                document.body.removeChild(overlay);
+            }
+            if (mediaQueryList.removeEventListener) {
+                mediaQueryList.removeEventListener('change', handlePrintChange);
+            } else {
+                mediaQueryList.removeListener(handlePrintChange);
+            }
+            console.groupEnd();
+        }, 10000); // 10秒后备清理
+        
+        // 定义处理函数
+        const handlePrintChange = (event) => {
+            if (!event.matches) {
+                console.log("🖨️ 打印完成或取消，开始清理...");
+                
+                // 清除备用定时器
+                clearTimeout(backupCleanup);
+                
+                // 使用setTimeout确保清理在所有打印任务完成后执行
+                setTimeout(() => {
+                    // 恢复标题
+                    document.title = originalTitle;
+                    console.log("✅ 标题已恢复为:", originalTitle);
+                    
+                    // 清理DOM元素
+                    if (document.body.contains(overlay)) {
+                        document.body.removeChild(overlay);
+                        console.log("🗑️ 打印层已移除");
+                    }
+                    
+                    // 清理内存
+                    overlay.innerHTML = "";
+                    
+                    // 移除事件监听器
+                    if (mediaQueryList.removeEventListener) {
+                        mediaQueryList.removeEventListener('change', handlePrintChange);
+                    } else {
+                        mediaQueryList.removeListener(handlePrintChange);
+                    }
+                    
+                    // 结束日志分组
+                    console.groupEnd();
+                }, 500); // 500ms延迟确保完全清理
+            }
+        };
+        
+        // 添加事件监听器（使用现代语法）
+        if (mediaQueryList.addEventListener) {
+            mediaQueryList.addEventListener('change', handlePrintChange);
+        } else {
+            // 兼容旧版浏览器
+            mediaQueryList.addListener(handlePrintChange);
+        }
+        
+        // --- 5. 延迟确保标题更新，然后打印 ---
+        console.log("⏳ 等待300ms确保浏览器更新标题...");
+        setTimeout(() => {
+            // 再次确认标题
+            if (document.title !== finalName) {
+                document.title = finalName;
+                console.log("🔄 重新确认标题为:", finalName);
+            }
+            
+            console.log("🖨️ 触发打印对话框...");
+            window.print();
+        }, 300);
+    });
+} 
+
+/* --- 新增：导出为 HTML 功能 --- */
+function exportToHTML() {
+    // ★ 新增
+    const history = getMergedHistory(importedHistory, conversationHistory);
+    
+    if (!history || history.length === 0) {
+        alert("画布为空，无法导出。");
+        return;
+    }
+
+    // 1. 克隆内容节点，避免修改原始界面
+    const contentContainer = document.getElementById('thoughtStreamContent');
+    const clone = contentContainer.cloneNode(true);
+
+    // 2. 清理不需要的交互元素 (删除按钮)
+    const deleteBtns = clone.querySelectorAll('.node-delete-btn');
+    deleteBtns.forEach(btn => btn.remove());
+    
+    // 清理 onclick 属性，导出的页面不需要交互逻辑
+    const allElements = clone.querySelectorAll('*');
+    allElements.forEach(el => el.removeAttribute('onclick'));
+
+    // 3. 获取导出的文件名
+    let fileName = "对话记录";
+    if (typeof getExportFileName === 'function') {
+        fileName = getExportFileName();
+    }
+
+    // 4. 构建完整的 HTML 字符串
+    // 我们将把关键样式直接嵌入，确保导出的文件打开就是深色星空主题
+    const htmlContent = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${fileName}</title>
+    <!-- 引入字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+    <!-- 引入图标库 (使用 CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* --- 基础重置 --- */
+        body { margin: 0; padding: 0; font-family: 'Noto Serif SC', serif; overflow-x: hidden; }
+        
+        /* --- 背景：复用 .canvas-modal 的深色星空样式 --- */
+        body {
+            background: linear-gradient(to bottom, #02060a 0%, #0d1620 100%);
+            min-height: 100vh;
+            color: #ccc;
+        }
+
+        /* --- 简单的星空背景模拟 (简化版动画) --- */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent), radial-gradient(2px 2px at 50% 50%, #fff, transparent);
+            background-size: 500px 500px; opacity: 0.5; z-index: -1; pointer-events: none;
+        }
+
+        /* --- 容器布局 --- */
+        .thought-stream {
+            max-width: 900px; margin: 0 auto; padding: 80px 20px;
+            display: flex; flex-direction: column; gap: 60px;
+        }
+
+        /* --- 节点通用样式 --- */
+        .thought-node {
+            position: relative; max-width: 80%; padding: 0; border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        /* --- User 样式 --- */
+        .thought-node.question-node {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #fff;
+            padding: 20px 25px; color: #fff;
+            border-radius: 0 10px 10px 0;
+            backdrop-filter: blur(5px);
+        }
+        .user-avatar-mark {
+            position: absolute; left: -20px; top: -15px; width: 40px; height: 40px;
+            background: #fff; color: #0d1218; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .user-handwriting {
+            font-family: 'Ma Shan Zheng', cursive; font-size: 1.3rem; line-height: 1.6; letter-spacing: 1px;
+        }
+
+        /* --- North Star 样式 --- */
+        .thought-node.answer-node {
+            align-self: flex-end;
+            background: #f4ecd8; color: #2c1e12;
+            border-radius: 4px 4px 4px 50px;
+            padding: 30px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(139, 90, 43, 0.2);
+            position: relative;
+        }
+        /* 卷角效果 */
+        .thought-node.answer-node::after {
+            content: ''; position: absolute; bottom: 8px; right: 8px;
+            width: 40px; height: 40px; z-index: -1;
+            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4);
+            transform: skew(15deg) rotate(5deg); border-radius: 50%;
+        }
+
+        /* --- 内容排版 --- */
+        .leader-name { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.4rem; color: #3e2723; text-align: center; }
+        .badge-field { background: #3e2723; color: #d7ccc8; padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; display: inline-block; }
+        .leader-header { text-align: center; margin-bottom: 10px; }
+        .leader-contribution-hint { font-size: 0.9rem; color: #6d4c41; font-style: italic; text-align: center; margin-bottom: 15px; }
+        .node-divider { height: 1px; background: linear-gradient(to right, transparent, #8b5a2b, transparent); margin: 15px 0; opacity: 0.4; }
+        .star-content { font-size: 1rem; line-height: 1.8; color: #1a1a1a; text-align: justify; }
+        
+        /* 装饰图标 */
+        .star-decoration-top { text-align: center; color: #8b5a2b; margin-bottom: 10px; }
+        .star-decoration-bottom { margin-top: 20px; text-align: right; font-size: 0.8rem; color: #8b5a2b; font-family: 'Cinzel', serif; opacity: 0.6; }
+
+        /* 页脚 */
+        footer { text-align: center; padding: 50px; color: #555; font-size: 0.8rem; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <div class="thought-stream">
+        ${clone.innerHTML}
+    </div>
+    <footer>
+        Exported from Talk with North Stars • ${new Date().toLocaleString()}
+    </footer>
+</body>
+</html>`;
+
+    // 5. 创建 Blob 并下载
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fileName}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
