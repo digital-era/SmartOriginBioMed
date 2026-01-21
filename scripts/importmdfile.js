@@ -112,9 +112,9 @@ function parseOldFormatMD(normalized) {
 
             // ★ 剥离 🧩 关联信息块（精确匹配三种常见写法）
             const infoBlockPatterns = [
-                /\*\*🧩 关联北极星人物\*\*：\s*(.+?)\n\s*-\s*领域[：:]\s*(.+?)\n\s*-\s*贡献[：:]\s*(.+?)(?=\n|$)/s,
-                /🧩 关联北极星人物：\s*(.+?)\n\s*-\s*领域：\s*(.+?)\n\s*-\s*贡献：\s*(.+?)(?=\n|$)/s,
-                /\*\*🧩 关联北极星人物\*\*：(.+?)(?:- 领域：(.+?))?(?:- 贡献：(.+?))?/s
+                /\*\*🧩 关联专家\*\*：\s*(.+?)\n\s*-\s*领域[：:]\s*(.+?)\n\s*-\s*贡献[：:]\s*(.+?)(?=\n|$)/s,
+                /🧩 关联专家：\s*(.+?)\n\s*-\s*领域：\s*(.+?)\n\s*-\s*贡献：\s*(.+?)(?=\n|$)/s,
+                /\*\*🧩 关联专家\*\*：(.+?)(?:- 领域：(.+?))?(?:- 贡献：(.+?))?/s
             ];
 
             let extractedLeaderInfo = null;
@@ -270,7 +270,7 @@ function extractRealUserQuestion(block) {
 
 
 /**
- * 从背景设定中提取北极星人物信息
+ * 从背景设定中提取专家信息
  */
 function extractLeaderInfoFromPrompt(block) {
     const info = { name: 'Unknown', field: '', contribution: '' };
@@ -312,7 +312,7 @@ function parseMDToHistory(mdContent) {
 
     // ── 策略1：尝试解析【问题 / Question】格式 ───────
     // 只有当解析出内容了，才算成功
-    if (normalized.includes('【问题 / Question】') || normalized.includes('【北极星答复】')) {
+    if (normalized.includes('【问题 / Question】') || normalized.includes('【专家答复】')) {
         const parts = normalized.split(/【([^】]+)】\s*[:：]/).filter(Boolean);
         let currentRole = null;
         let questionBlock = '';
