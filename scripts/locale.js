@@ -95,7 +95,7 @@
                 "saveBtnText": "保存设置",
                 "aboutBtnText": "了解我们",    
                 // --- 新增宣言模态框的翻译 ---
-                "manifestoTitle": "《智源生医》：汇聚生命长河的智者之声",
+                "manifestoTitle": "《智源生医》：探索生物医学旋律，解决人间疾苦",
                 "manifestoPara1": "你是否曾凝视生命的潮汐，渴望洞悉疾病的缘起，探寻健康的真谛？",
                 "manifestoPara2": "在医学的浩瀚天地里，我们时常面临困惑，被繁杂的病症所扰，被前沿的理论所惑。我们渴望一份指引，一份能穿透迷雾、照亮前路的智慧之光。",
                 "manifestoPara3": "张仲景、希波克拉底、埃里克·兰德、约翰·多诺霍……他们的卓越并非偶然，而是源于对生命本质的深刻体悟：中医的整体观、西医的实证精神、多组学的系统洞察，以及脑机接口的无限可能。他们理解人体系统，面对病痛挑战，每一次的发现与突破都如同生命长河中一位位深邃的智者，以其独特的洞察，指引着方向，最终塑造了医学的进程。",
@@ -216,7 +216,7 @@
                 "saveBtnText": "Save Setting",                    
                 "aboutBtnText": "About Us",    
                  // --- 新增宣言模态框的翻译 ---
-                "manifestoTitle": "《SmartOrigin BioMed》: The Voices of Wisdom in the River of Life",
+                "manifestoTitle": "《SmartOrigin BioMed》: Explore Biomedical melody, Relieve Human Suffering",
                 "manifestoPara1": "Have you ever gazed at the tides of life, eager to understand the origins of disease and explore the true meaning of health?",
                 "manifestoPara2": "In the vast realm of medicine, we often face confusion, troubled by complex symptoms and perplexed by cutting-edge theories. We long for guidance, a light of wisdom that can pierce through the fog and illuminate the path ahead.",
                 "manifestoPara3": "Zhang Zhongjing, Hippocrates, Eric Lander, John Donoghue... their excellence was not accidental, but stemmed from a profound understanding of the essence of life: the holistic view of Traditional Chinese Medicine, the empirical spirit of Western medicine, the macroscopic insights of multi-omics, and the infinite possibilities of brain-computer interfaces. They understood the human system, faced the challenges of illness, and each discovery and breakthrough was like a profound sage in the long river of life, guiding the way with their unique insights, ultimately shaping the progress of medicine.",
