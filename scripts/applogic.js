@@ -658,7 +658,7 @@ function copyConversationToClipboard() {
              // 简单的回退机制：如果检测到 html lang 不是 zh-CN，则显示英文
              const lang = document.documentElement.lang || 'zh-CN';
              if (lang !== 'zh-CN') {
-                 successMsg = "Merged Copy [Question] & [NorthStar Answer] to Clipboard!";
+                 successMsg = "Merged Copy [Question] & [Expert Answer] to Clipboard!";
              }
         }
         alert(successMsg);
@@ -1438,8 +1438,8 @@ function getExportFileName() {
     const minute = String(now.getMinutes()).padStart(2, '0');
     const second = String(now.getSeconds()).padStart(2, '0');
     
-    // 格式：TalkwithNorthStars20231027103000
-    return `TalkwithNorthStars${year}${month}${day}${hour}${minute}${second}`;
+    // 格式：SmartOriginBioMed20231027103000
+    return `SmartOriginBioMed${year}${month}${day}${hour}${minute}${second}`;
 }
 
 // 2. 导出为 Markdown
