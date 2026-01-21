@@ -136,15 +136,44 @@
 
         <div id="TCM" class="tab-content active">
             <h2 data-i18n-key="selectTCMExpert">选择一位中医专家</h2>
+            <!-- 现代风格专用：胶囊过滤 + 搜索区域 -->
+            <div class="modern-filter-bar" style="display:none;">                
+                <!-- 【修改点】 1. 将搜索框移到最前面 (作为左侧固定区) -->
+                <div class="modern-search-wrapper">
+                    <!-- 注意：这里去掉了 onclick，改用 CSS/JS 控制更流畅，或者保留 onclick 但要确保 JS 逻辑正确 -->
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="modern-search-input" placeholder="搜索..." oninput="filterModernGrid(this)">
+                </div>        
+                <!-- 【修改点】 2. 胶囊容器放在后面 (作为右侧滑动区) -->
+                <div class="filter-chips-container">
+                    <!-- JS 动态生成内容 -->
+                </div>                
+            </div>
+            
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="TCMGrid"></div>
                 <button class="scroll-button right" onclick="scrollGrid(this, 1)" aria-label="Scroll Right">></button>
             </div>
+
+            
         </div>
 
         <div id="WM" class="tab-content">
             <h2 data-i18n-key="selectWMExpert">选择一位西医专家</h2>
+            <!-- 现代风格专用：胶囊过滤 + 搜索区域 -->
+            <div class="modern-filter-bar" style="display:none;">                
+                <!-- 【修改点】 1. 将搜索框移到最前面 (作为左侧固定区) -->
+                <div class="modern-search-wrapper">
+                    <!-- 注意：这里去掉了 onclick，改用 CSS/JS 控制更流畅，或者保留 onclick 但要确保 JS 逻辑正确 -->
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="modern-search-input" placeholder="搜索..." oninput="filterModernGrid(this)">
+                </div>        
+                <!-- 【修改点】 2. 胶囊容器放在后面 (作为右侧滑动区) -->
+                <div class="filter-chips-container">
+                    <!-- JS 动态生成内容 -->
+                </div>                
+            </div>            
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="WMGrid"></div>
@@ -154,6 +183,19 @@
 
         <div id="MultiOmics" class="tab-content">
             <h2 data-i18n-key="selectMOExpert">选择一位多组学专家</h2>
+            <!-- 现代风格专用：胶囊过滤 + 搜索区域 -->
+            <div class="modern-filter-bar" style="display:none;">                
+                <!-- 【修改点】 1. 将搜索框移到最前面 (作为左侧固定区) -->
+                <div class="modern-search-wrapper">
+                    <!-- 注意：这里去掉了 onclick，改用 CSS/JS 控制更流畅，或者保留 onclick 但要确保 JS 逻辑正确 -->
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="modern-search-input" placeholder="搜索..." oninput="filterModernGrid(this)">
+                </div>        
+                <!-- 【修改点】 2. 胶囊容器放在后面 (作为右侧滑动区) -->
+                <div class="filter-chips-container">
+                    <!-- JS 动态生成内容 -->
+                </div>                
+            </div>
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="MultiOmicsGrid"></div>
@@ -163,6 +205,19 @@
 
        <div id="NeuralLink" class="tab-content">
             <h2 data-i18n-key="selectNLExpert">选择一位脑机接口专家</h2>
+            <!-- 现代风格专用：胶囊过滤 + 搜索区域 -->
+            <div class="modern-filter-bar" style="display:none;">                
+                <!-- 【修改点】 1. 将搜索框移到最前面 (作为左侧固定区) -->
+                <div class="modern-search-wrapper">
+                    <!-- 注意：这里去掉了 onclick，改用 CSS/JS 控制更流畅，或者保留 onclick 但要确保 JS 逻辑正确 -->
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="modern-search-input" placeholder="搜索..." oninput="filterModernGrid(this)">
+                </div>        
+                <!-- 【修改点】 2. 胶囊容器放在后面 (作为右侧滑动区) -->
+                <div class="filter-chips-container">
+                    <!-- JS 动态生成内容 -->
+                </div>                
+            </div>
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="NeuralLinkGrid"></div>
@@ -172,6 +227,19 @@
         
         <div id="AIDrugDiscovery" class="tab-content">
             <h2 data-i18n-key="selectAIDisExpert">选择一位AI制药专家</h2>
+            <!-- 现代风格专用：胶囊过滤 + 搜索区域 -->
+            <div class="modern-filter-bar" style="display:none;">                
+                <!-- 【修改点】 1. 将搜索框移到最前面 (作为左侧固定区) -->
+                <div class="modern-search-wrapper">
+                    <!-- 注意：这里去掉了 onclick，改用 CSS/JS 控制更流畅，或者保留 onclick 但要确保 JS 逻辑正确 -->
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="modern-search-input" placeholder="搜索..." oninput="filterModernGrid(this)">
+                </div>        
+                <!-- 【修改点】 2. 胶囊容器放在后面 (作为右侧滑动区) -->
+                <div class="filter-chips-container">
+                    <!-- JS 动态生成内容 -->
+                </div>                
+            </div>
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="AIDrugDiscoveryGrid"></div>
@@ -181,6 +249,19 @@
         
         <div id="AIHealthcare" class="tab-content">
             <h2 data-i18n-key="selectAIHCExpert">选择一位AI医疗专家</h2>
+            <!-- 现代风格专用：胶囊过滤 + 搜索区域 -->
+            <div class="modern-filter-bar" style="display:none;">                
+                <!-- 【修改点】 1. 将搜索框移到最前面 (作为左侧固定区) -->
+                <div class="modern-search-wrapper">
+                    <!-- 注意：这里去掉了 onclick，改用 CSS/JS 控制更流畅，或者保留 onclick 但要确保 JS 逻辑正确 -->
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="modern-search-input" placeholder="搜索..." oninput="filterModernGrid(this)">
+                </div>        
+                <!-- 【修改点】 2. 胶囊容器放在后面 (作为右侧滑动区) -->
+                <div class="filter-chips-container">
+                    <!-- JS 动态生成内容 -->
+                </div>                
+            </div>
             <div class="leader-scroll-container">
                 <button class="scroll-button left" onclick="scrollGrid(this, -1)" aria-label="Scroll Left"><</button>
                 <div class="leader-grid" id="AIHealthcareGrid"></div>
