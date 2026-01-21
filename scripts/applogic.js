@@ -2,6 +2,13 @@ let currentSelectedLeader = null;
 let currentSelectedLeaderCategory = '';
 let currentGeneratedPrompt = '';
 
+// --- [新增] 对话画布相关全局变量 ---
+let conversationHistory = []; // 存储 {role, text, leaderName, timestamp}
+// --- [新增] 用于临时存储从 MD 导入的对话历史
+let importedHistory = null;  
+let isCanvasModeOpen = false;
+
+
 // --- NEW: Modal Control ---
 const apiSettingsModal = document.getElementById('apiSettingsModal');
 const apiEndpointSelect = document.getElementById('apiEndpoint'); // Changed ID to match HTML
@@ -135,8 +142,6 @@ function loadApiSettings() {
     }
 }
 
-
-
 function openTab(evt, tabName) {
     let i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tab-content");
@@ -156,6 +161,7 @@ function openTab(evt, tabName) {
         clearSelection();
     }
     updateAllScrollButtonStates();
+
     //现代界面风格
     onTabChanged();
 }
