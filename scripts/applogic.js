@@ -156,6 +156,8 @@ function openTab(evt, tabName) {
         clearSelection();
     }
     updateAllScrollButtonStates();
+    //现代界面风格
+    onTabChanged();
 }
 
 function populateLeaders() {
@@ -848,50 +850,80 @@ window.addEventListener('click', function(event) {
     }
 });
 
-// 在初始化时刷新语言，确保新按钮和模态框的文本正确加载
 document.addEventListener('DOMContentLoaded', () => {
-   // 延迟一点执行以确保 translations 已经合并
-   setTimeout(() => {
-       setLanguage(currentLang);
-   }, 100);
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+    // 1. 【优先】初始化语言设置
+    // 先确定语言，防止后续渲染时语言不正确导致二次刷新
     const preferredLang = localStorage.getItem('preferredLang');
     const browserLang = navigator.language || navigator.userLanguage;
+    let targetLang = 'zh-CN';
 
     if (preferredLang && translations[preferredLang]) {
-        currentLang = preferredLang;
+        targetLang = preferredLang;
     } else if (browserLang.startsWith('en') && translations['en']) {
-        currentLang = 'en';
-    } else {
-        currentLang = 'zh-CN';
+        targetLang = 'en';
     }
-    document.getElementById('languageSelector').value = currentLang;
+    
+    // 更新全局变量
+    window.currentLang = targetLang;
+    const langSelect = document.getElementById('languageSelector');
+    if (langSelect) langSelect.value = targetLang;
 
-    // Load API settings early to ensure endpoint and model are set up before other UI elements might need them
-    // Note: populateEndpointSelect and updateModelSelectByEndpoint are called within loadApiSettings now
-    loadApiSettings();
+    // 2. 加载 API 设置 (不影响 UI渲染，可并行)
+    if (typeof loadApiSettings === 'function') {
+        loadApiSettings();
+    }
 
-    setLanguage(currentLang);
+    // 3. 设置语言文本 (静态文本替换)
+    if (typeof setLanguage === 'function') {
+        setLanguage(targetLang);
+    }
 
-    openTab(null, 'TCM');
-    const firstTabButton = document.querySelector('.tab-button');
-    if (firstTabButton && !firstTabButton.classList.contains('active')) {
+    // 4. 【关键】处理 Tab 状态
+    // 确保在渲染网格前，Tab 已经是 active 状态，否则 filterModernGrid 找不到容器会报错或渲染为空
+    if (typeof openTab === 'function') {
+        // 默认打开 AI，或者恢复上次的 Tab（如果有相关逻辑）
+        openTab(null, 'ai'); 
+    }
+    
+    // 确保 Tab 按钮状态同步
+    const firstTabButton = document.querySelector('.tab-button[onclick*="ai"]');
+    if (firstTabButton && !document.querySelector('.tab-button.active')) {
          firstTabButton.classList.add('active');
     }
-    updateAllScrollButtonStates();
+
+    // 5. 【核心修复】初始化 UI 风格与数据渲染
+    // 这一步会根据 localStorage 判断是 'modern' 还是 'traditional'
+    // switchUIStyle 内部会触发 filterModernGrid，所以我们不需要手动调 onLanguageChanged 了
+    initUIStyle(); 
+
+    // 6. 绑定搜索框与按钮事件 (防止重复绑定)
+    bindModernEvents();
+
+    // 7. 【致命冲突修复】仅在“非现代模式”下调用旧的 populateLeaders
+    const currentStyle = localStorage.getItem('northstarUIStyle');
+    if (currentStyle !== 'modern' && typeof populateLeaders === 'function') {
+        console.log('[Init] 传统模式，执行 populateLeaders');
+        populateLeaders();
+    } else {
+        console.log('[Init] 现代模式，跳过 populateLeaders，由 switchUIStyle 接管渲染');
+    }
+
+    // 8. 绑定 API 下拉框事件
+    // 直接使用文件最上方定义的正确变量，或者用 getElementById('apiEndpoint')
+    if (apiEndpointSelect && typeof updateModelSelectByEndpoint === 'function') {
+        apiEndpointSelect.addEventListener('change', function() {
+            updateModelSelectByEndpoint(this.value);
+        });
+    }
+    
+    if (apiModelSelect && typeof updateEndpointByModel === 'function') {
+        apiModelSelect.addEventListener('change', function() {
+            updateEndpointByModel(this.value);
+        });
+    }
+
+    // 9. 处理窗口调整
     window.addEventListener('resize', updateAllScrollButtonStates);
-
-    apiEndpointSelect.addEventListener('change', function() {
-        updateModelSelectByEndpoint(this.value);
-    });
-    apiModelSelect.addEventListener('change', function() {
-        updateEndpointByModel(this.value);
-    });
-
-    // Populate leaders after language is set and settings are loaded
-    populateLeaders();
 });
 
 /* --- 音乐播放控制逻辑 --- */
@@ -1033,7 +1065,7 @@ function openElegantMode() {
         // 如果 raw 为空，说明还没生成，或者生成函数没保存 raw
         // 尝试回退读取 innerText，但效果可能不好
         if (aiResponseEl.innerText.trim() === "") {
-             alert("请先获取北极星的回复，才能开启沉浸阅读模式。");
+             alert("请先获取专家的回复，才能开启专家阅读模式。");
              return;
         }
     }
