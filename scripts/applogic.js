@@ -1232,7 +1232,7 @@ function renderDialogueCanvas() {
     const history = getMergedHistory(importedHistory, conversationHistory);
     if (history.length === 0) {
         container.innerHTML = `<div style="text-align:center; color:#888; margin-top:100px; font-family:'Ma Shan Zheng'">
-            暂无思想轨迹...<br>请先在主界面与北极星对话。
+            暂无旋律轨迹...<br>请先在主界面与专家对话。
         </div>`;
         svgEl.innerHTML = '';
         return;
@@ -1452,7 +1452,7 @@ function exportToMD() {
         return;
     }
 
-    let mdContent = "# 对话北极星 (Talk with North Stars)\n\n";
+    let mdContent = "# 智源生医 (SmartOrigin BioMed)\n\n";
     const timestamp = new Date().toLocaleString();
     mdContent += `> Exported on: ${timestamp}\n\n---\n\n`;
 
@@ -1464,14 +1464,14 @@ function exportToMD() {
         // 引用格式化
         let text = item.text.replace(/\n/g, '\n> '); 
         
-        // --- 修改点：在 User 问题后增加北极星人物信息 ---
+        // --- 修改点：在 User 问题后增加专家信息 ---
         if (isUser) {
             // 向后看一条
             const nextItem = history[index + 1];
             if (nextItem && nextItem.role !== 'user' && nextItem.leaderInfo) {
                 const info = nextItem.leaderInfo;
                 // 追加信息到 User 的文本块中
-                text += `\n\n> **🧩 关联北极星人物**：${info.name}`;
+                text += `\n\n> **🧩 关联专家**：${info.name}`;
                 text += `\n> - 领域：${info.field}`;
                 text += `\n> - 贡献：${info.contribution}`;
             }
