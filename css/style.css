@@ -1436,3 +1436,718 @@ footer {
       }
   }
   /* ===END [新增] Begin 优雅阅读模式 (Celestial Manuscript Mode) === */
+
+
+/* --- 对话画布 (Dialogue Canvas) v2.0 重制版 --- */
+
+/* 1. 模态框容器：深邃宇宙背景 */
+.canvas-modal {
+    display: none;   /* 调试时暂时注释 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    /* 核心背景：深蓝渐变 */
+    background: linear-gradient(to bottom, #02060a 0%, #0d1620 100%);
+    font-family: 'Noto Serif SC', 'Cinzel', serif;
+    overflow: hidden; /* 防止背景滚动溢出 */
+}
+
+/* 2. 第一层星空：背景细碎星尘 (慢速漂移) */
+.canvas-modal::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; 
+    width: 200%; height: 200%; /* 放大容器以便移动 */
+    
+    /* 生成细小的白色星点，锐利不模糊 */
+    background-image: 
+        radial-gradient(1px 1px at 10% 10%, #fff, transparent),
+        radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+        radial-gradient(1px 1px at 30% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 40% 60%, #fff, transparent),
+        radial-gradient(1px 1px at 50% 30%, #fff, transparent),
+        radial-gradient(1px 1px at 60% 80%, #fff, transparent),
+        radial-gradient(1px 1px at 70% 50%, #fff, transparent),
+        radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+        radial-gradient(1px 1px at 90% 70%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 25% 85%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.5px 1.5px at 75% 15%, rgba(255,255,255,0.8), transparent);
+    
+    background-size: 500px 500px; /* 定义星图重复的单元大小 */
+    background-repeat: repeat;
+    opacity: 0.5;
+    
+    /* 动画：左上角斜向缓慢移动 */
+    animation: star-drift 120s linear infinite;
+    z-index: -2;
+}
+
+/* 3. 第二层星空：近处亮星 (较快漂移 + 呼吸闪烁) */
+.canvas-modal::after {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%; 
+    width: 200%; height: 200%;
+    
+    /* 较大的亮星，更稀疏 */
+    background-image: 
+        radial-gradient(2px 2px at 15% 15%, #fff, transparent),
+        radial-gradient(2px 2px at 45% 75%, #fff, transparent),
+        radial-gradient(2px 2px at 85% 35%, #fff, transparent),
+        radial-gradient(2.5px 2.5px at 50% 50%, #fff, transparent); /* 一颗特亮的主星 */
+        
+    background-size: 600px 600px; /* 错开背景尺寸，增加随机感 */
+    background-repeat: repeat;
+    
+    /* 复合动画：位移 + 闪烁 */
+    animation: 
+        star-drift 80s linear infinite reverse, /*反向移动，制造视差立体感*/
+        star-twinkle 4s ease-in-out infinite alternate; /* 呼吸闪烁 */
+        
+    z-index: -1;
+}
+
+/* --- 动画定义 --- */
+
+/* 星星漂移：移动 background-position 或者 translate */
+@keyframes star-drift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-100px, -200px); }
+}
+
+/* 星星闪烁：改变透明度 */
+@keyframes star-twinkle {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.3; }
+}
+
+
+/* 2. 核心视口 */
+.canvas-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding-bottom: 150px; /* 底部留白 */
+    perspective: 1000px; /* 增加3D透视感 */
+}
+
+/* 3. 连线层：金色星轨 */
+.thought-trails {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    filter: drop-shadow(0 0 5px rgba(197, 160, 89, 0.5)); /* 发光效果 */
+}
+
+.trail-path {
+    fill: none;
+    stroke: #c5a059; /* 金色 */
+    stroke-width: 1.5px;
+    opacity: 0.6;
+    /* 不再是虚线，而是像星图连线一样的实线 */
+}
+
+/* 4. 节点流容器 */
+.thought-stream {
+    position: relative;
+    max-width: 1100px; /* 更宽一点 */
+    margin: 0 auto;
+    padding: 100px 40px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+/* 5. 通用节点卡片样式 */
+.thought-node {
+    position: relative;
+    max-width: 48%;
+    padding: 0; /* 内部布局负责padding */
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: floatIn 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes floatIn {
+    from { opacity: 0; transform: translateY(30px) rotateX(5deg); }
+    to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+
+/* 悬停效果：轻微上浮 + 发光增强 */
+.thought-node:hover {
+    transform: translateY(-5px);
+    z-index: 10;
+}
+
+/* --- 用户提问卡片：极简便签风格 --- */
+.thought-node.question-node {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.1); /* 半透明玻璃感 */
+    border-left: 4px solid #fff;
+    backdrop-filter: blur(10px);
+    padding: 20px 25px;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 0 10px 10px 0;
+}
+
+.question-node .user-avatar-mark {
+    position: absolute;
+    left: -20px;
+    top: -15px;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    color: #0d1218;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.user-handwriting {
+    font-family: 'Ma Shan Zheng', cursive; /* 手写体 */
+    font-size: 1.4rem;
+    line-height: 1.6;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- 北极星回答卡片：古典羊皮纸风格 (修复版) --- */
+.thought-node.answer-node {
+    align-self: flex-end;
+    background: #f4ecd8; 
+    color: #2c1e12;
+    
+    /* 1. [核心修复] 移除原来的 clip-path (这个是造成切角生硬的元凶) */
+    clip-path: none !important; 
+    
+    /* 2. 使用圆角：左上、右上、左下为小圆角，右下角为大圆角(模拟卷起) */
+    border-radius: 4px 4px 4px 50px; 
+    
+    /* 3. 优化阴影：增加层次感 */
+    box-shadow: 
+        0 2px 5px rgba(0,0,0,0.05),       /* 基础阴影 */
+        0 15px 30px rgba(0,0,0,0.2),      /* 远距离投影 */
+        inset 0 0 60px rgba(139, 90, 43, 0.1); /* 纸张旧感内发光 */
+        
+    border: 1px solid rgba(139, 90, 43, 0.2);
+    padding: 30px 40px;
+    position: relative; /* 为伪元素定位做准备 */
+}
+
+/* 4. [核心修复] 新增：使用伪元素模拟右下角的“卷起阴影”，增加立体感 */
+.thought-node.answer-node::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    z-index: -1; /* 放在纸张下面 */
+    
+    /* 这是一个柔和的投影，模拟纸角翘起 */
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4); 
+    
+    /* 配合父元素的大圆角，形成翘起感 */
+    transform: skew(15deg) rotate(5deg);
+    border-radius: 50%;
+}
+
+/* 5. [核心修复] 新增：模拟纸张卷起背面的高光（可选，增加精致度） */
+.thought-node.answer-node::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    
+    /* 线性渐变模拟纸张卷曲的折痕光影 */
+    background: linear-gradient(135deg, transparent 45%, rgba(0,0,0,0.05) 50%, rgba(255,255,255,0.3) 100%);
+    border-radius: 0 0 4px 50px;
+    pointer-events: none;
+}
+
+/* 保持原来的悬停高亮 */
+.thought-node.answer-node:hover {
+    box-shadow: 
+        0 20px 50px rgba(197, 160, 89, 0.15),
+        inset 0 0 20px rgba(139, 90, 43, 0.1);
+    transform: translateY(-2px); /* 悬停轻微上浮 */
+}
+
+/* 北极星卡片内部元素 */
+.star-decoration-top {
+    text-align: center;
+    color: #8b5a2b;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.leader-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.leader-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #3e2723;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.leader-badges {
+    margin-top: 5px;
+}
+
+.badge-field {
+    font-size: 0.75rem;
+    font-weight: bold;
+    background: transparent;
+    color: #000000;
+    padding: 2px 8px;
+    border: 1px solid #D4AF37; 
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.leader-contribution-hint {
+    font-size: 0.9rem;
+    color: #6d4c41;
+    font-style: italic;
+    text-align: center;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+}
+
+.node-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #8b5a2b, transparent);
+    margin: 15px 0 20px 0;
+    opacity: 0.4;
+}
+
+.star-content {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #1a1a1a;
+    text-align: justify;
+}
+
+.star-decoration-bottom {
+    margin-top: 25px;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #8b5a2b;
+    font-family: 'Cinzel', serif;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* 6. 右侧侧边栏 (保持不变或微调颜色) */
+.inspiration-sidebar {
+    background: #fdfbf7;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.5);
+}
+
+/* 7. 顶部工具栏适配深色背景 */
+.canvas-title {
+    color: #c5a059; /* 金色文字 */
+    text-shadow: 0 0 10px rgba(197, 160, 89, 0.4);
+}
+
+/* 默认按钮样式 (如果有其他按钮需要) */
+.canvas-toolbar button {
+    color: #c5a059;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.canvas-toolbar button:hover {
+    background: #c5a059;
+    color: #0d1218;
+}
+
+/* === [核心修复] 关闭按钮样式重写 === */
+/* 确保覆盖之前的通用 button 样式，去除背景和边框 */
+.canvas-toolbar .canvas-close-btn,
+.canvas-close-btn {
+    background: transparent !important; /* 核心：去除灰色背景 */
+    border: none !important;            /* 去除边框 */
+    box-shadow: none !important;        /* 去除阴影框 */
+    color: rgba(255, 255, 255, 0.4);    /* 默认颜色调暗，不刺眼 */
+    font-size: 2rem;                    /* 图标大一点 */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 100;
+}
+
+/* 悬停效果：旋转 + 变亮 + 微弱光晕 */
+.canvas-toolbar .canvas-close-btn:hover,
+.canvas-close-btn:hover {
+    background: rgba(255, 255, 255, 0.05) !important; /* 悬停时极淡的背景 */
+    color: var(--dark-accent, #c5a059); /* 悬停变金色或主题色 */
+    transform: rotate(90deg) scale(1.1); /* 优雅旋转 */
+    text-shadow: 0 0 10px rgba(197, 160, 89, 0.5); /* 文字发光 */
+}
+
+/* 删除按钮样式 */
+.node-delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4d4f;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* 默认隐藏 */
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.node-delete-btn:hover {
+    background: #ff4d4f;
+    color: white;
+}
+
+/* 鼠标悬停在节点上时显示删除按钮 */
+.thought-node:hover .node-delete-btn {
+    opacity: 1;
+}
+
+/* 确保节点定位基准 */
+.thought-node {
+    position: relative; /* 确保绝对定位相对于节点 */
+}
+
+/* --- 灵感手稿侧边栏 (Inspiration Sidebar) --- */
+#inspirationSidebar {
+    /* 1. 核心定位：必须 Fixed 才能悬浮在视口上 */
+    position: fixed;
+    top: 0;
+    right: -350px; /* 默认隐藏在屏幕外 (宽度350px) */
+    width: 350px;
+    height: 100vh;
+    
+    /* 2. 关键层级：必须大于 canvas-modal 的 2000 */
+    z-index: 3000 !important; 
+    
+    /* 3. 视觉样式 */
+    background: #fdfbf7; /* 羊皮纸色 */
+    box-shadow: -5px 0 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    
+    /* 4. 动画过渡 */
+    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 当 JS 添加 .open 类时，滑入屏幕 */
+#inspirationSidebar.open {
+    right: 0;
+}
+
+/* 头部样式 */
+.sidebar-header {
+    padding: 20px;
+    background: #f4ecd8;
+    border-bottom: 2px solid #e0dcd0;
+    flex-shrink: 0; /* 防止头部被压缩 */
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    color: #8b5a2b;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-header p {
+    margin: 5px 0 0 0;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* 笔记容器样式 */
+.notes-container {
+    flex: 1; /* 占满剩余高度 */
+    overflow-y: auto; /* 允许滚动 */
+    padding: 20px;
+    outline: none; /* 去除 contenteditable 的蓝色边框 */
+    font-family: 'Noto Serif SC', serif;
+    color: #4a3b32;
+    line-height: 1.6;
+}
+
+/* Placeholder 占位符逻辑 (纯CSS实现) */
+.notes-container[data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: #aaa;
+    font-style: italic;
+    pointer-events: none;
+}
+
+/* JS 动态添加进来的笔记块样式 */
+.inspiration-note-block {
+    background: #fff;
+    border-left: 3px solid #8b5a2b;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    font-size: 0.95rem;
+    position: relative;
+    /* 防止被误删，设为不可编辑，或者设为 true 允许修改 */
+    user-select: text; 
+}
+
+/* 给笔记块加个引号装饰 */
+.inspiration-note-block::before {
+    content: '"';
+    font-family: serif;
+    font-size: 2rem;
+    color: rgba(139, 90, 43, 0.2);
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    pointer-events: none;
+}
+
+/* --- 1. 打印替身的基础设置 --- */
+#print-overlay {
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+    width: 100vw;
+    z-index: -1;
+}
+
+/* --- 0. 核心修正：调整页边距以容纳页眉页脚, 解决左右边距过大问题 --- */
+@page {
+    /* 
+       语法顺序：上  右  下  左 
+       将上下设为 15mm (给页眉页脚留位置)
+       将左右设为 5mm (保持水平方向内容尽可能宽)
+    */
+    margin: 15mm 5mm; 
+    size: auto;
+}
+
+/* --- 2. 打印媒体查询 (完整修正版) --- */
+@media print {
+    /* 1. 隐藏非打印内容 */
+    body > *:not(#print-overlay) {
+        display: none !important;
+    }
+
+    /* 2. Body 设置 */
+    body {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+  
+    /* 3. 打印容器复位 - 【核心修改：全宽 + 紧凑】 */
+    #print-overlay {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        /* 强制覆盖可能的 max-width 限制 */
+        max-width: 100% !important; 
+        z-index: 99999 !important;
+        
+        /* 去除所有内边距，让 @page 控制边缘 */
+        padding: 0 !important; 
+        margin: 0 !important;
+        
+        background: #fff !important;
+        
+        /* 字体设置：纯黑 + 极度紧凑 */
+        color: #000000 !important;
+        /*font-family: "Microsoft YaHei", "Segoe UI", sans-serif;*/
+        font-family: 'Noto Serif SC', 'Cinzel', serif;
+        font-size: 12px !important; /* 字体稍微调小一点点以容纳更多内容 */
+        line-height: 1.25 !important; /* 【关键】：进一步压缩行高 (原1.35) */
+    }
+
+    /* 4. 对话气泡容器 - 【核心修改：强制撑满宽度】 */
+    #print-overlay .thought-node {
+        position: relative;
+        /* 关键：强制气泡宽度 100%，解决“内容宽度被压缩” */
+        width: 100% !important;
+        max-width: 100% !important;
+        
+        page-break-inside: avoid !important;
+        margin-bottom: 5px !important; /* 气泡间距再压缩 */
+        padding: 5px 8px !important;   /* 内边距压缩 */
+        
+        border-radius: 4px !important;
+        border: 1px solid #ddd;       
+        white-space: pre-wrap !important; 
+        box-sizing: border-box !important; /* 防止边框撑破布局 */
+    }
+
+    /* --- 5. 【核心修改：暴力压缩段落与空隙】 --- */
+    
+    #print-overlay .thought-node * {
+        margin-top: 0 !important;
+        color: #000000 !important;
+    }
+
+    /* 压缩 P 标签：间距改为 1px */
+    #print-overlay .thought-node p {
+        margin-bottom: 1px !important; 
+        text-align: justify;
+        line-height: 1.25 !important;
+    }
+    
+    /* 隐藏空段落 (Markdown解析常出现多余空行) */
+    #print-overlay .thought-node p:empty {
+        display: none !important;
+    }
+    
+    /* 列表极致紧凑 */
+    #print-overlay .thought-node ul, 
+    #print-overlay .thought-node ol {
+        margin-bottom: 1px !important;
+        padding-left: 15px !important; 
+    }
+    #print-overlay .thought-node li {
+        margin-bottom: 0px !important;
+        line-height: 1.25 !important;
+    }
+    
+    /* 标题加粗 */
+    #print-overlay .thought-node h1,
+    #print-overlay .thought-node h2,
+    #print-overlay .thought-node strong,
+    #print-overlay .thought-node b {
+        font-weight: 800 !important;
+        color: #000 !important;
+        margin-bottom: 2px !important;
+    }
+
+    /* --- 6. 角色样式 (统一香槟色边线) --- */
+    
+    /* User: 浅灰底 + 香槟色线 (修改了原来的蓝色) */
+    #print-overlay .question-node {
+        background-color: #f0f6ff !important; /* 浅蓝底 */
+        border-left: 4px solid #0056b3 !important; /* 深蓝线，更清晰 */
+        border: 1px solid #eee;
+        font-weight: 500 !important;
+        /* --- 新增以下两行关键代码 --- */
+        -webkit-print-color-adjust: exact !important; /* 针对 Chrome, Safari, Edge */
+        print-color-adjust: exact !important;         /* 标准属性 */
+    }
+    
+    /* North Star: 纯白底 + 香槟色线 */
+    #print-overlay .answer-node {
+       /* 使用极淡的米黄色，配合金色边框非常高级 */
+        background-color: #FFFAF0 !important; 
+        /* 修复了之前的语法错误 */
+        border-left: 1px solid #D4AF37 !important; 
+        border: 1px solid #D4AF37 !important; 
+        /* 记得加上这个，否则打印时没有背景色 */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* --- 7. 隐藏无关元素 --- */
+    #print-overlay .node-delete-btn,
+    #print-overlay .action-bar,
+    #print-overlay button {
+        display: none !important;
+    }
+  
+   /* --- 8. 北极星与领域样式修正 --- */
+    /* 标志颜色 */
+    #print-overlay .star-decoration-top,
+    #print-overlay .star-decoration-top i,
+    #print-overlay .star-decoration-bottom i {
+        color: #D4AF37 !important; 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* 领域标签优化 */
+    #print-overlay .badge-field {
+        background: transparent !important;
+        color: #000000 !important; 
+        font-weight: bold !important;
+        border: 1px solid #D4AF37 !important;
+        padding: 1px 5px !important; /* 稍微再紧凑一点 */
+        border-radius: 4px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* 分割线 */
+    #print-overlay .node-divider {
+        background: linear-gradient(to right, transparent, #D4AF37, transparent) !important;
+        opacity: 1 !important;
+        margin: 5px 0 !important; /* 减少分割线上下间距 */
+    }
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+    .thought-stream {
+        padding: 60px 20px;
+        gap: 50px;
+    }
+    .thought-node {
+        max-width: 90%;
+    }
+    .thought-node.question-node {
+        align-self: center;
+        margin-right: auto;
+        border-radius: 10px;
+    }
+    .thought-node.answer-node {
+        align-self: center;
+        margin-left: auto;
+    }
+}
