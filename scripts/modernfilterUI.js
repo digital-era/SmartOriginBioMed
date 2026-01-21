@@ -20,14 +20,12 @@ function getMastersByCategory(category) {
         return allData[category];
     }
     const map = {
-        'ai': typeof aiMasters !== 'undefined' ? aiMasters : [],
-        'quantum': typeof QuantumMasters  !== 'undefined' ? QuantumMasters  : [],
-        'universe': typeof universeMasters !== 'undefined' ? universeMasters : [],
-        'humanities': typeof humanitiesMasters !== 'undefined' ? humanitiesMasters : [],
-        'art': typeof artMasters !== 'undefined' ? artMasters : [],
-        'finance': typeof financeMasters !== 'undefined' ? financeMasters : [],
-        'sport': typeof sportMasters !== 'undefined' ? sportMasters : [],
-        'chinaEntrepreneurs': typeof chinaEntrepreneurs !== 'undefined' ? chinaEntrepreneurs : []
+        'TCM': typeof TCMMasters !== 'undefined' ? TCMMasters : [],
+        'WM': typeof WMMasters   !== 'undefined' ? WMMasters   : [],
+        'MultiOmics': typeof MultiOmicsMasters !== 'undefined' ? MultiOmicsMasters : [],
+        'NeuralLink': typeof NeuralLinkMasters  !== 'undefined' ? NeuralLinkMasters  : [],
+        'AIDrugDiscovery': typeof AIDrugDiscoveryMasters  !== 'undefined' ? AIDrugDiscoveryMasters  : [],
+        'AIHealthcare': typeof AIHealthcareMasters !== 'undefined' ? AIHealthcareMasters : []
     };
     return map[category] || [];
 }
