@@ -1572,7 +1572,7 @@ function exportToPDF() {
     coverPage1.style.breakAfter = 'page'; 
 
     const img1 = document.createElement('img');
-    img1.src = 'images/对话北极星Cover1.jpg'; 
+    img1.src = 'images/智源生医Cover1.jpg'; 
     img1.style.position = 'absolute'; img1.style.top = '0'; img1.style.left = '0';
     img1.style.width = '100%'; img1.style.height = '48%'; 
     img1.style.objectFit = 'contain'; img1.style.objectPosition = 'center 40%'; 
@@ -1580,7 +1580,7 @@ function exportToPDF() {
     coverPage1.appendChild(img1);
 
     const img2 = document.createElement('img');
-    img2.src = 'images/对话北极星Cover2.jpg'; 
+    img2.src = 'images/智源生医Cover2.jpg'; 
     img2.style.position = 'absolute'; img2.style.bottom = '0'; img2.style.left = '0';
     img2.style.width = '100%'; img2.style.height = '48%'; 
     img2.style.objectFit = 'contain'; img2.style.objectPosition = 'center 60%'; 
@@ -1619,7 +1619,7 @@ function exportToPDF() {
     overlay.appendChild(contentWrapper);
 
     // --- 步骤 D: 最后一页 (保留特殊排版) ---
-    const backCover = createCoverPage('images/对话北极星Cover3.jpg', 'back');
+    const backCover = createCoverPage('images/智源生医Cover3.jpg', 'back');
     backCover.style.justifyContent = 'flex-start'; 
     backCover.style.paddingTop = '10vh'; 
     
