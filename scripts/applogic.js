@@ -888,7 +888,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 确保在渲染网格前，Tab 已经是 active 状态，否则 filterModernGrid 找不到容器会报错或渲染为空
     if (typeof openTab === 'function') {
         // 默认打开 AI，或者恢复上次的 Tab（如果有相关逻辑）
-        openTab(null, 'ai'); 
+        openTab(null, 'TCM'); 
     }
     
     // 确保 Tab 按钮状态同步
