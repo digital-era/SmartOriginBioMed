@@ -552,7 +552,7 @@ async function getAIResponse() {
             name: currentSelectedLeader.name,
             field: currentSelectedLeader.field[currentLang] || currentSelectedLeader.field['zh-CN'],
             contribution: currentSelectedLeader.contribution[currentLang] || currentSelectedLeader.contribution['zh-CN']
-        } : { name: 'North Star', field: 'General AI', contribution: '' };
+        } : { name: 'Expert', field: 'TCM Diagnostics', contribution: '' };
     
         // 3. 存入历史 - 用户提问
         conversationHistory.push({
@@ -1282,7 +1282,7 @@ function renderDialogueCanvas() {
                 </div>
                 <div class="node-divider"></div>
                 <div class="node-content star-content">${processedText}</div>
-                <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> North Star Insight</div>
+                <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> SmartOrigin BioMed Insight</div>
             `;
         }
         
@@ -1459,7 +1459,7 @@ function exportToMD() {
     history.forEach((item, index) => {
         // 以下保持原逻辑，只需把 conversationHistory 换成 history
         const isUser = item.role === 'user';
-        const roleName = isUser ? "User" : (item.leaderInfo?.name || "North Star");
+        const roleName = isUser ? "User" : (item.leaderInfo?.name || "Expert");
         
         // 引用格式化
         let text = item.text.replace(/\n/g, '\n> '); 
@@ -1610,7 +1610,7 @@ function exportToPDF() {
             roleTitle.style.color = '#0056b3';
             node.insertBefore(roleTitle, node.firstChild);
         } else if (node.classList.contains('answer-node')) {
-            roleTitle.innerText = "🤖 North Star"; 
+            roleTitle.innerText = "🤖 Expert"; 
             roleTitle.style.color = '#b8860b';
             node.insertBefore(roleTitle, node.firstChild);
         }
@@ -1825,7 +1825,7 @@ function exportToHTML() {
             font-family: 'Ma Shan Zheng', cursive; font-size: 1.3rem; line-height: 1.6; letter-spacing: 1px;
         }
 
-        /* --- North Star 样式 --- */
+        /* ---  答复节点样式 --- */
         .thought-node.answer-node {
             align-self: flex-end;
             background: #f4ecd8; color: #2c1e12;
@@ -1864,7 +1864,7 @@ function exportToHTML() {
         ${clone.innerHTML}
     </div>
     <footer>
-        Exported from Talk with North Stars • ${new Date().toLocaleString()}
+        Exported from SmartOrigin BioMed • ${new Date().toLocaleString()}
     </footer>
 </body>
 </html>`;
