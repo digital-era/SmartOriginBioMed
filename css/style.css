@@ -94,58 +94,108 @@ h1 {
     z-index: 10;
 }
 
-/* --- 统一的圆形图标按钮样式 (Glass Style) --- */
-.icon-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--dark-text-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 0;
-    position: relative;
-    /* === 新增这行：防止被压缩 === */
-    flex-shrink: 0; 
-}
+  /* --- 统一的圆形图标按钮样式 --- */
+  .icon-btn {
+      width: 40px;  /* 固定宽度 */
+      height: 40px; /* 固定高度，确保正圆 */
+      border-radius: 50%; /* 变成圆形 */
+      /* === 新增：PC端防止被拉伸的关键 === */
+      flex: 0 0 40px;        /* 强制 flex 占用空间 */
+      min-width: 40px; /* 绝对不准小于 40px (防挤扁) */
+      max-width: 40px; /* 绝对不准大于 40px (防拉伸) */     
+      /* ================================ */
+      
+      background-color: rgba(255, 255, 255, 0.05); /* 极淡背景 */
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--dark-text-secondary);
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none; /* 去掉链接下划线 */
+      font-size: 1.1rem; /* 图标稍微大一点 */
+      padding: 0; /* 移除内边距 */
+      position: relative; /* 为语言下拉框定位做准备 */
+      /* === 新增这行：防止被压缩 === */
+      flex-shrink: 0; 
+      flex-grow: 0
+  }
 
-.icon-btn:hover {
-    color: #fff;
-    background-color: var(--dark-accent);
-    border-color: var(--dark-accent);
-    box-shadow: 0 0 15px var(--dark-accent);
-    transform: rotate(15deg);
-}
+ /* 悬停效果 */
+  .icon-btn:hover {
+      color: #fff;
+      background-color: var(--dark-accent); /* 悬停变亮色 */
+      border-color: var(--dark-accent);
+      box-shadow: 0 0 15px var(--dark-accent); /* 发光 */
+      transform: rotate(15deg); /* 增加一点俏皮的旋转 */
+  }
+  
+  /* --- 语言选择器的特殊处理 (核心修改) --- */
+  .language-wrapper select {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0; /* 关键：完全透明，但仍然可以点击 */
+      cursor: pointer;
+      appearance: none; /* 移除默认样式 */
+      -webkit-appearance: none;
+      z-index: 2; /* 确保在图标之上 */
+  }
+  
+  /* --- 修复下拉菜单看不清的问题 --- */
+  /* 这里强制设置下拉选项的背景色和文字颜色 */
+  #languageSelector {
+      color-scheme: dark; /* 告诉浏览器这是暗色控件，滚动条和箭头会自动变黑底 */
+  }
+  
+  #languageSelector option {
+      background-color: #1e1e1e; /* 下拉菜单背景：深灰 */
+      color: #f0f0f0;            /* 下拉菜单文字：亮白 */
+      padding: 10px;
+  }
 
-/* --- 语言选择器处理 --- */
-.language-wrapper select {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    z-index: 2;
-}
+  /* --- 界面风格选择器的特殊处理 (新增，与上面完全对称) --- */
+  .style-wrapper select {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      z-index: 2;
+  }
+  
+  #uiStyle {
+      color-scheme: dark;
+  }
+  
+  #uiStyle option {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      padding: 10px;
+  }
+  
+  .about-us-button:hover, 
+  .settings-link:hover, 
+  .language-selector:hover {
+      color: #fff;
+      border-color: var(--dark-accent);
+      background-color: rgba(74, 144, 226, 0.15); /* 悬停微蓝 */
+      box-shadow: 0 0 10px rgba(74, 144, 226, 0.2); /* 悬停微发光 */
+      transform: translateY(-1px);
+  }
 
-#languageSelector {
-    color-scheme: dark;
-}
-#languageSelector option {
-    background-color: #1e1e1e;
-    color: #f0f0f0;
-    padding: 10px;
-}
+  .settings-link .fa-cog {
+      margin-right: 6px;
+  }    
 
 /* --- Modal Styles --- */
 .modal {
