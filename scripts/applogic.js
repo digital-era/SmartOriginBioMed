@@ -547,7 +547,7 @@ async function getAIResponse() {
         // 1. 获取纯净的用户问题 (不带Prompt指令)
         const rawUserQuestion = document.getElementById('userQuestion').value.trim();
     
-        // 2. 准备北极星的元数据 (防止当前没选人报错)
+        // 2. 准备专家的元数据 (防止当前没选人报错)
         const leaderMeta = currentSelectedLeader ? {
             name: currentSelectedLeader.name,
             field: currentSelectedLeader.field[currentLang] || currentSelectedLeader.field['zh-CN'],
@@ -568,7 +568,7 @@ async function getAIResponse() {
             id: Date.now() + '_ai',
             role: 'ai',
             text: rawContent, 
-            leaderInfo: leaderMeta, // 保存这一刻的北极星状态
+            leaderInfo: leaderMeta, // 保存这一刻的专家状态
             timestamp: new Date()
         });
         // 如果画布当前是打开的，实时刷新
@@ -639,7 +639,7 @@ function copyConversationToClipboard() {
     }
 
     // 3. 格式化合并文本
-    const clipboardText = `【问题 / Question】:\n${finalQuestion}\n\n【北极星答复 / NorthStar Answer】:\n${aiResponse}`;
+    const clipboardText = `【问题 / Question】:\n${finalQuestion}\n\n【专家答复 / Expert Answer】:\n${aiResponse}`;
 
     // 4. 写入剪贴板
     navigator.clipboard.writeText(clipboardText).then(() => {
@@ -1100,7 +1100,7 @@ function openElegantMode() {
     }
 
     // 3. 填充问题
-    document.getElementById('elegantQuestionText').innerText = userQuestion || "（北极星指引）";
+    document.getElementById('elegantQuestionText').innerText = userQuestion || "（专家指引）";
 
     // 4. 填充答案 (使用保护函数)
     const elegantAnswerBox = document.getElementById('elegantAnswerText');
@@ -1650,7 +1650,7 @@ function exportToPDF() {
         } else {
             const d = new Date();
             const pad = (n) => String(n).padStart(2, '0');
-            finalName = `对话北极星_${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`;
+            finalName = `智源生医_${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`;
         }
 
         // --- 2. 设置新标题 ---
