@@ -932,6 +932,29 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', updateAllScrollButtonStates);
 });
 
+// 辅助函数：将事件绑定逻辑抽离，避免闭包重复引用
+function bindModernEvents() {
+    document.querySelectorAll('.modern-search-input').forEach(el => {
+        // 移除旧监听器比较麻烦，这里利用 dataset 标记防止重复绑定
+        if (el.dataset.bound) return;
+        el.addEventListener('input', (e) => {
+            filterModernGrid(e.target);
+        });
+        el.dataset.bound = 'true';
+    });
+
+    document.querySelectorAll('.search-icon').forEach(el => {
+        if (el.dataset.bound) return;
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleModernSearch(el);
+        });
+        el.dataset.bound = 'true';
+    });
+}
+
+
 /* --- 音乐播放控制逻辑 --- */
 // 1. 主按钮点击：播放/暂停指定音乐
 function toggleMusic(btnElement) {
