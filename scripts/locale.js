@@ -2,9 +2,9 @@
         const translations = {
             "zh-CN": {
                 "pageTitle": "智源生医",
-                "headerTitleComplete": "智源生医<br>\"探索生物医学奥秘，解决人间疾苦\"",
+                "headerTitleComplete": "智源生医<br>\"探索生物医学旋律，解决人间疾苦\"",
                 "headerTitle": "智源生医",
-                "headerSubtitle": "探索生医奥秘，解决人间疾苦",
+                "headerSubtitle": "探索生物医学旋律，解决人间疾苦",
                 "tabTCM": "中医",
                 "tabWM": "西医",
                 "tabMO": "多组学",
@@ -104,7 +104,7 @@
                 "manifestoPara6": "如果你对心脏健康充满好奇，可以与瓦伦丁·福斯特（Valentin Fuster）洞察心血管疾病的预防，或和史蒂芬·尼斯（Steven Nissen）分析药物洗脱支架的安全性。在古老的智慧殿堂，与孙思邈品味养生之道，或随张仲景的《伤寒杂病论》漫游辨证论治的实践；在生物科技的前沿，与米格尔·尼科莱利斯（Miguel Nicolelis）共鸣脑机接口的融合，或与埃里克·兰德（Eric Lander）感受基因组测序的震撼力量。",
                 "manifestoPara7": "这不仅仅是技术，更是一次与生命深层对话的邀约，一次医学思维的远征。我们精心构建《智源生医》，让AI化身为连接人类智慧与健康的桥梁。它严格遵循每一位“生命智者”的思想框架、专业领域和语言风格，确保每一次回复都深邃而富有启发性。",
                 "manifestoPara8": "你无需穷尽所有医学文献，也无需在信息洪流中苦寻答案。在这里，你的每一个问题，都将得到智者般深邃的回应。每一次提问，都可能激发你内心深处未曾触及的探索火花；每一次对话，都将拓展你认知生命的边界，推动你健康管理与深度调研进程。",
-                "manifestoConclusion": "我们的使命是以AI原生智慧，汇聚生命长河智者之声，解决人间疾苦。",
+                "manifestoConclusion": "我们的使命是以AI原生智慧，探索生物医学旋律，解决人间疾苦。",
 
                 "angelModeTitle": "《智源生医》天使模式：天使降临，穿透星河",
                 "angelCoreConceptTitle": "[核心理念]",
@@ -123,9 +123,9 @@
             },
             "en": {
                 "pageTitle": "SmartOrigin BioMed",
-                "headerTitleComplete": "SmartOrigin BioMed<br>\"Explore Biomedical Secrets, Relieve Human Suffering\"",
+                "headerTitleComplete": "SmartOrigin BioMed<br>\"Explore Biomedical melody, Relieve Human Suffering\"",
                 "headerTitle": "SmartOrigin BioMed",
-                "headerSubtitle": "Explore Biomedical Secrets, Relieve Human Suffering",
+                "headerSubtitle": "Explore Biomedical melody, Relieve Human Suffering",
                 "tabTCM": "Chinese Med",
                 "tabWM": "Western Med",
                 "tabMO": "Multi-Omics",
@@ -225,7 +225,7 @@
                 "manifestoPara6": "If you are curious about heart health, you can gain insights into cardiovascular disease prevention with Valentin Fuster, or analyze the safety of drug-eluting stents with Steven Nissen. In the ancient temple of wisdom, you can savor the art of health preservation with Sun Simiao, or wander through the practice of syndrome differentiation and treatment with Zhang Zhongjing's 'Treatise on Cold Damage and Miscellaneous Diseases'; at the forefront of biotechnology, you can resonate with Miguel Nicolelis on the integration of brain-computer interfaces, or feel the astonishing power of genome sequencing with Eric Lander.",
                 "manifestoPara7": "This is not just technology; it is an invitation for a deep dialogue with life, an expedition of medical thought. We meticulously built 'Origin Medical AI' to let AI serve as a bridge connecting human wisdom and health. It strictly adheres to the thought framework, professional field, and linguistic style of each 'Life Sage,' ensuring every response is profound and inspiring.",
                 "manifestoPara8": "You don't need to exhaust all medical literature, nor search tirelessly for answers amidst the information deluge. Here, every question you ask will receive a profound response like that of a sage. Every inquiry may spark exploration fires previously untouched deep within you; every dialogue will expand the boundaries of your understanding of life and propel your progress in health management and deep research.",
-                "manifestoConclusion": "Our mission is to harness AI-native intelligence to converge the voices of wisdom from the river of life, thereby alleviating human suffering.",
+                "manifestoConclusion": "Our mission is to explore the melody of biomedicine with AI-native intelligence, and to alleviate human suffering.",
 
                 "angelModeTitle": "SmartOrigin BioMed Angel Mode: Angels Descend, Piercing the Galaxy",
                 "angelCoreConceptTitle": "[Core Philosophy]",
