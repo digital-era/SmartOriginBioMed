@@ -1,0 +1,170 @@
+/* =========================================
+   现代风格布局核心 CSS
+   ========================================= */
+
+/* 1. 容器：左搜右滑布局 */
+.modern-filter-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 56px;           /* 固定高度，视觉更稳 */
+    margin: 10px 0 20px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;       /* 防止整体溢出 */
+    box-sizing: border-box;
+}
+
+/* 右侧渐变遮罩 (提示可滑动) */
+.modern-filter-bar::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    /* 请根据你的背景色修改下面的 hex 值，这里假设是深色背景 #1a1a1a */
+    background: linear-gradient(to right, transparent, #1a1a1a);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 2. 左侧：搜索区域 (固定) */
+.modern-search-wrapper {
+    flex: 0 0 auto;         /* 禁止压缩，宽度由内容决定 */
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-right: 12px;    /* 右侧留白 */
+    margin-right: 8px;      /* 拉开与胶囊的距离 */
+    border-right: 1px solid rgba(255, 255, 255, 0.15); /* 分割线 */
+    z-index: 5;
+    background: inherit;    /* 避免遮挡背景 */
+}
+
+.search-icon {
+    font-size: 16px;
+    color: var(--text-tertiary, #888);
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.3s;
+}
+
+.search-icon:hover {
+    color: white;
+}
+
+/* 输入框：默认折叠，展开动画 */
+.modern-search-input {
+    width: 0;               /* 默认宽度为0 */
+    opacity: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* 搜索激活状态 (JS 添加 search-active 类时触发) */
+.modern-search-wrapper.search-active .modern-search-input {
+    width: 140px;           /* 展开后的宽度 */
+    opacity: 1;
+    padding: 6px 10px;
+    margin-left: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+}
+
+.modern-search-input:focus {
+    outline: none;
+    background: rgba(255,255,255,0.15);
+    border-color: #00DFD8;
+}
+
+/* 3. 右侧：胶囊容器 (横向滚动) */
+.filter-chips-container {
+    flex: 1;                /* 占据剩余空间 */
+    display: flex;
+    flex-wrap: nowrap;      /* 关键：单行不换行 */
+    align-items: center;
+    overflow-x: auto;       /* 允许横向滚动 */
+    gap: 8px;               /* 胶囊间距 */
+    height: 100%;
+    padding-right: 40px;    /* 给遮罩留位 */
+    
+    /* 解决 Flex 溢出问题 */
+    min-width: 0;
+    
+    /* 滚动条隐藏 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filter-chips-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* 胶囊样式 */
+.chip {
+    flex: 0 0 auto;         /* 关键：禁止胶囊被挤压 */
+    padding: 6px 14px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #ccc;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.chip:hover {
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+.chip.active {
+    background: linear-gradient(135deg, #00DFD8 0%, #007cf0 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0, 223, 216, 0.3);
+}
+
+/* 1. 先重置一下基础样式，防止旧的 transition 干扰 */
+.modern-mode .leader-card {
+    /* 移除旧的 transition，完全交给 animation 控制 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important; 
+    /* 这里的 transition 只保留 hover 效果，入场动画由下面控制 */
+}
+
+/* 2. 定义入场动画样式 */
+.leader-card.stagger-animate {
+    opacity: 0; /* 初始状态隐藏 */
+    
+    /* 动画配置：名称 | 时长 | 缓动曲线(快速切入缓慢停止) | 停留在最后一帧 */
+    animation: slideInRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    
+    /* 核心：根据 JS 传过来的索引 --i 计算延迟，形成流水线效果 */
+    /* 0.05s 是每张卡片的间隔，越小越快 */
+    animation-delay: calc(var(--i, 0) * 0.05s);
+    
+    /* 优化：启用硬件加速，防止卡顿 */
+    will-change: transform, opacity;
+}
+
+/* 3. 定义关键帧：从右往左滑入 */
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        /* 从右侧 50px 的位置开始，配合你的横向胶囊，视觉流线很顺畅 */
+        transform: translateX(50px); 
+    }
+    100% {
+        opacity: 1;
+        /* 回到原位 */
+        transform: translateX(0);
+    }
+}
