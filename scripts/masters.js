@@ -532,6 +532,113 @@ const MultiOmicsMasters = [
             "zh-CN": "Utrecht大学教授，领导欧洲心脏病学大数据联盟，成果用于临床决策支持系统。",
             "en": "Professor at Utrecht University, leads European Cardiology Big Data Alliance, outcomes applied in clinical decision support systems."
         }
+    },
+
+    老而不衰的科学作者介绍《老而不衰的科学》是一部探讨衰老生物学前沿研究的科普著作，原著英文名为《Ageless: The New Science of Getting Older Without Getting Old》。该书系统阐述了衰老的十大基本特征，并总结了四种潜在的治愈衰老疗法，旨在指导读者理解如何通过科学方法实现健康老龄化，从而延长寿命并减少疾病负担。 书中强调，衰老并非不可避免的衰退过程，而是可以通过生物学干预来缓解的自然现象。
+作者安德鲁·斯蒂尔（Andrew Steele）持有物理学博士学位，现任伦敦弗朗西斯·克里克研究所研究员，专攻计算机生物学。他最初从事粒子加速器用于分析磁性和半导体材料的研究，后转向生物学领域，专注于DNA解码和衰老机制的计算机模拟。 斯蒂尔认为，人类的主要痛苦源于衰老，因此致力于通过计算方法揭示现代生物学的隐秘，以推动抗衰老疗法的开发。 他的跨学科背景使该书融合了物理学、生物学和计算科学的视角，提供严谨且可读的分析。
+中文译本由张文韬和王曦负责翻译。张文韬为微生物学博士，现任中国科学院计算机网络信息中心高级工程师，同时担任“科学大院”和“中国科普博览”等平台的资深编辑，长期从事科普内容策划与运营。 王曦为生物化学与分子生物学博士，中国科学院生物物理研究所副研究员，在蛋白质稳态与人类健康领域开展研究，曾获中国科普作家协会优秀作品奖。
+该书获得多位专家推荐，包括《百岁人生》作者安德鲁·斯科特、清华大学药学院教授王钊、科普作家刘易斯·达特内尔，以及CNN首席医疗记者桑杰·古普塔。 它不仅适用于对衰老科学感兴趣的读者，还为专业人士提供关于健康老龄化的深入洞见。10大基本特征已经变成了12种?The understanding of the biological processes underlying aging has evolved since the publication of the book Ageless: The New Science of Getting Older Without Getting Old by Andrew Steele, which referenced an earlier framework of approximately ten fundamental features of aging, drawing from the 2013 seminal paper on the hallmarks of aging. That original framework identified nine hallmarks. However, in a comprehensive update published in 2023, researchers expanded this to twelve hallmarks, incorporating new insights from the intervening decade of research. This revision reflects advancements in the field, emphasizing interconnected mechanisms that manifest with age, accelerate aging when perturbed, and offer potential targets for therapeutic intervention to mitigate aging processes.
+The twelve hallmarks of aging, as outlined in the 2023 update, are as follows:
+
+Genomic instability: Accumulation of DNA damage over time.
+Telomere attrition: Shortening of protective chromosome ends.
+Epigenetic alterations: Changes in gene expression without altering DNA sequence.
+Loss of proteostasis: Impairment in protein quality control.
+Disabled macroautophagy: Reduced cellular recycling of damaged components.
+Deregulated nutrient-sensing: Dysfunctional metabolic signaling pathways.
+Mitochondrial dysfunction: Impaired energy production in cells.
+Cellular senescence: Irreversible cell cycle arrest contributing to tissue decline.
+Stem cell exhaustion: Depletion of regenerative cell populations.
+Altered intercellular communication: Disrupted signaling between cells.
+Chronic inflammation: Persistent low-grade immune activation.
+Dysbiosis: Imbalance in the microbiome affecting systemic health.
+
+These hallmarks are categorized into primary (causing damage), antagonistic (responses to damage), and integrative (culminating in functional decline) groups, providing a structured model for aging research. While the book's discussion remains valuable, this expansion underscores the dynamic nature of aging biology and informs ongoing efforts to develop interventions for healthy longevity.中文；自《老而不衰的科学》（原著《Ageless: The New Science of Getting Older Without Getting Old》）一书出版以来，对衰老生物学过程的理解已有所演进。该书参考了2013年开创性论文中约十个衰老基本特征的框架，该框架最初识别了九个特征。 然而，根据2023年发布的全面更新，研究人员将此扩展至十二个特征，以纳入过去十年研究的新洞见。 此修订反映了该领域的进步，强调了相互关联的机制，这些机制随年龄增长而显现，并在干扰时加速衰老，并为缓解衰老过程的治疗干预提供潜在目标。
+根据2023年更新的十二个衰老特征如下所述：
+
+基因组不稳定性：DNA损伤随时间积累。
+端粒损耗：染色体保护末端的缩短。
+表观遗传改变：不改变DNA序列的基因表达变化。
+蛋白质稳态丧失：蛋白质质量控制的损害。
+巨噬自噬功能障碍：细胞对损伤成分回收的减少。
+营养感知失调：代谢信号通路的异常。
+线粒体功能障碍：细胞能量产生的损害。
+细胞衰老：不可逆的细胞周期停滞，导致组织衰退。
+干细胞耗竭：再生细胞群体的耗尽。
+细胞间通信改变：细胞间信号的干扰。
+慢性炎症：持续的低度免疫激活。
+菌群失调：微生物组失衡影响系统健康。
+
+这些特征分为原发性（引起损伤）、对抗性（对损伤的响应）和整合性（导致功能衰退）三类，提供了一个结构化的衰老研究模型。 尽管该书的论述仍具价值，此扩展突显了衰老生物学的动态性质，并为开发促进健康长寿的干预措施提供指导。四种潜在的治愈衰老疗法在《老而不衰的科学》（原著《Ageless: The New Science of Getting Older Without Getting Old》）一书中，作者安德鲁·斯蒂尔总结了四种潜在的治愈衰老疗法。这些疗法基于对衰老生物学机制的理解，旨在针对衰老的根本原因进行干预，从而延长健康寿命并减少年龄相关疾病的发生。 以下是对这四种疗法的概述，每种均代表当前衰老研究中的关键方向，并结合了实验证据和临床潜力。
+
+药物再利用（Repurposed Drugs）：这一疗法涉及使用已批准的药物，如器官移植药物雷帕霉素（rapamycin）和糖尿病药物二甲双胍（metformin），来调控营养感知通路和代谢过程。这些药物已在动物模型中显示出延缓衰老的效果，例如通过抑制mTOR信号通路减少细胞损伤积累。目前，这些药物正处于临床试验阶段，可能在短期内成为抗衰老干预的先驱。
+衰老细胞清除剂（Senolytics）：衰老细胞（senescent cells）是衰老过程中积累的非功能细胞，会分泌有害物质促进炎症和组织退化。衰老细胞清除剂，如癌症药物达沙替尼（dasatinib）和槲皮素（quercetin）的组合，能选择性地消除这些细胞。在小鼠实验中，此类疗法已证明可逆转生物年龄，改善组织功能，并正在人类临床试验中评估其安全性与疗效。
+基因疗法（Gene Therapies）：通过基因编辑技术，如CRISPR，针对衰老相关基因进行修复或增强，例如调控端粒酶活性或修复DNA损伤。该疗法已在美国食品和药物管理局（FDA）批准用于某些遗传病治疗，并有望扩展到衰老领域。尽管目前仍处于实验阶段，其潜力在于精确干预衰老的分子基础，可能实现对多个衰老特征的综合调控。
+干细胞疗法（Stem Cell Therapies）：衰老会导致干细胞耗竭，影响组织再生。该疗法通过移植或激活自体干细胞来恢复再生能力，例如针对骨髓或肌肉干细胞的干预。在实验室模型中，此类疗法已显示出逆转组织衰退的效果，并与基因疗法结合使用以提升疗效。尽管挑战包括安全性和递送机制，但其前景在于促进全身性健康恢复。
+
+这些疗法并非旨在实现永生，而是通过延缓或逆转衰老过程来提升生活质量。当前研究强调多靶点结合策略，以最大化疗效并最小化风险。未来进展取决于临床试验结果和监管批准，预计将在十年内产生初步应用。参照下面数组元素定义，补充安德鲁·斯蒂尔（Andrew Steele）元素定义： {
+        id: "amelia_hains",
+        name: "Amelia Hains (阿梅利亚·海因斯)",
+        contribution: {
+            "zh-CN": "分子蛋白质组学主任，开发质谱技术整合多组学分析心血管重塑与糖尿病并发症，推动早期诊断与个性化治疗。",
+            "en": "Director of Molecular Proteomics, develops mass spectrometry for multi-omics integration in cardiovascular remodeling and diabetic complications, advances early diagnosis and personalized treatment."
+        },
+        field: {
+            "zh-CN": "蛋白质组学、心血管重塑、糖尿病并发症。",
+            "en": "Proteomics, Cardiovascular Remodeling, Diabetic Complications."
+        },
+        remarks: {
+            "zh-CN": "Baker心脏与糖尿病研究所核心PI，构建临床转化质谱平台。",
+            "en": "Core PI at Baker Heart and Diabetes Institute, established clinical translational mass spectrometry platform."
+        }
+    },
+    {
+        id: "david_greening",
+        name: "David Greening (大卫·格林宁)",
+        contribution: {
+            "zh-CN": "蛋白质组与代谢组平台主任，领导细胞信号多组学研究心血管衰老与炎症，桥接组学与临床转化。",
+            "en": "Director of Proteomics and Metabolomics Platform, leads multi-omics studies of cell signaling in cardiovascular aging and inflammation, bridges omics and clinical translation."
+        },
+        field: {
+            "zh-CN": "细胞信号多组学、心血管衰老、炎症机制。",
+            "en": "Cell Signaling Multi-omics, Cardiovascular Aging, Inflammation Mechanisms."
+        },
+        remarks: {
+            "zh-CN": "La Trobe大学教授，开发外泌体多组学技术，应用于心血管液体活检。",
+            "en": "Professor at La Trobe University, developed exosome multi-omics technology for cardiovascular liquid biopsy."
+        }
+    },
+    {
+        id: "folkert_asselbergs",
+        name: "Folkert W. Asselbergs (福尔克特·W·阿塞尔贝格斯)",
+        contribution: {
+            "zh-CN": "大数据多组学专家，领导心血管生物银行整合研究，结合电子健康记录与组学预测高血压与心梗风险。",
+            "en": "Big data multi-omics expert, leads cardiovascular biobank integration, combines EHRs with omics to predict hypertension and myocardial infarction risk."
+        },
+        field: {
+            "zh-CN": "大数据多组学、心血管生物银行、风险预测。",
+            "en": "Big Data Multi-omics, Cardiovascular Biobanking, Risk Prediction."
+        },
+        remarks: {
+            "zh-CN": "Utrecht大学教授，领导欧洲心脏病学大数据联盟，成果用于临床决策支持系统。",
+            "en": "Professor at Utrecht University, leads European Cardiology Big Data Alliance, outcomes applied in clinical decision support systems."
+        }
+    },
+    {
+        "id": "andrew_steele",
+        "name": "Andrew Steele (安德鲁·斯蒂尔)",
+        "contribution": {
+        "zh-CN": "计算生物学家与长寿专家，利用机器学习解码DNA并推动衰老生物学研究，倡导将衰老视为可治疗疾病以延长健康寿命。",
+        "en": "Computational biologist and longevity expert, uses machine learning to decode DNA and advances aging biology research, advocates treating aging as a treatable disease to extend healthy lifespan."
+        },
+        "field": {
+        "zh-CN": "计算生物学、衰老生物学、长寿科学。",
+        "en": "Computational Biology, Aging Biology, Longevity Science."
+        },
+        "remarks": {
+        "zh-CN": "The Longevity Initiative总监与联合创始人，前弗朗西斯·克里克研究所研究员，《老而不衰的科学》作者，柏林基地科学作家与活动家。",
+        "en": "Director and Co-Founder of The Longevity Initiative, former researcher at Francis Crick Institute, author of Ageless, Berlin-based science writer and campaigner."
+        }
     }
 ];
 
