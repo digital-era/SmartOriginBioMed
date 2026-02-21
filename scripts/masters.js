@@ -1,4 +1,4 @@
-const TCMMasters = [
+    const TCMMasters = [
     {
         id: "bian_que",
         name: "扁鹊 (Bian Que)",
@@ -352,6 +352,22 @@ const WMMasters = [
         remarks: {
             "zh-CN": "纽约大学教授，其案例著作普及神经科学，影响全球医学教育。",
             "en": "Professor at New York University; his case studies popularized neuroscience, influencing global medical education."
+        }
+    },
+    {
+        "id": "john_sarno",
+        "name": "John Sarno (约翰·萨诺)",
+        "contribution": {
+        "zh-CN": "康复医学专家，开发张力肌神经综合征理论，强调慢性疼痛源于心理因素而非结构性损伤，推动心身医学在疼痛管理中的应用。",
+        "en": "Expert in rehabilitation medicine, developed Tension Myoneural Syndrome theory, emphasizing chronic pain originates from psychological factors rather than structural damage, advancing psychosomatic medicine in pain management."
+        },
+        "field": {
+        "zh-CN": "心身医学、慢性疼痛、康复医学。",
+        "en": "Psychosomatic Medicine, Chronic Pain, Rehabilitation Medicine."
+        },
+        "remarks": {
+        "zh-CN": "纽约大学医学院教授，著《治愈背痛》等著作，帮助数千人。",
+        "en": "Professor at NYU School of Medicine, authored 'Healing Back Pain' and other works, aiding thousands."
         }
     }
 ];
