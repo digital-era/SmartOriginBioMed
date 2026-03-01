@@ -83,8 +83,8 @@
         id: "zhu_zongxiang",
         name: "祝总骧 (Zhu Zongxiang)",
         contribution: {
-            "zh-CN": "著名经络学家，首创“312经络锻炼法”。运用现代生物物理技术（如高振动声法）首次客观证实了人体经络线的存在，为经络学说提供了科学依据。",
-            "en": "Renowned meridian scientist, pioneered the '312 Meridian Exercise Method'. Utilized modern biophysical techniques to objectively verify for the first time the existence and distribution of human meridian lines, thus providing a scientific basis for meridian theory."
+            "zh-CN": "著名经络学家，首创“312经络锻炼法”。运用现代生物物理技术（如高振动声法）首次客观证实了人体经络线的存在。",
+            "en": "Renowned meridian scientist, pioneered the '312 Meridian Exercise Method'. Utilized modern biophysical techniques to objectively verify for the first time the existence and distribution of human meridian lines."
         },
         field: {
             "zh-CN": "经络生物学、经络物理研究、中医养生。",
