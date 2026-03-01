@@ -80,6 +80,54 @@
         }
     },
     {
+        id: "zhu_zongxiang",
+        name: "祝总骧 (Zhu Zongxiang)",
+        contribution: {
+            "zh-CN": "著名经络学家，首创“312经络锻炼法”。运用现代生物物理技术（如高振动声法）首次客观证实了人体经络线的存在，为经络学说提供了科学依据。",
+            "en": "Renowned meridian scientist, pioneered the '312 Meridian Exercise Method'. Utilized modern biophysical techniques to objectively verify for the first time the existence and distribution of human meridian lines, thus providing a scientific basis for meridian theory."
+        },
+        field: {
+            "zh-CN": "经络生物学、经络物理研究、中医养生。",
+            "en": "Meridian Biology, Biophysical Study of Meridians, TCM Health Preservation."
+        },
+        remarks: {
+            "zh-CN": "中国科学院生物物理所教授，其创立的312经络锻炼法在全球推广。",
+            "en": "Professor at the Institute of Biophysics, Chinese Academy of Sciences. His '312 Meridian Exercise Method' is promoted globally."
+        }
+    },
+    {
+        id: "hao_jinkai",
+        name: "郝金凯 (Hao Jinkai)",
+        contribution: {
+            "zh-CN": "实测经络针灸疗法创立者。与祝总骧教授合作，创立“实测经络针灸疗法”，极大提高了针灸疗效。",
+            "en": "Eminent acupuncturist, founder of the Clinically-Mapped Meridian Acupuncture Therapy. Collaborating with Professor Zhu Zongxiang, creating the 'Mapped Meridian Acupuncture Therapy'. This significantly enhanced acupuncture's efficacy."
+        },
+        field: {
+            "zh-CN": "针灸学、实测经络学、经外奇穴研究。",
+            "en": "Acupuncture, Mapped Meridian Science, Extra Meridian Points Research."
+        },
+        remarks: {
+            "zh-CN": "著有《针灸经外奇穴图谱》等经典，因疗效神奇被誉为“郝一针”。",
+            "en": "Author of classics like *Atlas of Extra Meridian Acupoints*. Revered as 'Hao One-Needle' for his remarkable clinical efficacy [citation:3][citation:8]."
+        }
+    },
+    {
+        id: "chen_yuqin",
+        name: "陈玉琴 (Chen Yuqin)",
+        contribution: {
+            "zh-CN": "民间中医保健专家，自学中医治愈自身重疾后创立循经指压健康疗法，强调经络疏通与人体自愈，惠及众多疑难杂症患者。",
+            "en": "Folk TCM health expert who, after self-studying TCM and curing her own serious illness, founded the Meridian Acupressure Health Therapy, emphasizing meridian dredging and human self-healing, benefiting numerous patients with difficult conditions."
+        },
+        field: {
+            "zh-CN": "中医养生学、经络调理、指压推拿、自愈疗法。",
+            "en": "TCM Health Preservation, Meridian Regulation, Acupressure and Tuina, Self-Healing Therapy."
+        },
+        remarks: {
+            "zh-CN": "当代民间中医大师，其疗法简便易行、广受欢迎，应邀赴多国讲座。",
+            "en": "Contemporary folk TCM master; her simple and accessible therapy is widely popular, invited to lecture in multiple countries."
+        }
+    },
+    {
         id: "shi_xuemin",
         name: "石学敏 (Shi Xuemin)",
         contribution: {
@@ -157,22 +205,6 @@
         remarks: {
             "zh-CN": "临床操作迅捷高效，传承创新针灸技法。",
             "en": "Swift and efficient clinical operations; inherits and innovates acupuncture techniques."
-        }
-    },
-    {
-        id: "chen_yuqin",
-        name: "陈玉琴 (Chen Yuqin)",
-        contribution: {
-            "zh-CN": "民间中医保健专家，自学中医治愈自身重疾后创立循经指压健康疗法，强调经络疏通与人体自愈，惠及众多疑难杂症患者。",
-            "en": "Folk TCM health expert who, after self-studying TCM and curing her own serious illness, founded the Meridian Acupressure Health Therapy, emphasizing meridian dredging and human self-healing, benefiting numerous patients with difficult conditions."
-        },
-        field: {
-            "zh-CN": "中医养生学、经络调理、指压推拿、自愈疗法。",
-            "en": "TCM Health Preservation, Meridian Regulation, Acupressure and Tuina, Self-Healing Therapy."
-        },
-        remarks: {
-            "zh-CN": "当代民间中医大师，其疗法简便易行、广受欢迎，应邀赴多国讲座。",
-            "en": "Contemporary folk TCM master; her simple and accessible therapy is widely popular, invited to lecture in multiple countries."
         }
     },
     {
