@@ -112,6 +112,22 @@
         }
     },
     {
+        id: "zhou_lihua",
+        name: "周立华 (Zhou Lihua)",
+        contribution: {
+            "zh-CN": "中医心脑血管病专家，主张“心脑同治，心身并调，针药并用，西药中用”。",
+            "en": "TCM expert in cardiovascular and cerebrovascular diseases, advocates 'simultaneous treatment of heart and brain, coordination of mind and body, combined use of acupuncture and medicine, and adaptation of Western medicine with TCM principles'. "
+        },
+        field: {
+            "zh-CN": "中医内科学、心脑血管病、高血压研究、状态医学。",
+            "en": "Internal Medicine of TCM, Cardiovascular and Cerebrovascular Diseases, Hypertension Research, State Medicine."
+        },
+        remarks: {
+            "zh-CN": "河南中医药大学第三附属医院主任医师、教授、博士生导师，高血压病研究所所长。",
+            "en": "Chief Physician, Professor, and Doctoral Supervisor at the Third Affiliated Hospital of Henan University of Chinese Medicine; Director of the Hypertension Research Institute; Renowned TCM Doctor of Henan Province."
+        }
+    },
+    {
         id: "chen_yuqin",
         name: "陈玉琴 (Chen Yuqin)",
         contribution: {
