@@ -176,6 +176,22 @@
         }
     },
     {
+        id: "zhang_zishun",
+        name: "张至顺 (Zhang Zhishun)",
+        contribution: {
+            "zh-CN": "道教全真龙门派第二十一代传人，整理并公开历代单传秘法《金刚长寿功》，系统阐述内外八部刚柔并济、经络疏通、阴阳平衡的养生之道。",
+            "en": "21st-generation successor of Quanzhen Longmen School in Daoism, systematized and publicized the secret single-transmission method *Diamond Longevity Gong*,  achieving disease elimination, fitness, longevity, and even unity of Heaven and Man."
+        },
+        field: {
+            "zh-CN": "道教养生学、气功修炼、内丹静功、经络调理、金刚长寿功法。",
+            "en": "Daoist Health Preservation, Qigong Cultivation, Internal Alchemy Static Gong, Meridian Regulation, Diamond Longevity Exercises."
+        },
+        remarks: {
+            "zh-CN": "当代道教高道与‘陆地神仙’，医术精湛，曾治愈多例疑难重症。",
+            "en": "Contemporary eminent Daoist master and 'Terrestrial Immortal';  skilled in medicine, cured numerous difficult cases."
+        }
+    },
+    {
         id: "huang_yong",
         name: "黄泳 (Huang Yong)",
         contribution: {
