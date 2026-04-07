@@ -36,6 +36,10 @@ function openSettingsAndCheckAuth(event) {
 // 操作权限拦截检查机制 (新增)
 // ==========================================
 function checkActionAuth(actionName) {
+    if (!currentSelectedLeader) {
+        alert(translations[currentLang].alertSelectLeaderFirst);
+        return "";
+    }
     
     if (currentSelectedLeader.name == "扁鹊 (Bian Que)") {
         return true;
