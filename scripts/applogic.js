@@ -8,6 +8,8 @@ let conversationHistory = []; // 存储 {role, text, leaderName, timestamp}
 let importedHistory = null;  
 let isCanvasModeOpen = false;
 
+// 优雅模式状态锁，防止动画冲突和频繁点击
+let isElegantModeOpen = false;
 
 // --- NEW: Modal Control ---
 const apiSettingsModal = document.getElementById('apiSettingsModal');
@@ -1102,64 +1104,79 @@ function escapeHtml(text) {
         .replace(/'/g, "&#039;");
 }
 
-function openElegantMode() {
-    // 1. 获取元素
-    const userQuestion = document.getElementById('userQuestion').value;
-    const aiResponseEl = document.getElementById('aiResponseText');
-    
-    // 【关键】必须从 dataset.raw 获取原始纯文本
-    // 如果 dataset.raw 为空（修正前的代码会导致为空），逻辑就无法进行
-    const rawAiContent = aiResponseEl.dataset.raw; 
+async function openElegantMode() {
+    if (isElegantModeOpen) return;
 
-    // 2. 校验
-    if (!rawAiContent) {
-        // 如果 raw 为空，说明还没生成，或者生成函数没保存 raw
-        // 尝试回退读取 innerText，但效果可能不好
-        if (aiResponseEl.innerText.trim() === "") {
-             alert("请先获取专家的回复，才能开启专家阅读模式。");
-             return;
-        }
+    // 1. 获取元素
+    const userQuestionEl = document.getElementById('userQuestion');
+    const aiResponseEl = document.getElementById('aiResponseText');
+    const elegantQuestionBox = document.getElementById('elegantQuestionText');
+    const elegantAnswerBox = document.getElementById('elegantAnswerText');
+    const modal = document.getElementById('elegantModal');
+
+    // 2. 数据校验与提取：优先获取原始纯文本 raw
+    const rawAiContent = aiResponseEl.dataset.raw || aiResponseEl.innerText;
+    if (!rawAiContent || rawAiContent.trim() === "") {
+         // 契合专家应用的专属提示
+         alert("✦ 请先获取专家的回复，才能开启专家阅读模式。"); 
+         return;
     }
 
-    // 3. 填充问题
-    document.getElementById('elegantQuestionText').innerText = userQuestion || "（专家指引）";
+    // 3. 填充问题（如果为空，提供一个优雅的默认文案）
+    elegantQuestionBox.innerText = userQuestionEl?.value || "「 探寻专家视角的深度洞见 」";
 
     // 4. 填充答案 (使用保护函数)
-    const elegantAnswerBox = document.getElementById('elegantAnswerText');
+    // 【关键】必须先填充转换好的 HTML，再触发渲染和动效
+    elegantAnswerBox.innerHTML = parseMarkdownWithMath(rawAiContent);
+
+    // 5. 丝滑展开动效
+    modal.style.display = 'flex'; // 使用 flex 替代 block，更容易配合 CSS 实现完美居中
     
-    // 这里传入原始文本，先保护公式，再转 MD，再恢复公式
-    elegantAnswerBox.innerHTML = parseMarkdownWithMath(rawAiContent || aiResponseEl.innerText);
+    // 使用双 requestAnimationFrame 确保浏览器渲染管线准备就绪，动画过渡更完美
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // 锁定底层滚动，营造沉浸感
+            isElegantModeOpen = true;
+        });
+    });
 
-    // 5. 显示模态框
-    const modal = document.getElementById('elegantModal');
-    modal.style.display = 'block';
-    modal.offsetHeight; // 强制重绘
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden';
-
-    // 6. 触发 MathJax 渲染
-    if (window.MathJax) {
-        // 针对模态框区域重新渲染
-        MathJax.typesetPromise([elegantAnswerBox]).catch(err => console.error('Modal MathJax error:', err));
+    // 6. 异步且安全地触发 MathJax 渲染
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        try {
+            await MathJax.typesetPromise([elegantAnswerBox]);
+        } catch (err) {
+            console.warn('✦ 专家公式渲染出现微小扰动:', err);
+        }
     }
 }
 
 function closeElegantMode() {
+    if (!isElegantModeOpen) return;
+    
     const modal = document.getElementById('elegantModal');
     modal.classList.remove('show');
     
-    // 等待动画结束后隐藏
-    setTimeout(() => {
+    // 监听 CSS 动画结束事件，彻底替代硬编码的 setTimeout，更优雅且不卡顿
+    modal.addEventListener('transitionend', function handler() {
         modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // 恢复滚动
-    }, 400);
+        document.body.style.overflow = ''; // 恢复默认滚动
+        modal.removeEventListener('transitionend', handler);
+        isElegantModeOpen = false;
+    }, { once: true });
 }
 
-// 点击模态框背景关闭
+// 7. 事件监听：点击模态框背景关闭
 document.getElementById('elegantModal').addEventListener('click', function(e) {
     // 如果点击的是背景（elegantModal）或 container 外部区域，则关闭
-    // 注意：点击 .elegant-content 内部不应关闭
     if (e.target === this) {
+        closeElegantMode();
+    }
+});
+
+// 8. [新增] 键盘无障碍交互：加入 ESC 键丝滑退出（符合高级 UX 直觉）
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isElegantModeOpen) {
         closeElegantMode();
     }
 });
