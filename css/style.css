@@ -2201,9 +2201,9 @@ footer {
 
     /* --- Expert 回答区块：专业科技感 --- */
     #print-overlay .answer-node {
-        background-color: #f9fbfd !important; /* 极淡的科技蓝白底色 */
-        border: 1px solid #e2ebf3 !important; 
-        border-top: 3px solid #0056b3 !important; /* 顶部深蓝线提气 */
+        background-color: #fffcf8 !important; 
+        border: 1px solid #f2e9d3 !important; 
+        border-top: 3px solid #D4AF37 !important; 
     }
 
     /* --- 排版细节：段落与列表 --- */
