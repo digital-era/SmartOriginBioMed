@@ -2106,182 +2106,168 @@ footer {
     pointer-events: none;
 }
 
+/* ==========================================
+   智源生医 PDF导出：商业级白皮书样式
+   ========================================== */
+
 /* --- 1. 打印替身的基础设置 --- */
 #print-overlay {
-    position: fixed;
-    top: -9999px;
-    left: -9999px;
-    width: 100vw;
-    z-index: -1;
+    position: fixed; top: -9999px; left: -9999px; width: 100vw; z-index: -1;
 }
 
-/* --- 0. 核心修正：调整页边距以容纳页眉页脚, 解决左右边距过大问题 --- */
+/* --- 2. 页面设置：A4 标准留白 --- */
 @page {
-    /* 
-       语法顺序：上  右  下  左 
-       将上下设为 15mm (给页眉页脚留位置)
-       将左右设为 5mm (保持水平方向内容尽可能宽)
-    */
-    margin: 15mm 5mm; 
-    size: auto;
+    /* 上下留 15mm，左右留 12mm，这是高端画册的标准留白 */
+    margin: 15mm 12mm; 
+    size: A4 auto; 
 }
 
-/* --- 2. 打印媒体查询 (完整修正版) --- */
+/* --- 3. 打印媒体查询 --- */
 @media print {
-    /* 1. 隐藏非打印内容 */
-    body > *:not(#print-overlay) {
-        display: none !important;
-    }
+    body > *:not(#print-overlay) { display: none !important; }
 
-    /* 2. Body 设置 */
     body {
-        background: #fff !important;
+        background: #ffffff !important;
         margin: 0 !important;
         padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
   
-    /* 3. 打印容器复位 - 【核心修改：全宽 + 紧凑】 */
     #print-overlay {
         position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        /* 强制覆盖可能的 max-width 限制 */
-        max-width: 100% !important; 
+        top: 0 !important; left: 0 !important;
+        width: 100% !important; max-width: 100% !important; 
         z-index: 99999 !important;
+        background: #ffffff !important;
         
-        /* 去除所有内边距，让 @page 控制边缘 */
-        padding: 0 !important; 
-        margin: 0 !important;
-        
-        background: #fff !important;
-        
-        /* 字体设置：纯黑 + 极度紧凑 */
-        color: #000000 !important;
-        /*font-family: "Microsoft YaHei", "Segoe UI", sans-serif;*/
-        font-family: 'Noto Serif SC', 'Cinzel', serif;
-        font-size: 12px !important; /* 字体稍微调小一点点以容纳更多内容 */
-        line-height: 1.25 !important; /* 【关键】：进一步压缩行高 (原1.35) */
+        color: #222222 !important;
+        font-family: 'Noto Serif SC', 'SimSun', 'Times New Roman', serif !important;
+        font-size: 11pt !important; 
+        line-height: 1.75 !important; 
     }
 
-    /* 4. 对话气泡容器 - 【核心修改：强制撑满宽度】 */
+    /* 角色标题样式 */
+    #print-overlay .print-role-title {
+        font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif !important;
+        font-size: 10.5pt !important;
+        font-weight: 700 !important;
+        margin-bottom: 8px !important;
+        letter-spacing: 0.5px !important;
+    }
+    #print-overlay .user-role { color: #1a2a3a !important; }
+    #print-overlay .ai-role { color: #0056b3 !important; } /* 智源生医Expert角色：科技感深蓝色 */
+
+    /* --- 对话气泡全局容器 --- */
     #print-overlay .thought-node {
         position: relative;
-        /* 关键：强制气泡宽度 100%，解决“内容宽度被压缩” */
-        width: 100% !important;
-        max-width: 100% !important;
-        
-        page-break-inside: avoid !important;
-        margin-bottom: 5px !important; /* 气泡间距再压缩 */
-        padding: 5px 8px !important;   /* 内边距压缩 */
-        
-        border-radius: 4px !important;
-        border: 1px solid #ddd;       
+        width: 100% !important; max-width: 100% !important;
+        page-break-inside: avoid !important; 
+        margin-bottom: 25px !important; 
+        padding: 20px 25px !important; 
+        border-radius: 8px !important;
+        box-shadow: none !important; /* 强制去除网页阴影 */
         white-space: pre-wrap !important; 
-        box-sizing: border-box !important; /* 防止边框撑破布局 */
+        box-sizing: border-box !important; 
+        text-align: left !important;
     }
 
-    /* --- 5. 【核心修改：暴力压缩段落与空隙】 --- */
+    /* ==========================================
+       User 提问区块 (彻底修复字发白发虚问题)
+       ========================================== */
+    #print-overlay .question-node {
+        background-color: #f4f6f9 !important; /* 稍有质感的灰蓝色底 */
+        border-left: 4px solid #34495e !important; 
+        border-top: 1px solid #eef1f5 !important;
+        border-right: 1px solid #eef1f5 !important;
+        border-bottom: 1px solid #eef1f5 !important;
+    }
     
+    #print-overlay .question-node,
+    #print-overlay .question-node *,
+    #print-overlay .question-node p {
+        color: #1a252f !important; 
+        -webkit-text-fill-color: #1a252f !important; 
+        text-shadow: none !important; 
+        -webkit-text-stroke: 0 !important; 
+        background-image: none !important; 
+        background-clip: border-box !important; 
+        -webkit-background-clip: border-box !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif !important; 
+        font-weight: 600 !important; 
+        font-size: 11pt !important;
+        letter-spacing: normal !important;
+    }
+
+    /* --- Expert 回答区块：专业科技感 --- */
+    #print-overlay .answer-node {
+        background-color: #f9fbfd !important; /* 极淡的科技蓝白底色 */
+        border: 1px solid #e2ebf3 !important; 
+        border-top: 3px solid #0056b3 !important; /* 顶部深蓝线提气 */
+    }
+
+    /* --- 排版细节：段落与列表 --- */
     #print-overlay .thought-node * {
         margin-top: 0 !important;
+        box-shadow: none !important; 
+    }
+
+    #print-overlay .thought-node p {
+        margin-bottom: 12px !important; 
+        text-align: justify !important; 
+        line-height: 1.75 !important;
+    }
+    
+    #print-overlay .thought-node p:last-child { margin-bottom: 0 !important; }
+    #print-overlay .thought-node p:empty { display: none !important; }
+    
+    #print-overlay .thought-node ul, 
+    #print-overlay .thought-node ol {
+        margin-bottom: 12px !important; padding-left: 25px !important; 
+    }
+    #print-overlay .thought-node li {
+        margin-bottom: 6px !important; line-height: 1.75 !important;
+    }
+    
+    #print-overlay .thought-node h1, #print-overlay .thought-node h2, #print-overlay .thought-node h3 {
+        font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif !important;
+        color: #111111 !important;
+        margin-top: 15px !important; margin-bottom: 10px !important;
+        padding-bottom: 5px !important;
+        border-bottom: 1px solid #eeeeee !important; 
+    }
+    
+    #print-overlay .thought-node strong, #print-overlay .thought-node b {
+        font-weight: 800 !important;
         color: #000000 !important;
     }
 
-    /* 压缩 P 标签：间距改为 1px */
-    #print-overlay .thought-node p {
-        margin-bottom: 1px !important; 
-        text-align: justify;
-        line-height: 1.25 !important;
-    }
-    
-    /* 隐藏空段落 (Markdown解析常出现多余空行) */
-    #print-overlay .thought-node p:empty {
-        display: none !important;
-    }
-    
-    /* 列表极致紧凑 */
-    #print-overlay .thought-node ul, 
-    #print-overlay .thought-node ol {
-        margin-bottom: 1px !important;
-        padding-left: 15px !important; 
-    }
-    #print-overlay .thought-node li {
-        margin-bottom: 0px !important;
-        line-height: 1.25 !important;
-    }
-    
-    /* 标题加粗 */
-    #print-overlay .thought-node h1,
-    #print-overlay .thought-node h2,
-    #print-overlay .thought-node strong,
-    #print-overlay .thought-node b {
-        font-weight: 800 !important;
-        color: #000 !important;
-        margin-bottom: 2px !important;
-    }
-
-    /* --- 6. 角色样式 (统一香槟色边线) --- */
-    
-    /* User: 浅灰底 + 香槟色线 (修改了原来的蓝色) */
-    #print-overlay .question-node {
-        background-color: #f0f6ff !important; /* 浅蓝底 */
-        border-left: 4px solid #0056b3 !important; /* 深蓝线，更清晰 */
-        border: 1px solid #eee;
-        font-weight: 500 !important;
-        /* --- 新增以下两行关键代码 --- */
-        -webkit-print-color-adjust: exact !important; /* 针对 Chrome, Safari, Edge */
-        print-color-adjust: exact !important;         /* 标准属性 */
-    }
-    
-    /* North Star: 纯白底 + 香槟色线 */
-    #print-overlay .answer-node {
-       /* 使用极淡的米黄色，配合金色边框非常高级 */
-        background-color: #FFFAF0 !important; 
-        /* 修复了之前的语法错误 */
-        border-left: 1px solid #D4AF37 !important; 
-        border: 1px solid #D4AF37 !important; 
-        /* 记得加上这个，否则打印时没有背景色 */
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    /* --- 7. 隐藏无关元素 --- */
-    #print-overlay .node-delete-btn,
-    #print-overlay .action-bar,
-    #print-overlay button {
+    /* --- 隐藏无关元素 --- */
+    #print-overlay .node-delete-btn, #print-overlay .action-bar, #print-overlay button {
         display: none !important;
     }
   
-   /* --- 8. 北极星与领域样式修正 --- */
-    /* 标志颜色 */
-    #print-overlay .star-decoration-top,
-    #print-overlay .star-decoration-top i,
-    #print-overlay .star-decoration-bottom i {
-        color: #D4AF37 !important; 
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    /* 领域标签优化 */
+    /* --- 标志与领域标签修正 --- */
     #print-overlay .badge-field {
         background: transparent !important;
-        color: #000000 !important; 
-        font-weight: bold !important;
-        border: 1px solid #D4AF37 !important;
-        padding: 1px 5px !important; /* 稍微再紧凑一点 */
+        color: #0056b3 !important; /* 科技蓝 */
+        font-weight: 700 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif !important;
+        border: 1px solid #0056b3 !important;
+        padding: 3px 8px !important; 
         border-radius: 4px !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+        font-size: 9pt !important;
     }
     
-    /* 分割线 */
     #print-overlay .node-divider {
-        background: linear-gradient(to right, transparent, #D4AF37, transparent) !important;
-        opacity: 1 !important;
-        margin: 5px 0 !important; /* 减少分割线上下间距 */
+        height: 1px !important;
+        background: linear-gradient(to right, transparent, #0056b3, transparent) !important;
+        opacity: 0.3 !important;
+        margin: 20px 0 !important; 
+        border: none !important;
     }
 }
+
 
 /* 适配移动端 */
 @media (max-width: 768px) {
