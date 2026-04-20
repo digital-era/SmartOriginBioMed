@@ -264,7 +264,7 @@
             }
         
             if (manifestoModalConclusion && translations[lang] && translations[lang]['manifestoConclusion']) {
-                manifestoModalConclusion.innerHTML = `<em>${translations[lang]['manifestoConclusion']}</em>`;
+                manifestoModalConclusion.innerText = translations[lang]['manifestoConclusion'];
             }
         }
 
