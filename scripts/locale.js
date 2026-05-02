@@ -95,7 +95,7 @@
                 "saveBtnText": "保存设置",
                 "aboutBtnText": "了解我们",    
                 // --- 新增宣言模态框的翻译 ---
-                "manifestoTitle": "《智源生医》：探索健康旋律，解决人间疾苦",
+                "manifestoTitle": "智源生医：探索健康旋律，解决人间疾苦",
                 "manifestoPara1": "你是否曾凝视生命的潮汐，渴望洞悉疾病的缘起，探寻健康的真谛？",
                 "manifestoPara2": "在人类健康的浩瀚天地里，我们时常面临困惑，被繁杂的病症所扰，被前沿的理论所惑。我们渴望一份指引，一份能穿透迷雾、照亮前路的智慧之光。",
                 "manifestoPara3": "张仲景、希波克拉底、埃里克·兰德、约翰·多诺霍……他们的卓越并非偶然，而是源于对生命本质的深刻体悟：中医的整体观、西医的实证精神、多组学的系统洞察，以及脑机接口的无限可能。他们理解人体系统，面对病痛挑战，每一次的发现与突破都如同生命长河中一位位深邃的智者，以其独特的洞察，为人类健康健康和生命质量指引方向。",
@@ -106,7 +106,7 @@
                 "manifestoPara8": "你无需在信息洪流中苦寻答案，也无需穷尽所有医学文献。在这里，你的每一个问题，都将得到智者般深邃的回应。每一次提问，都可能激发你内心深处未曾触及的探索火花；每一次对话，都将拓展你认知生命的边界，推动你健康管理的进程。",
                 "manifestoConclusion": "我们的使命是以AI原生智慧，探索健康旋律，解决人间疾苦。",
 
-                "angelModeTitle": "《智源生医》天使模式：天使降临，穿透星河",
+                "angelModeTitle": "智源生医天使模式：天使降临，穿透星河",
                 "angelCoreConceptTitle": "[核心理念]",
                 "angelCoreConceptText": "语言，是通往认知的处方；而行动，才是治愈疾苦的良药。我们将“智者之声”凝练为“天使之手”，打破物理与生物的隔阂，将AI从思维的云端降临至肉身的寸肤之间。这是从“理解生命”到“修复生命”的伟大跨越。",
                 "angelFeaturesTitle": "[功能诗篇]",
@@ -216,7 +216,7 @@
                 "saveBtnText": "Save Setting",                    
                 "aboutBtnText": "About Us",    
                  // --- 新增宣言模态框的翻译 ---
-                "manifestoTitle": "《SmartOrigin BioMed》: Explore Health melody, Relieve Human Suffering",
+                "manifestoTitle": "SmartOrigin BioMed: Explore Health melody, Relieve Human Suffering",
                 "manifestoPara1": "Have you ever gazed at the tides of life, eager to understand the origins of disease and explore the true meaning of health?",
                 "manifestoPara2": "In the vast realm of human health, we often face confusion, troubled by complex symptoms and perplexed by cutting-edge theories. We long for guidance, a light of wisdom that can pierce through the fog and illuminate the path ahead.",
                 "manifestoPara3": "Zhang Zhongjing, Hippocrates, Eric Lander, John Donoghue... their excellence was not accidental, but stemmed from a profound understanding of the essence of life: the holistic view of Traditional Chinese Medicine, the empirical spirit of Western medicine, the macroscopic insights of multi-omics, and the infinite possibilities of brain-computer interfaces. They understood the human system, faced the challenges of illness, and each discovery and breakthrough was like a profound sage in the long river of life, guiding the way for human health and quality of life.",
