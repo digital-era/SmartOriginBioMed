@@ -119,7 +119,7 @@
                 "angelFeature3Title": "合一 · 智者的融合关怀 (飞针+纳米 天使)",
                 "angelFeature3Subtitle": "中西医融合的实时反馈与动态疗愈场",
                 "angelFeature3Desc": "飞针在表，疏通经络之河；纳米在里，修复生命之基。这种“内外兼修”并非割裂的执行，而是在统一的智慧大脑下协同运作。当你在这个模式中，你会听到希波克拉底的誓言与张仲景的叮咛在耳边交织，背景音随着身体指标的好转而从焦灼转为宁静的乐章。<br><strong>AI不仅在治病，更在护佑。</strong> 它让每一次针刺的力度、每一次纳米机器人的吞噬，都充满着对生命最深沉的敬畏与爱意。",
-                 "footerRight": "© 2025 AI范式进化. 保留所有权利。",
+                 "footerRight": "© AI范式进化. 保留所有权利。",
             },
             "en": {
                 "pageTitle": "SmartOrigin BioMed",
@@ -240,7 +240,7 @@
                 "angelFeature3Title": "Unity · The Fusion of Wisdom (Flying Needle + Nano Angel)",
                 "angelFeature3Subtitle": "Real-time feedback and dynamic healing field of integrated Chinese and Western medicine",
                 "angelFeature3Desc": "Flying needles on the surface dredge the river of meridians; nanobots inside repair the foundation of life. This 'internal and external cultivation' is not a fragmented execution, but a coordinated operation under a unified wisdom brain. When you are in this mode, you will hear the Hippocratic Oath and Zhang Zhongjing's exhortations intertwining in your ear, and the background sound turns from anxious to a serene movement as your body indicators improve.<br><strong>AI is not only treating diseases but also protecting.</strong> It makes the intensity of every acupuncture and every phagocytosis of nanobots full of the deepest awe and love for life.",
-                "footerRight": "© 2025 AI Paradigm Evolution. All rights reserved.",
+                "footerRight": "© AI Paradigm Evolution. All rights reserved.",
             }
         };
         let currentLang = 'zh-CN'; // Default language
