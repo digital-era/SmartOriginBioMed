@@ -1215,9 +1215,34 @@ footer {
 
     .container { width: 95%; padding: 10px; margin-top: 0px; }
     .tab-content h2, .interaction-area h2 { font-size: 0.9em; margin-bottom: 10px; }
+
+    /* --- 3. 容器与Tab (已修改为单行可滑动模式) --- */
+    .tabs {
+          display: flex;
+          flex-wrap: nowrap; /* 【修改 1】强制不换行，保持在同一排 */
+          overflow-x: auto;  /* 【修改 2】超出屏幕宽度时，允许左右滑动 */
+          -webkit-overflow-scrolling: touch; /* 【修改 3】优化 iOS 端滑动的丝滑度 */
+          justify-content: flex-start; /* 【修改 4】因为是滑动，必须改为左对齐，用 center 会导致左边文字滑不到 */
+          gap: 8px;
+          margin-bottom: 15px;
+          
+          /* 隐藏默认的滚动条，保持界面干净 */
+          scrollbar-width: none; /* 针对 Firefox */
+      }
+
+      /* 隐藏默认的滚动条 (针对 Chrome, Safari, Edge) */
+      .tabs::-webkit-scrollbar {
+          display: none;
+      }    
     
-    .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
-    .tab-button { font-size: 11px; padding: 4px 4px; margin-right: 2px; margin-bottom: 3px; min-width: 30px; flex: 0 0 auto; }
+     .tab-button { 
+          font-size: 11px; 
+          padding: 6px 12px; /* 稍微增加一点左右内边距，手指更好点击 */
+          margin-right: 2px; 
+          margin-bottom: 3px; 
+          min-width: auto;   /* 移除 min-width 限制，让胶囊自适应文字 */
+          flex: 0 0 auto;   /* 【核心】绝对不准被 flex 压缩，保持原大小 */
+    }
     
     /* 手机端卡片修复 */
     .scroll-button { display: none !important; }
