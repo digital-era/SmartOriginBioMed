@@ -120,10 +120,10 @@
                 "angelFeature3Subtitle": "中西医融合的实时反馈与动态疗愈场",
                 "angelFeature3Desc": "飞针在表，疏通经络之河；纳米在里，修复生命之基。这种“内外兼修”并非割裂的执行，而是在统一的智慧大脑下协同运作。当你在这个模式中，你会听到希波克拉底的誓言与张仲景的叮咛在耳边交织，背景音随着身体指标的好转而从焦灼转为宁静的乐章。<br><strong>AI不仅在治病，更在护佑。</strong> 它让每一次针刺的力度、每一次纳米机器人的吞噬，都充满着对生命最深沉的敬畏与爱意。",
 
-                             // 主菜单 tooltip
+                  // 主菜单 tooltip
                  "tooltipBgMusic": '背景音乐',
-                 "tooltipReadingMode": '星语阅读',
-                 "tooltipCanvas": '思想画布',
+                 "tooltipReadingMode": '专家之声',
+                 "tooltipCanvas": '旋律画布',
                  "tooltipAboutUs": '了解我们',
                  "tooltipSettings": '设置',
                  "tooltipLanguage": '切换语言',
@@ -262,8 +262,8 @@
                 "angelFeature3Desc": "Flying needles on the surface dredge the river of meridians; nanobots inside repair the foundation of life. This 'internal and external cultivation' is not a fragmented execution, but a coordinated operation under a unified wisdom brain. When you are in this mode, you will hear the Hippocratic Oath and Zhang Zhongjing's exhortations intertwining in your ear, and the background sound turns from anxious to a serene movement as your body indicators improve.<br><strong>AI is not only treating diseases but also protecting.</strong> It makes the intensity of every acupuncture and every phagocytosis of nanobots full of the deepest awe and love for life.",
 
                 "tooltipBgMusic": 'Background Music',
-                "tooltipReadingMode": 'Reading Mode',
-                "tooltipCanvas": 'Thought Canvas',
+                "tooltipReadingMode": 'Expert Voice',
+                "tooltipCanvas": 'Melody Canvas',
                 "tooltipAboutUs": 'About Us',
                 "tooltipSettings": 'Settings',
                 "tooltipLanguage": 'Switch Language',
@@ -304,17 +304,35 @@
             }
         }
 
+       /**
+         * 完整版语言切换函数
+         * 修复了 contextManager 和 ContextUI 状态同步问题
+         */
         function setLanguage(lang) {
-            currentLang = lang;
-            document.documentElement.lang = currentLang;
-            document.title = translations[currentLang].pageTitle;
-            localStorage.setItem('preferredLang', lang); // Save preference
+            // 1. 【核心修复】同步到全局 window 对象，确保 contextManager.js 的 _t 函数能获取最新语言
+            window.currentLang = lang; 
+            currentLang = lang; // 更新当前作用域变量
 
+            // 【关键修复：同步 UI 状态】
+            // 无论从哪里调用 setLanguage，都强制让下拉框的显示值与语言值一致
+            const langSelector = document.getElementById('languageSelector');
+            if (langSelector) {
+                langSelector.value = lang;
+            }
+                    
+            // 2. 更新 HTML 属性及持久化配置
+            document.documentElement.lang = currentLang;
+            if (translations[currentLang].pageTitle) {
+                document.title = translations[currentLang].pageTitle;
+            }
+            localStorage.setItem('preferredLang', lang); // 保存用户偏好
+        
+            // 3. 翻译静态元素：扫描所有 data-i18n-key
             document.querySelectorAll('[data-i18n-key]').forEach(el => {
                 const key = el.dataset.i18nKey;
-                const target = el.dataset.i18nTarget || 'textContent'; // Default to textContent
-                let translation = translations[currentLang][key] || key; // Fallback to key if no translation
-
+                const target = el.dataset.i18nTarget || 'textContent'; // 默认为 textContent
+                let translation = translations[currentLang][key] || key; // 如果找不到翻译则显示 key
+        
                 if (target === 'innerHTML') {
                     el.innerHTML = translation;
                 } else if (target === 'placeholder') {
@@ -325,18 +343,78 @@
                     el.textContent = translation;
                 }
             });
-            
-            // Update dynamic elements that need re-translation
-            populateLeaders(); // This will now use translated labels AND translated data content
-            updateModelSelectByEndpoint(document.getElementById('apiEndpoint').value); // Re-populate models with translated labels
-
-            // Update selected leader display if "None"
+        
+            // 4. 翻译标题提示元素：扫描所有 data-i18n-title
+            document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                const key = el.getAttribute('data-i18n-title');
+                if (translations[currentLang][key]) {
+                    el.setAttribute('title', translations[currentLang][key]);
+                }
+            });
+                
+            // 5. 更新业务逻辑中的动态内容
+            if (typeof populateLeaders === 'function') {
+                populateLeaders(); // 重新填充专家列表（包含翻译标签）
+            }
+        
+            const apiEndpointEl = document.getElementById('apiEndpoint');
+            if (apiEndpointEl && typeof updateModelSelectByEndpoint === 'function') {
+                // 根据当前接入点重新生成模型下拉列表（包含翻译后的模型名称）
+                updateModelSelectByEndpoint(apiEndpointEl.value); 
+            }
+        
+            // 6. 更新“当前选择”状态显示
             const selectedLeaderNameEl = document.getElementById('selectedLeaderName');
-            if (!currentSelectedLeader) {
+            // 如果当前没选专家，更新“无/None”的显示
+            if (selectedLeaderNameEl && (typeof currentSelectedLeader === 'undefined' || !currentSelectedLeader)) {
                 selectedLeaderNameEl.textContent = translations[currentLang].noLeaderSelected;
             }
+        
+            // 7. 更新宣言模态框内容 (Manifesto Modal)
+            if (typeof updateManifestoModalContent === 'function') {
+                updateManifestoModalContent(lang);
+            }
+        
+            // 8. 【新增修复】强制刷新星语上下文 UI 面板
+            // 确保面板中的“暂无上下文”、“来源标签”等动态渲染的内容立即跟随语言变化
+            if (window.ContextUI && typeof window.ContextUI._renderList === 'function') {
+                window.ContextUI._renderList();
+            }
+        }  
 
-            // === NEW: Call function to update manifesto modal content ===
-            updateManifestoModalContent(lang);
-            // === END NEW ===
-        }    
+
+        //=== 修正后的语言初始化逻辑 ===
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 计算初始语言
+            const savedLang = localStorage.getItem('preferredLang');
+            const browserLang = navigator.language.startsWith('en') ? 'en' : 'zh-CN';
+            const initialLang = savedLang || browserLang || 'zh-CN';
+        
+            // 2. 【关键修正】：立即同步全局变量，不等待 Timeout
+            // 这样当 newUI.js 开始执行渲染函数时，读到的 window.currentLang 就是 'en'
+            window.currentLang = initialLang;
+            document.documentElement.lang = initialLang;
+        
+            // 3. 同步下拉框状态
+            const langSelector = document.getElementById('languageSelector');
+            if (langSelector) {
+                langSelector.value = initialLang;
+            }
+        
+            // 4. 执行翻译逻辑
+            // 稍微延迟确保 populateLeaders 等函数已挂载
+            setTimeout(() => {
+                setLanguage(initialLang);
+        
+                // 5. 【核心修复】：显式触发一次全局语言变更通知
+                // 这会强制 newUI.js 重新运行渲染函数，修正那 8 个大类和提示文字
+                if (typeof window.onLanguageChanged === 'function') {
+                    window.onLanguageChanged();
+                }
+            }, 60); 
+        });
+
+        // 在你的翻译脚本最底部添加
+        window.translations = translations;
+        window.currentLang = currentLang;
+        window.setLanguage = setLanguage;
