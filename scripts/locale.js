@@ -91,7 +91,8 @@
                 "promptReplyInChinese": "开始你的思考和中文回复:",
                 "promptReplyInEnglish": "开始你的思考和英文回复:",
                 "settingsBtnText": "设置",
-                "modalTitle": "API及模型设置",
+                "modelTitle": "API及模型设置",
+                "loginTitle": "账号登录",
                 "saveBtnText": "保存设置",
                 "aboutBtnText": "了解我们",    
                 // --- 新增宣言模态框的翻译 ---
