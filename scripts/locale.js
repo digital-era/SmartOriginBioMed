@@ -254,7 +254,8 @@
                 "promptReplyInChinese": "begin your thinking and reply in Chinese:",
                 "promptReplyInEnglish": "begin your thinking and reply in English:",                    
                 "settingsBtnText": "Setting",
-                "modalTitle": "API&Modal Setting",
+                "modelTitle": "API&Model Setting",
+                "loginTitle": "Login",
                 "saveBtnText": "Save Setting",                    
                 "aboutBtnText": "About Us",    
                  // --- 新增宣言模态框的翻译 ---
@@ -313,7 +314,7 @@
                  "loginButton": 'Login',
                  "authenticatedBadge": '[ Authenticated ]',
                  "oldPasswordLabel": 'Old Password:',
-                 "oldPasswordPlaceholder": 'Current password',
+                 "oldPasswordPlaceholder": 'Curresdnt password',
                  "newPasswordLabel": 'New Password:',
                  "newPasswordPlaceholder": 'New password',
                  "logoutButton": 'Logout',
