@@ -137,7 +137,9 @@
                  "tooltipExportPDF": '导出PDF',
                  "tooltipExportMD": '导出Markdown',
                  "tooltipExportHTML": '导出HTML',
-                 "tooltipImportMD": '导入Markdown'  ,     
+                 "tooltipImportMD": '导入Markdown'  ,   
+                    
+                 "canvasTitle": '旋律画布',               
                     
                  "footerRight": "© AI范式进化. 保留所有权利。",
             },
@@ -274,7 +276,9 @@
                 "tooltipExportPDF": 'Export as PDF',
                 "tooltipExportMD": 'Export as Markdown',
                 "tooltipExportHTML": 'Export as HTML',
-                "tooltipImportMD": 'Import Markdown',       
+                "tooltipImportMD": 'Import Markdown',     
+                    
+                "canvasTitle": 'Melody Canvas',
                     
                 "footerRight": "© AI Paradigm Evolution. All rights reserved.",
             }
