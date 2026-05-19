@@ -119,6 +119,26 @@
                 "angelFeature3Title": "合一 · 智者的融合关怀 (飞针+纳米 天使)",
                 "angelFeature3Subtitle": "中西医融合的实时反馈与动态疗愈场",
                 "angelFeature3Desc": "飞针在表，疏通经络之河；纳米在里，修复生命之基。这种“内外兼修”并非割裂的执行，而是在统一的智慧大脑下协同运作。当你在这个模式中，你会听到希波克拉底的誓言与张仲景的叮咛在耳边交织，背景音随着身体指标的好转而从焦灼转为宁静的乐章。<br><strong>AI不仅在治病，更在护佑。</strong> 它让每一次针刺的力度、每一次纳米机器人的吞噬，都充满着对生命最深沉的敬畏与爱意。",
+
+                             // 主菜单 tooltip
+                 "tooltipBgMusic": '背景音乐',
+                 "tooltipReadingMode": '星语阅读',
+                 "tooltipCanvas": '思想画布',
+                 "tooltipAboutUs": '了解我们',
+                 "tooltipSettings": '设置',
+                 "tooltipLanguage": '切换语言',
+                 "tooltipStyle": '界面风格',
+
+                 // 滚动按钮 aria-label
+                 // scrollLeftAria: '向左滚动',
+                 // scrollRightAria: '向右滚动',
+                 // 画布工具栏
+                 "tooltipClearCanvas": '清空画布',
+                 "tooltipExportPDF": '导出PDF',
+                 "tooltipExportMD": '导出Markdown',
+                 "tooltipExportHTML": '导出HTML',
+                 "tooltipImportMD": '导入Markdown'  ,     
+                    
                  "footerRight": "© AI范式进化. 保留所有权利。",
             },
             "en": {
@@ -240,6 +260,22 @@
                 "angelFeature3Title": "Unity · The Fusion of Wisdom (Flying Needle + Nano Angel)",
                 "angelFeature3Subtitle": "Real-time feedback and dynamic healing field of integrated Chinese and Western medicine",
                 "angelFeature3Desc": "Flying needles on the surface dredge the river of meridians; nanobots inside repair the foundation of life. This 'internal and external cultivation' is not a fragmented execution, but a coordinated operation under a unified wisdom brain. When you are in this mode, you will hear the Hippocratic Oath and Zhang Zhongjing's exhortations intertwining in your ear, and the background sound turns from anxious to a serene movement as your body indicators improve.<br><strong>AI is not only treating diseases but also protecting.</strong> It makes the intensity of every acupuncture and every phagocytosis of nanobots full of the deepest awe and love for life.",
+
+                "tooltipBgMusic": 'Background Music',
+                "tooltipReadingMode": 'Reading Mode',
+                "tooltipCanvas": 'Thought Canvas',
+                "tooltipAboutUs": 'About Us',
+                "tooltipSettings": 'Settings',
+                "tooltipLanguage": 'Switch Language',
+                "tooltipStyle": 'UI Style',
+                //"scrollLeftAria": 'Scroll Left',
+                //scrollRightAria": 'Scroll Right',
+                "tooltipClearCanvas": 'Clear Canvas',
+                "tooltipExportPDF": 'Export as PDF',
+                "tooltipExportMD": 'Export as Markdown',
+                "tooltipExportHTML": 'Export as HTML',
+                "tooltipImportMD": 'Import Markdown',       
+                    
                 "footerRight": "© AI Paradigm Evolution. All rights reserved.",
             }
         };
