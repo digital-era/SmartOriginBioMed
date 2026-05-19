@@ -35,6 +35,9 @@ function importFromMD() {
                 }
 
                 importedHistory = parsed;
+                if (typeof saveCanvasSession === 'function') {
+                    saveCanvasSession(); 
+                }
                 renderDialogueCanvas();
 
                 // 可选：添加成功提示（根据你的UI风格实现）
@@ -110,11 +113,14 @@ function parseOldFormatMD(normalized) {
 
             let userText = userLines.join('\n');
 
-            // ★ 剥离 🧩 关联信息块（精确匹配三种常见写法）
+            // ★【修复】剥离 🧩 关联信息块（兼容中英文冒号）
             const infoBlockPatterns = [
-                /\*\*🧩 关联专家\*\*：\s*(.+?)\n\s*-\s*领域[：:]\s*(.+?)\n\s*-\s*贡献[：:]\s*(.+?)(?=\n|$)/s,
-                /🧩 关联专家：\s*(.+?)\n\s*-\s*领域：\s*(.+?)\n\s*-\s*贡献：\s*(.+?)(?=\n|$)/s,
-                /\*\*🧩 关联专家\*\*：(.+?)(?:- 领域：(.+?))?(?:- 贡献：(.+?))?/s
+                // 模式1: **🧩 关联专家**：姓名 (中文/英文冒号)
+                /\*\*🧩 关联专家\*\*[：:]\s*(.+?)\n\s*-\s*领域[：:]\s*(.+?)\n\s*-\s*贡献[：:]\s*(.+?)(?=\n|$)/s,
+                // 模式2: 🧩 关联专家：姓名 (无加粗，兼容冒号)
+                /🧩 关联专家[：:]\s*(.+?)\n\s*-\s*领域[：:]\s*(.+?)\n\s*-\s*贡献[：:]\s*(.+?)(?=\n|$)/s,
+                // 模式3: 宽松匹配（兼容冒号，非贪婪）
+                /\*\*🧩 关联专家\*\*[：:](.+?)(?:-\s*领域[：:](.+?))?(?:-\s*贡献[：:](.+?))?/s
             ];
 
             let extractedLeaderInfo = null;
