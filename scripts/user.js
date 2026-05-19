@@ -41,7 +41,7 @@ function checkActionAuth(actionName) {
     }
     
     // 特殊硬编码逻辑保留，但建议以后也放入配置
-    if (currentSelectedLeader.name == "Elon Musk (马斯克)") {
+    if (currentSelectedLeader.name == "扁鹊 (Bian Que)") {
         return true;
     }        
         
