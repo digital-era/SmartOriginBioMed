@@ -181,7 +181,7 @@
         	 "Old password incorrect": "老密码不正确",  
                     
                  "footerRight": "© AI范式进化. 保留所有权利。",
-                 "footerStatement": "© 内容由AI模型生成，不对适用性作出任何明示或暗示的保证。",
+                 "footerStatement": "内容由AI模型生成，不对适用性作出任何明示或暗示的保证。",
             },
             "en": {
                 "pageTitle": "SmartOrigin BioMed",
