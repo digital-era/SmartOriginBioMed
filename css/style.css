@@ -1197,6 +1197,7 @@ footer {
      #angelModeModal .manifesto-text h4 {
          font-size: 0.9em;
      }
+    footer {font-size: 0.6rem;}
 }
 
 @media (max-width: 480px) {
@@ -1283,6 +1284,7 @@ footer {
     
     #apiSettingsModal .modal-content { width: 80%; margin: 3% auto; padding: 4px 20px; }
     #apiSettingsModal h2 { font-size: 1.5em; }
+    footer {font-size: 0.6rem;}
 }
 
 /* === 全局滚动条美化 === */
