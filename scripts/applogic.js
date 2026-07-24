@@ -2,11 +2,216 @@ let currentSelectedLeader = null;
 let currentSelectedLeaderCategory = '';
 let currentGeneratedPrompt = '';
 
+// ═══════════════════════════════════════════════
+// 【全局变量挂载】支持跨模块访问
+// ═══════════════════════════════════════════════
+window.currentSelectedLeader = currentSelectedLeader;
+window.currentSelectedLeaderCategory = currentSelectedLeaderCategory;
+window.currentGeneratedPrompt = currentGeneratedPrompt;
+
 // --- [新增] 对话画布相关全局变量 ---
 let conversationHistory = []; // 存储 {role, text, leaderName, timestamp}
 // --- [新增] 用于临时存储从 MD 导入的对话历史
 let importedHistory = null;  
 let isCanvasModeOpen = false;
+
+
+// ═══════════════════════════════════════════════
+// 【多语言字段解析】统一处理字符串和多语言对象
+// ═══════════════════════════════════════════════
+function getFieldValue(field, lang) {
+    if (!field) return '';
+    if (typeof field === 'string') return field;
+    if (typeof field === 'object') {
+        return field[lang] || field['zh-CN'] || field['en'] || Object.values(field)[0] || '';
+    }
+    return String(field);
+}
+
+// ═══════════════════════════════════════════════
+// 【Admin 系统】Prompt 区域权限控制
+// ═══════════════════════════════════════════════
+function updateAdminUI() {
+    const isAdmin = document.body.classList.contains('admin-logged-in');
+    const promptDisplayArea = document.getElementById('prompt-display-area');
+    const promptCollapsibleContent = document.getElementById('prompt-collapsible-content');
+    const promptToggleIcon = document.getElementById('prompt-toggle-icon');
+    
+    if (!promptDisplayArea) return;
+    
+    if (isAdmin) {
+        promptDisplayArea.classList.remove('admin-only');
+        // Admin 默认折叠
+        if (promptCollapsibleContent) {
+            promptCollapsibleContent.style.display = 'none';
+        }
+        if (promptToggleIcon) {
+            promptToggleIcon.classList.remove('icon-rotated');
+        }
+    } else {
+        promptDisplayArea.classList.add('admin-only');
+    }
+}
+
+// ═══════════════════════════════════════════════
+// 【现代 UI 模式】初始化与切换
+// ═══════════════════════════════════════════════
+function initUIStyle() {
+    const savedStyle = localStorage.getItem('northstarUIStyle') || 'traditional';
+    switchUIStyle(savedStyle, false);
+}
+
+function switchUIStyle(style, save = true) {
+    if (save) {
+        localStorage.setItem('northstarUIStyle', style);
+    }
+    
+    const body = document.body;
+    const modernElements = document.querySelectorAll('.modern-ui');
+    const traditionalElements = document.querySelectorAll('.traditional-ui');
+    
+    if (style === 'modern') {
+        body.classList.add('modern-mode');
+        body.classList.remove('traditional-mode');
+        modernElements.forEach(el => el.style.display = '');
+        traditionalElements.forEach(el => el.style.display = 'none');
+        // 现代模式渲染
+        if (typeof filterModernGrid === 'function') {
+            filterModernGrid();
+        }
+    } else {
+        body.classList.add('traditional-mode');
+        body.classList.remove('modern-mode');
+        modernElements.forEach(el => el.style.display = 'none');
+        traditionalElements.forEach(el => el.style.display = '');
+        // 传统模式渲染
+        if (typeof populateLeaders === 'function') {
+            populateLeaders();
+        }
+    }
+    
+    updateAllScrollButtonStates();
+}
+
+function onTabChanged() {
+    const activeTab = document.querySelector('.tab-content.active');
+    if (!activeTab) return;
+    
+    const category = activeTab.id;
+    
+    // 现代模式：触发网格过滤
+    if (document.body.classList.contains('modern-mode')) {
+        const searchInput = document.querySelector('.modern-search-input[data-category="' + category + '"]');
+        if (searchInput && typeof filterModernGrid === 'function') {
+            filterModernGrid(searchInput);
+        }
+    }
+    
+    updateAllScrollButtonStates();
+}
+
+// ═══════════════════════════════════════════════
+// 【现代模式搜索】过滤领袖网格
+// ═══════════════════════════════════════════════
+function filterModernGrid(inputElement) {
+    const category = inputElement ? inputElement.dataset.category : currentSelectedLeaderCategory;
+    const searchTerm = inputElement ? inputElement.value.toLowerCase().trim() : '';
+    const grid = document.getElementById(category + 'Grid');
+    
+    if (!grid || !allData || !allData[category]) return;
+    
+    grid.innerHTML = '';
+    
+    allData[category].forEach(leader => {
+        const name = getFieldValue(leader.name, currentLang).toLowerCase();
+        const contribution = getFieldValue(leader.contribution, currentLang).toLowerCase();
+        const field = getFieldValue(leader.field, currentLang).toLowerCase();
+        const remarks = leader.remarks ? getFieldValue(leader.remarks, currentLang).toLowerCase() : '';
+        
+        // 搜索匹配
+        if (searchTerm && !name.includes(searchTerm) && !contribution.includes(searchTerm) 
+            && !field.includes(searchTerm) && !remarks.includes(searchTerm)) {
+            return;
+        }
+        
+        const card = document.createElement('div');
+        card.className = 'leader-card';
+        card.dataset.id = leader.id;
+        card.dataset.category = category;
+        
+        const displayedContribution = getFieldValue(leader.contribution, currentLang);
+        const displayedField = getFieldValue(leader.field, currentLang);
+        const displayedRemarks = leader.remarks ? getFieldValue(leader.remarks, currentLang) : '';
+        
+        card.innerHTML = `
+            <h3>${getFieldValue(leader.name, currentLang)}</h3>
+            <p><strong>${translations[currentLang].labelContribution}</strong> ${displayedContribution}</p>
+            <p class="field"><strong>${translations[currentLang].labelField}</strong> ${displayedField}</p>
+            ${displayedRemarks ? `<p class="remarks"><strong>${translations[currentLang].labelRemarks}</strong> ${displayedRemarks}</p>` : ''}
+        `;
+        card.onclick = () => selectLeader(leader, category, card);
+        grid.appendChild(card);
+    });
+    
+    updateScrollButtonStates(grid);
+}
+
+function toggleModernSearch(iconElement) {
+    const container = iconElement.closest('.modern-search-container');
+    if (!container) return;
+    
+    const input = container.querySelector('.modern-search-input');
+    if (!input) return;
+    
+    container.classList.toggle('expanded');
+    if (container.classList.contains('expanded')) {
+        input.focus();
+    } else {
+        input.value = '';
+        filterModernGrid(input);
+    }
+}
+
+// ═══════════════════════════════════════════════
+// 【文字流动动效】优雅阅读模式的滚动动画
+// ═══════════════════════════════════════════════
+function triggerTextFlowEffect(containerId, scrollContainerId) {
+    const container = document.getElementById(containerId);
+    const scrollArea = document.getElementById(scrollContainerId);
+    if (!container || !scrollArea) return;
+
+    // 获取所有顶层区块（段落、标题、列表、引用等）
+    const elements = container.children;
+    
+    // 使用 IntersectionObserver 监听元素是否进入视口
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                // 元素进入视口，触发流动动画
+                entry.target.classList.add('flow-animate');
+                // 触发后停止观察，保持常驻
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        root: scrollArea, // 监听滚动区域
+        threshold: 0.1,   // 露出10%就开始流动
+        rootMargin: "0px 0px -30px 0px" // 底部视口稍微往上一点触发，更有流动感
+    });
+
+    Array.from(elements).forEach((el, index) => {
+        // 首屏可见的元素（假设前5个），给予阶梯式延迟，产生"哗啦啦"流下来的感觉
+        if (index < 6) {
+            el.style.animationDelay = `${index * 0.15}s`;
+        } else {
+            // 滚动出来的元素，仅给微小延迟
+            el.style.animationDelay = `0.1s`;
+        }
+        // 开始观察
+        observer.observe(el);
+    });
+}
+
 
 // ═══════════════════════════════════════════════
 // 【Session 持久化】仅恢复对话画布内容
@@ -250,11 +455,18 @@ function selectLeader(leader, category, cardElement) {
 
     currentSelectedLeader = leader;
     currentSelectedLeaderCategory = category;
-    document.getElementById('selectedLeaderName').textContent = leader.name;
-    cardElement.classList.add('selected');
+    
+    // 【增强】多语言名称解析
+    const lang = window.currentLang || 'zh-CN';
+    const nameText = getFieldValue(leader.name, lang);
+    document.getElementById('selectedLeaderName').textContent = nameText;
+    
+    if (cardElement) {
+        cardElement.classList.add('selected');
+    }
+    
     currentGeneratedPrompt = '';
     document.getElementById('prompt-display-area').style.display = 'none';
-    // --- 新增：重置折叠状态 ---
     document.getElementById('prompt-collapsible-content').style.display = 'none';
     const toggleIcon = document.getElementById('prompt-toggle-icon');
     if(toggleIcon) toggleIcon.classList.remove('icon-rotated');
@@ -271,6 +483,10 @@ function selectLeader(leader, category, cardElement) {
             }
         }
     }
+    
+    // 【新增】同步 window 全局变量
+    window.currentSelectedLeader = currentSelectedLeader;
+    window.currentSelectedLeaderCategory = currentSelectedLeaderCategory;
 }
 
 function scrollGrid(buttonElement, direction) {
@@ -348,9 +564,27 @@ function generateBasePrompt() {
         return "";
     }
 
-    const leaderContribution = currentSelectedLeader.contribution[lang] || currentSelectedLeader.contribution['zh-CN'];
-    const leaderField = currentSelectedLeader.field[lang] || currentSelectedLeader.field['zh-CN'];
-    const leaderRemarks = currentSelectedLeader.remarks ? (currentSelectedLeader.remarks[lang] || currentSelectedLeader.remarks['zh-CN']) : '';
+    const leader = currentSelectedLeader;
+
+    // 【增强】统一转换 name 为字符串
+    const leaderName = getFieldValue(leader.name, lang) || getFieldValue(leader.name, 'zh-CN') || '';
+
+    // 【增强】兼容普通领袖（多语言对象）和星空专栏虚拟领袖（_raw对象）
+    const contributionObj = leader._rawContribution || leader.contribution;
+    const fieldObj = leader._rawField || leader.field;
+    const remarksObj = leader._rawRemarks || leader.remarks;
+
+    const leaderContribution = getFieldValue(contributionObj, lang) 
+        || getFieldValue(contributionObj, 'zh-CN') 
+        || '';
+
+    const leaderField = getFieldValue(fieldObj, lang) 
+        || getFieldValue(fieldObj, 'zh-CN') 
+        || '';
+
+    const leaderRemarks = remarksObj 
+        ? (getFieldValue(remarksObj, lang) || getFieldValue(remarksObj, 'zh-CN') || '')
+        : '';
 
     const remarksText = leaderRemarks || translations[lang].promptBaseRemarksNone;
     const remarksSection = leaderRemarks
@@ -359,27 +593,44 @@ function generateBasePrompt() {
 
     const replyInstructionKey = lang === 'zh-CN' ? 'promptReplyInChinese' : 'promptReplyInEnglish';
 
+    // 【增强】判断是否为星空专栏卡片
+    const isStarryCard = leader._isStarryCard === true;
+    
+    // 星空专栏使用简化模板（6条），普通领袖使用完整模板（8条）
+    const thinkingFrameworks = isStarryCard ? `
+1.  **${translations[lang].promptFirstPrinciplesThinking}**: ${translations[lang].promptFirstPrinciplesDetail}
+2.  **${translations[lang].promptDomainExpertise}**: ${translations[lang].promptDomainExpertiseDetail1.replace('${field}', leaderField)} ${translations[lang].promptDomainExpertiseDetail2}
+3.  **${translations[lang].promptCorePhilosophyDrivingForce}**: ${translations[lang].promptCorePhilosophyDetail1.replace('${name}', leaderName).replace('${remarksSection}', remarksSection)}
+4.  **${translations[lang].promptProblemAnalysis}**: ${translations[lang].promptProblemAnalysisDetail}
+5.  **${translations[lang].promptSolutionInsight}**: ${translations[lang].promptSolutionInsightDetail1.replace('${name}', leaderName)} ${translations[lang].promptSolutionInsightDetail2}
+6.  **${translations[lang].promptLanguageStyle}**: ${translations[lang].promptLanguageStyleDetail1.replace('${name}', leaderName)} ${translations[lang].promptLanguageStyleDetail2}
+` : `
+1.  **${translations[lang].promptFirstPrinciplesThinking}**: ${translations[lang].promptFirstPrinciplesDetail}
+2.  **${translations[lang].promptDomainExpertise}**: ${translations[lang].promptDomainExpertiseDetail1.replace('${field}', leaderField)} ${translations[lang].promptDomainExpertiseDetail2}
+3.  **${translations[lang].promptCorePhilosophyDrivingForce}**: ${translations[lang].promptCorePhilosophyDetail1.replace('${name}', leaderName).replace('${remarksSection}', remarksSection)}
+4.  **${translations[lang].promptProblemAnalysis}**: ${translations[lang].promptProblemAnalysisDetail}
+5.  **${translations[lang].promptSolutionInsight}**: ${translations[lang].promptSolutionInsightDetail1.replace('${name}', leaderName)} ${translations[lang].promptSolutionInsightDetail2} ${translations[lang].promptSolutionInsightDetail3}
+6.  **${translations[lang].promptCognitiveFriction}**: ${translations[lang].promptCognitiveFrictionDetail1}
+7.  **${translations[lang].promptCognitiveFriction}**: ${translations[lang].promptCognitiveFrictionDetail2}
+8.  **${translations[lang].promptLanguageStyle}**: ${translations[lang].promptLanguageStyleDetail1.replace('${name}', leaderName)} ${translations[lang].promptLanguageStyleDetail2}
+`;
+
     return `
 ${translations[lang].promptBackgroundSetting}
-${translations[lang].promptYouAre} ${currentSelectedLeader.name}. ${translations[lang].promptBasedOnPublicContributions}
+${translations[lang].promptYouAre} ${leaderName}. ${translations[lang].promptBasedOnPublicContributions}
 
-${currentSelectedLeader.name}${translations[lang].promptCoreInfoFor}
+${leaderName}${translations[lang].promptCoreInfoFor}
 - ${translations[lang].promptMainContributions} ${leaderContribution}
 - ${translations[lang].promptExpertise} ${leaderField}
 - ${translations[lang].promptKeyRemarksFeatures} ${remarksText}
 
-${translations[lang].promptThinkingFrameworkGuidance.replace('${name}', currentSelectedLeader.name)}
-1.  **${translations[lang].promptFirstPrinciplesThinking}**: ${translations[lang].promptFirstPrinciplesDetail}
-2.  **${translations[lang].promptDomainExpertise}**: ${translations[lang].promptDomainExpertiseDetail1.replace('${field}', leaderField)} ${translations[lang].promptDomainExpertiseDetail2}
-3.  **${translations[lang].promptCorePhilosophyDrivingForce}**: ${translations[lang].promptCorePhilosophyDetail1.replace('${name}', currentSelectedLeader.name).replace('${remarksSection}', remarksSection)}
-4.  **${translations[lang].promptProblemAnalysis}**: ${translations[lang].promptProblemAnalysisDetail}
-5.  **${translations[lang].promptSolutionInsight}**: ${translations[lang].promptSolutionInsightDetail1.replace('${name}', currentSelectedLeader.name)} ${translations[lang].promptSolutionInsightDetail2}
-6.  **${translations[lang].promptLanguageStyle}**: ${translations[lang].promptLanguageStyleDetail1.replace('${name}', currentSelectedLeader.name)} ${translations[lang].promptLanguageStyleDetail2}
+${translations[lang].promptThinkingFrameworkGuidance.replace('${name}', leaderName)}
+${thinkingFrameworks}
 
 ${translations[lang].promptUserQuestion}
 "${question}"
 
-${translations[lang].promptAs} ${currentSelectedLeader.name}, ${translations[lang][replyInstructionKey]}
+${translations[lang].promptAs} ${leaderName}, ${translations[lang][replyInstructionKey]}
 `;
 }
 
@@ -397,27 +648,7 @@ function togglePromptCollapse() {
     }
 }
 
-function generateAndShowPrompt() {
-    currentGeneratedPrompt = generateBasePrompt();
-    const promptDisplayArea = document.getElementById('prompt-display-area');
-    const promptTextElement = document.getElementById('generatedPromptText');
-    // 获取内容区和图标，用于重置状态
-    const content = document.getElementById('prompt-collapsible-content');
-    const icon = document.getElementById('prompt-toggle-icon');
 
-    if (currentGeneratedPrompt) {
-        promptTextElement.value = currentGeneratedPrompt.trim();
-        promptDisplayArea.style.display = 'block'; // 显示整个提示词区域        
-        // 建议：点击“生成”后，默认仍保持折叠状态（如需自动展开，请把下面设为 'block' 并 add class）
-        content.style.display = 'none'; 
-        icon.classList.remove('icon-rotated');
-        document.getElementById('ai-response-area').style.display = 'none';
-        document.getElementById('aiResponseText').textContent = '';
-    } else {
-        promptDisplayArea.style.display = 'none';
-        promptTextElement.value = '';
-    }
-}
 
 async function getAIResponse() {
     const promptText = document.getElementById('generatedPromptText').value.trim();
@@ -838,6 +1069,38 @@ function updateEndpointByModel(modelValue) {
     }
 }
 
+function generateAndShowPrompt() {
+    currentGeneratedPrompt = generateBasePrompt();
+    const promptDisplayArea = document.getElementById('prompt-display-area');
+    const promptTextElement = document.getElementById('generatedPromptText');
+    const content = document.getElementById('prompt-collapsible-content');
+    const icon = document.getElementById('prompt-toggle-icon');
+
+    if (currentGeneratedPrompt) {
+        promptTextElement.value = currentGeneratedPrompt.trim();
+        
+        // 【新增】Admin 权限控制
+        const isAdmin = document.body.classList.contains('admin-logged-in');
+        
+        if (isAdmin) {
+            promptDisplayArea.style.display = 'block';
+            content.style.display = 'none';
+            if (icon) icon.classList.remove('icon-rotated');
+        } else {
+            // 非 Admin：整个区域由 CSS .admin-only 隐藏
+            promptDisplayArea.style.display = 'block';
+        }
+        
+        document.getElementById('ai-response-area').style.display = 'none';
+        document.getElementById('aiResponseText').textContent = '';
+    } else {
+        promptDisplayArea.style.display = 'none';
+        promptTextElement.value = '';
+    }
+    
+    // 同步全局变量
+    window.currentGeneratedPrompt = currentGeneratedPrompt;
+}
 
 // 天使模式逻辑处理函数
 function handleAngelMode() {
@@ -886,7 +1149,6 @@ window.addEventListener('click', function(event) {
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. 【优先】初始化语言设置
-    // 先确定语言，防止后续渲染时语言不正确导致二次刷新
     const preferredLang = localStorage.getItem('preferredLang');
     const browserLang = navigator.language || navigator.userLanguage;
     let targetLang = 'zh-CN';
@@ -897,43 +1159,37 @@ document.addEventListener('DOMContentLoaded', () => {
         targetLang = 'en';
     }
     
-    // 更新全局变量
     window.currentLang = targetLang;
     const langSelect = document.getElementById('languageSelector');
     if (langSelect) langSelect.value = targetLang;
 
-    // 2. 加载 API 设置 (不影响 UI渲染，可并行)
+    // 2. 加载 API 设置
     if (typeof loadApiSettings === 'function') {
         loadApiSettings();
     }
 
-    // 3. 设置语言文本 (静态文本替换)
+    // 3. 设置语言文本
     if (typeof setLanguage === 'function') {
         setLanguage(targetLang);
     }
 
     // 4. 【关键】处理 Tab 状态
-    // 确保在渲染网格前，Tab 已经是 active 状态，否则 filterModernGrid 找不到容器会报错或渲染为空
     if (typeof openTab === 'function') {
-        // 默认打开 AI，或者恢复上次的 Tab（如果有相关逻辑）
-        openTab(null, 'TCM'); 
+        openTab(null, 'ai'); // 默认打开 AI Tab
     }
     
-    // 确保 Tab 按钮状态同步
     const firstTabButton = document.querySelector('.tab-button[onclick*="ai"]');
     if (firstTabButton && !document.querySelector('.tab-button.active')) {
          firstTabButton.classList.add('active');
     }
 
     // 5. 【核心修复】初始化 UI 风格与数据渲染
-    // 这一步会根据 localStorage 判断是 'modern' 还是 'traditional'
-    // switchUIStyle 内部会触发 filterModernGrid，所以我们不需要手动调 onLanguageChanged 了
     initUIStyle(); 
 
-    // 6. 绑定搜索框与按钮事件 (防止重复绑定)
+    // 6. 绑定搜索框与按钮事件
     bindModernEvents();
 
-    // 7. 【致命冲突修复】仅在“非现代模式”下调用旧的 populateLeaders
+    // 7. 【致命冲突修复】仅在"非现代模式"下调用旧的 populateLeaders
     const currentStyle = localStorage.getItem('northstarUIStyle');
     if (currentStyle !== 'modern' && typeof populateLeaders === 'function') {
         console.log('[Init] 传统模式，执行 populateLeaders');
@@ -942,8 +1198,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('[Init] 现代模式，跳过 populateLeaders，由 switchUIStyle 接管渲染');
     }
 
+    // 【新增】初始化 admin UI 状态
+    if (typeof updateAdminUI === 'function') {
+        updateAdminUI();
+    }
+
     // 8. 绑定 API 下拉框事件
-    // 直接使用文件最上方定义的正确变量，或者用 getElementById('apiEndpoint')
     if (apiEndpointSelect && typeof updateModelSelectByEndpoint === 'function') {
         apiEndpointSelect.addEventListener('change', function() {
             updateModelSelectByEndpoint(this.value);
@@ -1132,48 +1392,49 @@ function escapeHtml(text) {
 
 async function openElegantMode() {
     if (isElegantModeOpen) return;
-
-    // 1. 获取元素
+    
     const userQuestionEl = document.getElementById('userQuestion');
     const aiResponseEl = document.getElementById('aiResponseText');
     const elegantQuestionBox = document.getElementById('elegantQuestionText');
     const elegantAnswerBox = document.getElementById('elegantAnswerText');
     const modal = document.getElementById('elegantModal');
 
-    // 2. 数据校验与提取：优先获取原始纯文本 raw
     const rawAiContent = aiResponseEl.dataset.raw || aiResponseEl.innerText;
     if (!rawAiContent || rawAiContent.trim() === "") {
-         // 契合专家应用的专属提示
-         alert("✦ 请先获取专家的回复，才能开启专家阅读模式。"); 
-         return;
+        alert(translations[currentLang].alertNoNorthStarResponse || "✦ 请先获取专家的回复，才能开启专家阅读模式。");
+        return;
     }
 
-    // 3. 填充问题（如果为空，提供一个优雅的默认文案）
     elegantQuestionBox.innerText = userQuestionEl?.value || "「 探寻专家视角的深度洞见 」";
-
-    // 4. 填充答案 (使用保护函数)
-    // 【关键】必须先填充转换好的 HTML，再触发渲染和动效
+    
+    // 【新增】在解析前，先给容器加上准备流动的 class
+    elegantAnswerBox.classList.add('flowing-ready');
     elegantAnswerBox.innerHTML = parseMarkdownWithMath(rawAiContent);
 
-    // 5. 丝滑展开动效
-    modal.style.display = 'flex'; // 使用 flex 替代 block，更容易配合 CSS 实现完美居中
+    modal.style.display = 'flex'; 
     
-    // 使用双 requestAnimationFrame 确保浏览器渲染管线准备就绪，动画过渡更完美
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             modal.classList.add('show');
-            document.body.style.overflow = 'hidden'; // 锁定底层滚动，营造沉浸感
+            document.body.style.overflow = 'hidden';
             isElegantModeOpen = true;
         });
     });
 
-    // 6. 异步且安全地触发 MathJax 渲染
+    // 异步且安全地触发 MathJax 渲染
     if (window.MathJax && window.MathJax.typesetPromise) {
         try {
             await MathJax.typesetPromise([elegantAnswerBox]);
         } catch (err) {
-            console.warn('✦ 专家公式渲染出现微小扰动:', err);
+            console.warn('✦ 公式渲染出现微小扰动:', err);
         }
+    }
+    
+    // 【新增】确保 MathJax 渲染完成后，再触发文字流动
+    const scrollContainer = document.querySelector('.elegant-content');
+    if (scrollContainer) {
+        if (!scrollContainer.id) scrollContainer.id = 'elegantContentArea';
+        triggerTextFlowEffect('elegantAnswerText', 'elegantContentArea');
     }
 }
 
