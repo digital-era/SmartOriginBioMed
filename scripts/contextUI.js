@@ -1,0 +1,359 @@
+/**
+ * ═══════════════════════════════════════════════
+ * 星语上下文 UI 控制器
+ * 职责：侧滑面板、画布按钮注入、浏览交互、Toast
+ * ═══════════════════════════════════════════════
+ */
+
+const ContextUI = {
+  panel: null,
+  browseModal: null,
+  isPanelOpen: false,
+
+  // ── 国际化辅助方法 ──
+  _t(key) {
+    // 确保 fallback 逻辑更健壮
+    const lang = window.currentLang || 'zh-CN';
+    const translations = window.translations || {}; 
+    const dict = translations[lang] || translations['zh-CN'] || {};
+    return dict[key] || key;
+},
+
+  // ── 来源标签映射（动态国际化）──
+  _getSourceLabel(source) {
+    const map = {
+      text: this._t('contextSourceText'),
+      url: this._t('contextSourceUrl'),
+      dialogue: this._t('contextSourceDialogue')
+    };
+    return map[source] || source;
+  },
+
+  init() {
+      this._createPanel();
+      this._createBrowseModal();
+      this._bindGlobalEvents();
+      this._watchCanvas();
+  
+      // ── 核心修复：面板创建后立即同步语言 ──
+      if (window.setLanguage && window.currentLang) {
+        window.setLanguage(window.currentLang);
+      }
+  
+      window.starContext.onChange(() => this._renderList());
+      this._renderList();
+    },
+
+  /* ── 构建侧滑面板（国际化版） ── */
+  _createPanel() {
+    const panel = document.createElement('div');
+    panel.id = 'starContextPanel';
+    panel.className = 'star-context-panel';
+    panel.innerHTML = `
+      <div class="star-context-backdrop" onclick="ContextUI.closePanel()"></div>
+      <div class="star-context-sheet">
+        <div class="star-context-header">
+          <!-- 关键：添加 data-i18n-key -->
+          <h3><i class="fas fa-star-of-life"></i> <span data-i18n-key="contextPanelTitle">${this._t('contextPanelTitle')}</span></h3>
+          <button class="star-context-close" onclick="ContextUI.closePanel()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="star-context-body">
+          <div class="star-context-input-area">
+            <div class="star-context-tabs">
+              <button class="ctx-tab active" data-tab="paste" onclick="ContextUI.switchTab('paste')" data-i18n-key="contextTabPaste">
+                <i class="fas fa-paste"></i> ${this._t('contextTabPaste')}
+              </button>
+              <button class="ctx-tab" data-tab="url" onclick="ContextUI.switchTab('url')" data-i18n-key="contextTabUrl">
+                <i class="fas fa-link"></i> ${this._t('contextTabUrl')}
+              </button>
+            </div>
+            <div class="ctx-tab-content active" id="ctx-tab-paste">
+              <!-- placeholder 的翻译需要 data-i18n-target="placeholder" -->
+              <textarea id="ctxPasteInput" data-i18n-key="contextPastePlaceholder" data-i18n-target="placeholder" placeholder="${this._t('contextPastePlaceholder')}"></textarea>
+              <button class="ctx-add-btn" onclick="ContextUI.addFromPaste()" data-i18n-key="contextAddBtn">
+                <i class="fas fa-plus"></i> ${this._t('contextAddBtn')}
+              </button>
+            </div>
+            <div class="ctx-tab-content" id="ctx-tab-url">
+              <input type="text" id="ctxUrlInput" data-i18n-key="contextUrlPlaceholder" data-i18n-target="placeholder" placeholder="${this._t('contextUrlPlaceholder')}" />
+              <button class="ctx-add-btn" onclick="ContextUI.addFromUrl()" data-i18n-key="contextParseBtn">
+                <i class="fas fa-globe"></i> ${this._t('contextParseBtn')}
+              </button>
+              <div class="ctx-url-hint" data-i18n-key="contextUrlHint">${this._t('contextUrlHint')}</div>
+            </div>
+          </div>
+
+          <div class="star-context-list-area">
+            <div class="ctx-list-header">
+              <!-- 这里选中的上下文标题 -->
+              <span><span data-i18n-key="contextSelectedHeader">${this._t('contextSelectedHeader')}</span> <span id="ctxCountBadge" class="ctx-count">0/3</span></span>
+              <!-- title 翻译需要特殊处理 -->
+              <button class="ctx-clear-btn" onclick="ContextUI.clearAll()" data-i18n-title="contextClearTitle" title="${this._t('contextClearTitle')}">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+            <div id="ctxListContainer" class="ctx-list-container">
+              <!-- 空状态也会被 renderList 动态刷新，建议在 renderList 里也加上 key -->
+            </div>
+          </div>
+        </div>
+      </div>`;
+    document.body.appendChild(panel);
+    this.panel = panel;
+  },
+
+  _createBrowseModal() {
+    const modal = document.createElement('div');
+    modal.id = 'starContextBrowseModal';
+    modal.className = 'star-context-browse-modal';
+    modal.innerHTML = `
+      <div class="modal-content star-context-browse-content">
+        <span class="close-button" onclick="ContextUI.closeBrowse(event)">×</span>
+        <div class="ctx-browse-title"><i class="fas fa-scroll"></i> <span id="ctxBrowseTitleText">${this._t('contextBrowseTitle')}</span></div>
+        <div id="ctxBrowseBody" class="ctx-browse-body"></div>
+      </div>`;
+    document.body.appendChild(modal);
+    this.browseModal = modal;
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) this.closeBrowse();
+    });
+
+    this._escHandler = (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) this.closeBrowse();
+    };
+    document.addEventListener('keydown', this._escHandler);
+  },
+
+  /* ── 绑定原有按钮（国际化版） ── */
+  _bindGlobalEvents() {
+    const btn = document.getElementById('ContextButton');
+    if (btn) {
+      btn.onclick = () => this.openPanel();
+      btn.title = this._t('contextButtonTitle');
+    }
+    window.handleContext = () => this.openPanel();
+  },
+
+  /* ── 画布按钮注入 ── */
+  _watchCanvas() {
+    const container = document.getElementById('thoughtStreamContent');
+    if (!container) return;
+    const observer = new MutationObserver(() => this._injectCanvasButtons());
+    observer.observe(container, { childList: true, subtree: true });
+    setTimeout(() => this._injectCanvasButtons(), 500);
+  },
+
+  /* ── 画布按钮注入（国际化版） ── */
+  _injectCanvasButtons() {
+    const nodes = document.querySelectorAll('.thought-node');
+    const history = (typeof getMergedHistory === 'function')
+      ? getMergedHistory(window.importedHistory || null, window.conversationHistory || [])
+      : [];
+
+    nodes.forEach((node, idx) => {
+      if (node.querySelector('.ctx-canvas-btn')) return;
+      const data = history[idx];
+      if (!data || !data.id) return;
+
+      const inCtx = window.starContext.hasDialogueNode(data.id);
+      const btn = document.createElement('button');
+      btn.className = `ctx-canvas-btn ${inCtx ? 'in-context' : ''}`;
+      btn.title = inCtx ? this._t('contextCanvasRemoveTitle') : this._t('contextCanvasAddTitle');
+      btn.innerHTML = inCtx ? '<i class="fas fa-minus"></i>' : '<i class="fas fa-plus"></i>';
+
+      /* ── 画布按钮注入（国际化版） ── */
+      // 确保这部分代码和你发给我的一致，使用的是 res.message
+      // 如果还是中文，请全局搜索 "是否打开管理面板" 这几个字，找到并删掉硬编码
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const res = window.starContext.addFromDialogue(data);
+        if (res.success) {
+            // ... 成功处理
+        } else {
+            // 这里的 res.message 必须来自 Manager 的翻译
+            if (confirm(res.message)) {
+                this.openPanel();
+            }
+        }
+      };
+
+      const deleteBtn = node.querySelector('.node-delete-btn');
+      if (deleteBtn) {
+        node.insertBefore(btn, deleteBtn);
+      } else {
+        node.appendChild(btn);
+      }
+    });
+  },
+
+  /* ── 标签切换 ── */
+  switchTab(name) {
+    document.querySelectorAll('.ctx-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.querySelectorAll('.ctx-tab-content').forEach(t => t.classList.toggle('active', t.id === 'ctx-tab-' + name));
+  },
+
+  /* ── 添加操作 ── */
+ addFromPaste() {
+    const ta = document.getElementById('ctxPasteInput');
+    const text = ta.value.trim();
+    if (!text) return;
+    // 【修改】：这里的 '粘贴文本' 是硬编码，请改为使用国际化 Key
+    const res = window.starContext.addFromText(text, this._t('contextSourceText')); 
+    if (res.success) {
+      ta.value = '';
+      this._showToast(this._t('contextToastAdded'));
+    } else {
+      // 这里的 alert 也建议改为 confirm，保持交互一致性
+      if (confirm(res.message)) { this.openPanel(); }
+    }
+  },
+  
+  async addFromUrl() {
+    const input = document.getElementById('ctxUrlInput');
+    const url = input.value.trim();
+    if (!url) return;
+    const btn = input.nextElementSibling;
+    const html = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 解析中…';
+    btn.disabled = true;
+
+    const res = await window.starContext.addFromUrl(url);
+
+    btn.innerHTML = html;
+    btn.disabled = false;
+    if (res.success) {
+      input.value = '';
+      this._showToast(this._t('contextToastUrlAdded'));
+    } else {
+      alert(res.message);
+    }
+  },
+
+  clearAll() {
+    if (!window.starContext.getAll().length) return;
+    if (!confirm(this._t('contextConfirmClear'))) return;
+    window.starContext.clear();
+    this._showToast(this._t('contextToastCleared'));
+    this._refreshCanvasButtons();
+  },
+
+  removeContext(id) {
+    window.starContext.remove(id);
+    this._refreshCanvasButtons();
+    this._showToast(this._t('contextToastRemoved'));
+  },
+
+  /* ── 浏览 ── */
+  browseContext(id) {
+    if (this._browseOpening) return;
+    this._browseOpening = true;
+
+    const ctx = window.starContext.getAll().find(c => c.id === id);
+    if (!ctx) { this._browseOpening = false; return; }
+
+    document.getElementById('ctxBrowseTitleText').textContent = ctx.title;
+    const body = document.getElementById('ctxBrowseBody');
+    body.innerHTML = (typeof marked !== 'undefined')
+      ? marked.parse(ctx.content)
+      : ctx.content.replace(/\n/g, '<br>');
+
+    const modal = this.browseModal;
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => modal.classList.add('open'));
+    });
+
+    if (window.MathJax) MathJax.typesetPromise([body]).catch(() => {});
+
+    setTimeout(() => { this._browseOpening = false; }, 400);
+  },
+
+  closeBrowse(e) {
+    if (e) e.stopPropagation();
+
+    const modal = this.browseModal;
+    if (!modal || !modal.classList.contains('open')) return;
+
+    modal.classList.remove('open');
+
+    setTimeout(() => {
+      if (!modal.classList.contains('open')) {
+        modal.style.display = 'none';
+      }
+    }, 400);
+  },
+
+  /* ── 面板开关 ── */
+  openPanel() {
+    this.isPanelOpen = true;
+    this.panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    this._renderList();
+  },
+
+  closePanel() {
+    this.isPanelOpen = false;
+    this.panel.classList.remove('open');
+    document.body.style.overflow = '';
+  },
+
+  /* ── 渲染列表（国际化版） ── */
+  _renderList() {
+    const container = document.getElementById('ctxListContainer');
+    const items = window.starContext.getAll();
+    document.getElementById('ctxCountBadge').textContent = `${items.length}/3`;
+
+    if (!items.length) {
+      container.innerHTML = `
+        <div class="ctx-empty-state">
+          <i class="fas fa-wind"></i>
+          <p>${this._t('contextEmptyTitle')}</p>
+          <span>${this._t('contextEmptyDesc')}</span>
+        </div>`;
+      return;
+    }
+
+    const iconMap = { text: 'fa-file-alt', url: 'fa-globe', dialogue: 'fa-comments' };
+    container.innerHTML = items.map((ctx, i) => `
+      <div class="ctx-card" style="--i:${i}">
+        <div class="ctx-card-header">
+          <div class="ctx-card-title">
+            <i class="fas ${iconMap[ctx.source] || 'fa-star'}"></i>
+            <span>${ctx.title}</span>
+          </div>
+          <div class="ctx-card-actions">
+            <button onclick="ContextUI.browseContext('${ctx.id}')" title="${this._t('contextBrowseTitleAttr')}"><i class="fas fa-eye"></i></button>
+            <button onclick="ContextUI.removeContext('${ctx.id}')" title="${this._t('contextRemoveTitleAttr')}"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="ctx-card-preview">${ctx.preview}</div>
+        <div class="ctx-card-meta">
+          <span>${new Date(ctx.timestamp).toLocaleString()}</span>
+          <span class="ctx-source-tag">${this._getSourceLabel(ctx.source)}</span>
+        </div>
+      </div>`).join('');
+  },
+
+  _refreshCanvasButtons() {
+    document.querySelectorAll('.ctx-canvas-btn').forEach(b => b.remove());
+    this._injectCanvasButtons();
+  },
+
+  _showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'ctx-toast';
+    t.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 300);
+    }, 2200);
+  }
+};
+
+/* 初始化 */
+document.addEventListener('DOMContentLoaded', () => ContextUI.init());
