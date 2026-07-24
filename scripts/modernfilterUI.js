@@ -1,6 +1,6 @@
 // modern-filter.js
 // 现代风格相关完整逻辑：胶囊动态生成、过滤动画、风格切换
-// 包含详细调试日志，用于排查搜索框闪现/不显示、过滤结果异常等问题
+// 【增强版】补充水晶球、转盘、定制专家等功能，修复类名控制BUG
 
 // 防抖工具函数
 function debounce(fn, delay = 250) {
@@ -12,22 +12,28 @@ function debounce(fn, delay = 250) {
 }
 
 // ──────────────────────────────────────────────
-// 1. 获取分类数据
+// 1. 获取分类数据（增强版：合并自定义数据）
 // ──────────────────────────────────────────────
 function getMastersByCategory(category) {
+    let builtIn = [];
     if (window.allData && allData[category]) {
-        // console.log(`[DEBUG] 从 allData 获取 ${category} 数据`);
-        return allData[category];
+        builtIn = allData[category] || [];
+    } else {
+        const map = {
+            'TCM': typeof TCMMasters !== 'undefined' ? TCMMasters : [],
+            'WM': typeof WMMasters !== 'undefined' ? WMMasters : [],
+            'MultiOmics': typeof MultiOmicsMasters !== 'undefined' ? MultiOmicsMasters : [],
+            'NeuralLink': typeof NeuralLinkMasters !== 'undefined' ? NeuralLinkMasters : [],
+            'AIDrugDiscovery': typeof AIDrugDiscoveryMasters !== 'undefined' ? AIDrugDiscoveryMasters : [],
+            'AIHealthcare': typeof AIHealthcareMasters !== 'undefined' ? AIHealthcareMasters : []
+        };
+        builtIn = map[category] || [];
     }
-    const map = {
-        'TCM': typeof TCMMasters !== 'undefined' ? TCMMasters : [],
-        'WM': typeof WMMasters   !== 'undefined' ? WMMasters   : [],
-        'MultiOmics': typeof MultiOmicsMasters !== 'undefined' ? MultiOmicsMasters : [],
-        'NeuralLink': typeof NeuralLinkMasters  !== 'undefined' ? NeuralLinkMasters  : [],
-        'AIDrugDiscovery': typeof AIDrugDiscoveryMasters  !== 'undefined' ? AIDrugDiscoveryMasters  : [],
-        'AIHealthcare': typeof AIHealthcareMasters !== 'undefined' ? AIHealthcareMasters : []
-    };
-    return map[category] || [];
+
+    // 【新增】合并自定义专家数据
+    const custom = window.customAllData?.[category] || [];
+    
+    return [...builtIn, ...custom];
 }
 
 // ──────────────────────────────────────────────
@@ -41,7 +47,6 @@ function extractCommonFieldKeywords(category, lang) {
     const keywordCount = new Map();
     
     masters.forEach(master => {
-        // 稳健的数据读取
         let text = '';
         if (master.field && typeof master.field === 'object') {
             text = master.field[targetLang] || master.field['en'] || master.field['zh-CN'] || '';
@@ -51,7 +56,6 @@ function extractCommonFieldKeywords(category, lang) {
 
         if (!text) return;        
         
-        // 分割逻辑：保留英文短语空格，同时兼容中文和常见标点
         const parts = text.split(/[()（）\[\]、,，；;./]+/) 
             .map(p => p.trim().replace(/[。.。]+$/, ''))
             .filter(p => p && p.length >= 2 && p.length <= 60);
@@ -67,7 +71,6 @@ function extractCommonFieldKeywords(category, lang) {
         });
     });
 
-    // 返回所有结果，按频率排序
     return [...keywordCount.values()]
         .sort((a, b) => b.count - a.count || b.text.length - a.text.length)
         .map(item => item.text);
@@ -82,7 +85,6 @@ function generateChipsForCategory(category, container) {
 
     const lang = window.currentLang || 'zh-CN';
 
-    // 生成 "All" 按钮
     const allBtn = document.createElement('button');
     allBtn.className = 'chip active';
     allBtn.dataset.filter = 'all';
@@ -98,7 +100,6 @@ function generateChipsForCategory(category, container) {
     allBtn.addEventListener('click', () => filterModernGrid(allBtn, category));
     container.appendChild(allBtn);
 
-    // 生成关键词按钮
     const keywords = extractCommonFieldKeywords(category, lang);
     
     if (keywords.length > 0) {
@@ -125,66 +126,143 @@ function refreshChipsForActiveTab() {
 }
 
 // ──────────────────────────────────────────────
-// 5. 风格切换核心函数
+// 5. 风格切换核心函数（增强版：支持水晶球、转盘、定制专家）
 // ──────────────────────────────────────────────
 function switchUIStyle(style) {
     style = (style === 'modern') ? 'modern' : 'traditional';
-    localStorage.setItem('northstarUIStyle', style);
+    
+    // 【修复】正确设置全局变量和 body 类名
+    window.currentUIStyle = style;
     document.body.classList.toggle('modern-mode', style === 'modern');
+    
+    localStorage.setItem('northstarUIStyle', style);
 
-    // 处理容器和按钮
-    document.querySelectorAll('.leader-scroll-container').forEach(container => {
-        const leftBtn = container.querySelector('.scroll-button.left');
-        const rightBtn = container.querySelector('.scroll-button.right');
-        const grid = container.querySelector('.leader-grid');
+    if (style === 'traditional') {
+        // 【新增】初始化定制专家数据（传统模式也需要）
+        if (typeof initCustomExperts === 'function') {
+            initCustomExperts();
+        }
+        
+        // ════════════════════════════════════════
+        // 传统模式：对话卡片选择界面
+        // ════════════════════════════════════════
+        
+        // 1. 隐藏水晶球
+        const nebulaCrystal = document.getElementById('nebula-crystal');
+        if (nebulaCrystal) nebulaCrystal.style.display = 'none';
+        
+        // 2. 隐藏转盘和左右布局
+        const wheel = document.getElementById('wheel-of-destiny');
+        if (wheel) wheel.style.display = 'none';
+        const layout = document.getElementById('category-layout-container');
+        if (layout) layout.style.display = 'none';
 
-        container.style.display = 'flex';
-        container.style.overflow = 'hidden';
+        // 3. 恢复标签页
+        const tabsBar = document.querySelector('.tabs');
+        if (tabsBar) tabsBar.style.display = 'flex';
 
-        if (style === 'modern') {
-            // === 现代模式 ===
+        // 4. 显示传统容器
+        const container = document.querySelector('.container');
+        if (container) container.style.display = 'block';
+        
+        document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
+        
+        // 5. 设置网格容器
+        document.querySelectorAll('.leader-scroll-container').forEach(container => {
+            container.style.display = 'flex';
+            container.style.overflow = 'hidden';
+            const leftBtn = container.querySelector('.scroll-button.left');
+            const rightBtn = container.querySelector('.scroll-button.right');
+            const grid = container.querySelector('.leader-grid');
             if (leftBtn) leftBtn.style.display = 'block';
             if (rightBtn) rightBtn.style.display = 'block';
-
             if (grid) {
                 grid.style.display = 'flex';
                 grid.style.flexWrap = 'nowrap';
                 grid.style.justifyContent = 'flex-start';
                 grid.style.gap = '20px';
                 grid.style.overflowX = 'auto';
-                grid.style.scrollBehavior = 'smooth';
-                grid.style.scrollbarWidth = 'none'; // Firefox
-                grid.style.msOverflowStyle = 'none'; // IE
+                grid.style.scrollbarWidth = 'none';
             }
-        } else {
-            // === 传统模式 ===
-            if (leftBtn) leftBtn.style.display = 'block';
-            if (rightBtn) rightBtn.style.display = 'block';
+            if (typeof updateScrollButtonStates === 'function' && grid) {
+                updateScrollButtonStates(grid);
+            }
+        });
 
-            if (grid) {
-                grid.style.display = 'flex';
-                grid.style.flexWrap = 'nowrap';
-                grid.style.justifyContent = 'flex-start';
-                grid.style.gap = '0';
-                grid.style.overflowX = 'auto';
-                grid.style.scrollbarWidth = 'auto';
+        // 6. 为所有 Tab 生成子类胶囊
+        document.querySelectorAll('.modern-filter-bar').forEach(bar => {
+            bar.style.display = 'flex';
+            const tabContent = bar.closest('.tab-content');
+            if (tabContent) {
+                const chipsContainer = tabContent.querySelector('.filter-chips-container');
+                if (chipsContainer && typeof generateChipsForCategory === 'function') {
+                    generateChipsForCategory(tabContent.id, chipsContainer);
+                }
+                if (chipsContainer) {
+                    chipsContainer.style.flexWrap = 'nowrap';
+                    chipsContainer.style.overflowX = 'auto';
+                    chipsContainer.style.scrollbarWidth = 'none';
+                    chipsContainer.style.msOverflowStyle = 'none';
+                }
             }
-            if (typeof populateLeaders === 'function') {
-                populateLeaders();
-            }
+        });
+
+        // 7. 激活当前选中的标签
+        const activeBtn = document.querySelector('.tab-button.active') || document.querySelector('.tab-button');
+        if (activeBtn) {
+            const match = activeBtn.getAttribute('onclick').match(/'([^']+)'/);
+            if (match) openTab(null, match[1]);
         }
-        
-        if (typeof updateScrollButtonStates === 'function' && grid) {
-             updateScrollButtonStates(grid);
-        }
-    });
 
-    updateModernFilterBarVisibility();
-
-    if (style === 'modern') {
+        // 8. 刷新当前网格
         const activeTab = document.querySelector('.tab-content.active');
         if (activeTab) {
             filterModernGrid(null, activeTab.id);
+        }
+        
+    } else {
+        // ════════════════════════════════════════
+        // 现代模式：星云水晶球
+        // ════════════════════════════════════════
+        
+        // 1. 隐藏标签页
+        const tabsBar = document.querySelector('.tabs');
+        if (tabsBar) tabsBar.style.display = 'none';
+
+        // 2. 隐藏传统模式元素
+        document.querySelectorAll('.modern-filter-bar').forEach(bar => bar.style.display = 'none');
+        document.querySelectorAll('.leader-scroll-container').forEach(container => container.style.display = 'none');
+        document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
+        
+        const container = document.querySelector('.container');
+        if (container) container.style.display = 'none';
+
+        // 3. 隐藏转盘和左右布局
+        const wheel = document.getElementById('wheel-of-destiny');
+        if (wheel) wheel.style.display = 'none';
+        const layout = document.getElementById('category-layout-container');
+        if (layout) layout.style.display = 'none';
+
+        // 4. 【关键】显示水晶球
+        const nebulaCrystal = document.getElementById('nebula-crystal');
+        if (nebulaCrystal) nebulaCrystal.style.display = 'flex';
+
+        // 5. 初始化水晶球
+        if (typeof initNebulaCrystal === 'function') {
+            initNebulaCrystal();
+        }
+
+        // 【新增】初始化定制专家数据
+        if (typeof initCustomExperts === 'function') {
+            initCustomExperts();
+        }
+
+        // 【修复】：从传统模式切回现代模式时，确保重置显示状态
+        const manualSelector = document.getElementById('nebula-manual-selector');
+        if (manualSelector) {
+            manualSelector.classList.remove('fading-out');
+        } else if (typeof renderNebulaManualSelector === 'function') {
+            renderNebulaManualSelector();
         }
     }
 }
@@ -200,7 +278,7 @@ function initUIStyle() {
 }
 
 // ──────────────────────────────────────────────
-// 7. 过滤核心函数 (全量整合版：单选 + CSS侧滑动画 + 自动滚动)
+// 7. 过滤核心函数（增强版：支持 deselect + 多语言 name）
 // ──────────────────────────────────────────────
 function filterModernGrid(trigger, category = null) {
     const tab = category ? document.getElementById(category) : document.querySelector('.tab-content.active');
@@ -208,33 +286,37 @@ function filterModernGrid(trigger, category = null) {
     const grid = tab.querySelector('.leader-grid');
     if (!grid) return;
 
-    // 获取当前语言
     const lang = window.currentLang || 'zh-CN';
 
-    // 1. 确定过滤条件
+    // 1. 确定过滤条件 + 胶囊 UI 状态（【新增】合并处理 deselect）
     let filterVal = 'all';
     if (trigger) {
         if (trigger.tagName === 'INPUT') {
             filterVal = trigger.value.trim();
-        } else if (trigger.dataset?.filter) {
-            filterVal = trigger.dataset.filter;
+        } else if (trigger.classList?.contains('chip')) {
+            const isAlreadyActive = trigger.classList.contains('active');
+            const isAllChip = trigger.dataset?.filter === 'all';
+            
+            if (isAlreadyActive && !isAllChip) {
+                // 【新增】deselect：点击已激活的子类 → 切换到全部
+                const allChip = tab.querySelector('.chip[data-filter="all"]');
+                if (allChip) {
+                    tab.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+                    allChip.classList.add('active');
+                    allChip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    filterVal = 'all';
+                }
+            } else {
+                // 正常选择：激活当前芯片
+                tab.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+                trigger.classList.add('active');
+                trigger.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                filterVal = trigger.dataset.filter;
+            }
         }
     }
 
-    // 2. 更新胶囊 UI 状态 (激活高亮 + 滚动居中)
-    if (trigger && trigger.classList?.contains('chip')) {
-        tab.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
-        trigger.classList.add('active');
-        
-        // 关键：让选中的胶囊平滑滚动到可视区域中间
-        trigger.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'nearest', 
-            inline: 'center' 
-        });
-    }
-
-    // 3. 获取并过滤数据
+    // 2. 获取并过滤数据
     const masters = getMastersByCategory(tab.id);
     let filtered = masters;
 
@@ -243,7 +325,7 @@ function filterModernGrid(trigger, category = null) {
         filtered = masters.filter(m => {
             const getName = (obj) => (typeof obj === 'string' ? obj : (obj[lang] || obj['en'] || obj['zh-CN'] || ''));
             const searchStr = [
-                m.name, 
+                getName(m.name),           // 【修复】使用 getName 解析多语言
                 getName(m.contribution), 
                 getName(m.field), 
                 getName(m.remarks)
@@ -252,7 +334,7 @@ function filterModernGrid(trigger, category = null) {
         });
     }
 
-    // 4. 开始渲染
+    // 3. 开始渲染
     grid.innerHTML = '';
 
     if (filtered.length === 0) {
@@ -264,14 +346,10 @@ function filterModernGrid(trigger, category = null) {
     } else {
         filtered.forEach((leader, i) => {
             const card = document.createElement('div');
-            // 添加 stagger-animate 类，配合 CSS 实现侧滑动画
             card.className = 'leader-card stagger-animate';
             card.dataset.id = leader.id;
-            
-            // 关键：设置 CSS 变量 --i，CSS 会根据它计算延迟时间
             card.style.setProperty('--i', i);
 
-            // 辅助函数：安全获取文本
             const getText = (fieldObj) => {
                 if (!fieldObj) return '';
                 if (typeof fieldObj === 'string') return fieldObj;
@@ -288,21 +366,16 @@ function filterModernGrid(trigger, category = null) {
             const lblRemarks = t.labelRemarks || 'Remarks';
 
             card.innerHTML = `
-                <h3>${leader.name}</h3>
+                <h3>${getText(leader.name)}</h3>     <!-- 【修复】多语言 name 解析 -->
                 <p><strong>${lblContrib}</strong> ${txtContrib}</p>
                 <p class="field"><strong>${lblField}</strong> ${txtField}</p>
                 ${txtRemarks ? `<p class="remarks"><strong>${lblRemarks}</strong> ${txtRemarks}</p>` : ''}
             `;
             
-            // --- 单选互斥逻辑 ---
+            // 单选互斥逻辑
             card.onclick = function() {
-                // 1. 清除当前网格内所有卡片的选中状态
                 grid.querySelectorAll('.leader-card').forEach(c => c.classList.remove('selected'));
-
-                // 2. 选中自己
                 this.classList.add('selected');
-
-                // 3. 触发业务逻辑
                 if(typeof selectLeader === 'function') {
                     selectLeader(leader, tab.id, this);
                 }
@@ -312,14 +385,11 @@ function filterModernGrid(trigger, category = null) {
         });
     }
     
-    // 5. 更新滚动按钮状态 (修改版)
-    // 第一步：利用 requestAnimationFrame 确保在 DOM 刚刚渲染后立即检查一次
+    // 4. 更新滚动按钮状态（双保险）
     requestAnimationFrame(() => {
         if(typeof updateScrollButtonStates === 'function') updateScrollButtonStates(grid);
     });
 
-    // 第二步：延迟检查，确保 CSS 动画（如 stagger-animate）完全结束后再次修正
-    // 将延迟时间由 100 改为 500（假设动画在 0.5秒内结束），防止动画过程中尺寸变化导致误判
     setTimeout(() => {
         if(typeof updateScrollButtonStates === 'function') updateScrollButtonStates(grid);
     }, 500);
@@ -337,14 +407,13 @@ function updateModernFilterBarVisibility() {
     if (isModern) refreshChipsForActiveTab();
 }
 
-// 搜索框切换 (关键修正：移除 display 操作，配合 CSS 动画)
+// 搜索框切换
 function toggleModernSearch(iconElement) {
     const wrapper = iconElement.closest('.modern-search-wrapper');
     if (!wrapper) return;
 
     const input = wrapper.querySelector('.modern-search-input');
     
-    // 切换 class，让 CSS 处理宽度动画
     wrapper.classList.toggle('search-active');
     const isActive = wrapper.classList.contains('search-active');
 
@@ -354,13 +423,7 @@ function toggleModernSearch(iconElement) {
         if (input) input.focus();
     } else {
         if (input) {
-            // 修改处 1：不要清空输入框的值
-            // input.value = ''; 
-            
             input.blur();
-            
-            // 修改处 2：收起时不要重新触发过滤（防止结果重置为全部）
-            // filterModernGrid(input); 
         }
     }
 }
@@ -387,20 +450,21 @@ function onLanguageChanged() {
         const activeTab = document.querySelector('.tab-content.active');
         if (!activeTab) return;
 
-        // 重新生成胶囊
         refreshChipsForActiveTab();
 
-        // 强制触发全部
         setTimeout(() => {
             const allBtn = activeTab.querySelector('.chip[data-filter="all"]');
             if (allBtn) {
-                // 使用 click() 模拟点击，确保触发 scrollIntoView 和 active 状态更新
-                allBtn.click(); 
+                allBtn.click();
             } else {
                 filterModernGrid({ dataset: { filter: 'all' } }, activeTab.id);
             }
         }, 50);
     } else {
+        // 【新增】传统模式下也要重新生成胶囊
+        if (typeof refreshChipsForActiveTab === 'function') {
+            refreshChipsForActiveTab();
+        }
         if (typeof populateLeaders === 'function') populateLeaders();
     }
 }
@@ -411,7 +475,6 @@ function onLanguageChanged() {
 document.addEventListener('DOMContentLoaded', () => {
     initUIStyle();
     
-    // 如果 HTML 里写了 onclick/oninput，这里的绑定其实是冗余的，但保留作为兜底
     document.querySelectorAll('.modern-search-input').forEach(el => {
         if (!el.dataset.bound) {
             el.addEventListener('input', (e) => filterModernGrid(e.target));
