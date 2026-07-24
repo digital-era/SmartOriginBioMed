@@ -608,4 +608,4 @@
         // 在你的翻译脚本最底部添加
         window.translations = translations;
         window.currentLang = currentLang;
-        window.setLanguage = setLanguage;d
+        window.setLanguage = setLanguage;
