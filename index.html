@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="css/QuestionPattern.css">
     <link rel="stylesheet" href="css/modernfilterUI.css">
 	<link rel="stylesheet" href="css/wheelUI.css">	
-	<link rel="stylesheet" href="css/Angelcolumn.css">	
+	<link rel="stylesheet" href="css/angelcolumn.css">	
 	<link rel="stylesheet" href="css/context.css">
 	<link rel="stylesheet" href="css/columnSpaceStyle.css">
     
@@ -338,6 +338,30 @@
         
         <div class="interaction-area">
             <h2 data-i18n-key="interactWithLeader">与专家对话</h2>
+			<div class="sample-icons-group">					
+			        <i class="fas fa-compass sample-q-icon2"
+			           onclick="fillSampleQuestion(2)"
+			           data-i18n-key="tooltipSampleQuestionPractice"
+			           data-i18n-target="aria-label"						
+				       data-i18n-title="tooltipSampleQuestionPractice"
+				       title="实践"
+			           aria-label="Sample question: Practice"></i>
+			        <i class="fas fa-lightbulb sample-q-icon"
+			           onclick="fillSampleQuestion(1)"
+			           data-i18n-key="tooltipSampleQuestionThought"
+			           data-i18n-target="aria-label"
+					   data-i18n-title="tooltipSampleQuestionThought"
+      				   title="思想"
+			           aria-label="Sample question: Thought"></i>
+			        <i class="fas fa-mountain sample-q-icon3"
+			           onclick="fillSampleQuestion(3)"
+			           data-i18n-key="tooltipSampleQuestionPotential"							
+			           data-i18n-target="aria-label"
+				       data-i18n-title="tooltipSampleQuestionPotential"
+				       title="潜能"
+			           aria-label="Sample question: Potential"></i>
+			    </div>
+			</div>
             <div id="selected-leader-info">
                 <div>
                     <span data-i18n-key="currentSelectedLeaderPrefix">当前选择的专家: </span>
@@ -354,11 +378,16 @@
             
             <div class="interaction-buttons">
                 <button onclick="if(checkActionAuth('1. 生成 问题')) generateAndShowPrompt()" data-i18n-key="btnGeneratePrompt">1. 生成 问题</button>
-                <button id="getAIResponseButton" onclick="if(checkActionAuth('2. 获取 北极星 回复')) getAIResponse()">
+                <button id="getAIResponseButton" onclick="if(checkActionAuth('2. 获取 专家 回复')) getAIResponse()">
                     <span data-i18n-key="btnGetAiResponse">2. 获取 专家 回复</span>
                     <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
-                </button>
-                <button id="angelModeButton" onclick="handleAngelMode()" data-i18n-key="btnAngelMode">天使模式 (未来构想)</button>
+                </button>                
+				<!-- --- 修改开始：按钮改名，移除原有 onclick --- -->
+                <!-- --- <button id="angelModeButton" onclick="handleAngelMode()" data-i18n-key="btnAngelMode">天使模式 (未来构想)</button> --- -->
+                <!-- --- 修改结束 --- -->
+				<!-- --- 新增：星语上下文 --- -->
+                <button id="ContextButton" onclick="handleContext()" data-i18n-key="btnContext">智源上下文</button>
+                <!-- --- 修改结束 --- -->
             </div>
 
             <div id="prompt-display-area" class="response-display" style="display:none;">
