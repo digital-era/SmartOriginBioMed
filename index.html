@@ -14,7 +14,12 @@
     <!-- 先加载基础样式 -->
     <link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/DialogueCanvas.css">
+	<link rel="stylesheet" href="css/QuestionPattern.css">
     <link rel="stylesheet" href="css/modernfilterUI.css">
+	<link rel="stylesheet" href="css/wheelUI.css">	
+	<link rel="stylesheet" href="css/Angelcolumn.css">	
+	<link rel="stylesheet" href="css/context.css">
+	<link rel="stylesheet" href="css/columnSpaceStyle.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <!--link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'" -->
@@ -134,21 +139,10 @@
             <img src="images/TalktoNorthStarIcon.png" alt="Talk to NorthStar Logo">
         </div>
         <div class="top-right-controls">
-            <!-- 1. [新增] 音乐播放器 (移到第一位，即最左侧) -->
-            <!-- 注意：请确保 music/Ludovico Einaudi - Experience.mp3 文件存在，或修改为有效路径 -->
-            <div class="icon-btn music-wrapper" onclick="toggleMusic(this)" title="背景音乐" data-i18n-title="tooltipBgMusic">
-                <i class="fas fa-music main-music-icon"></i>
-                
-                <!-- 随机播放小标记 -->
-                <div class="random-badge" title="随机播放 (未来功能)" onclick="playRandomMusic(event)">
-                    <i class="fas fa-shuffle"></i>
-                </div>
-                
-                <!-- 音频控件 -->
-                <audio id="bgMusic" loop>
-                    <source src="music/Ludovico Einaudi - Experience.mp3" type="audio/mpeg">
-                </audio>
-            </div>
+			<!-- 1. 天使专栏入口（原音乐按钮位置） -->
+			<button class="icon-btn" onclick="enterAngelColumn()" title="天使专栏" data-i18n-title="tooltipAngelColumn">
+			    <i class="fas fa-star"></i>
+			</button>
             
             <!-- 2. 开启专家之声：只留图标，增加 title 提示 -->
             <button class="icon-btn" onclick="openElegantMode()" title="专家之声" data-i18n-title="tooltipReadingMode">
@@ -653,8 +647,21 @@
     <script src="scripts/locale.js"></script>
     <script src="scripts/masters.js"></script>
     <script src="scripts/modernfilterUI.js"></script>
+	<script src="scripts/newUI.js"></script>
+	<script src="scripts/expertConfig.js"></script>
+	<script src="scripts/contextManager.js"></script>
+	<script src="scripts/contextUI.js"></script>
+	<script src="scripts/startnavigator.js"></script>
     <script src="scripts/applogic.js"></script>
+	<script src="scripts/dialoguecanvas.js"></script>
+	<script src="scripts/AngelColumn.js"></script>
+	<script src="scripts/columnConfig.js"></script>
     <script src="scripts/importmdfile.js"></script>
+	<script src="scripts/speech.js"></script>
+	<script src="scripts/createwebpage.js"></script>
+	<script src="scripts/columnSpaceCreation.js"></script>
+
+	
     
     <footer>
         <p data-i18n-key="footerRight">© AI范式进化. 保留所有权利。</p>
