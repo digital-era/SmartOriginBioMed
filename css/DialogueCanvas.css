@@ -315,6 +315,51 @@
     text-align: justify;
 }
 
+/* 【新增】标题降级 - 放在现有 .star-content 后面 */
+.star-content h1,
+.star-content h2,
+.star-content h3,
+.star-content h4,
+.star-content h5,
+.star-content h6 {
+    font-family: 'Noto Serif SC', 'Cinzel', serif;
+    color: #3e2723;
+    line-height: 1.4;
+}
+
+.star-content h1 {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin: 16px 0 10px;
+    padding-left: 10px;
+    border-left: 3px solid #c5a059;
+}
+
+.star-content h2 {
+    font-size: 1.15em;
+    font-weight: 600;
+    margin: 14px 0 8px;
+    padding-left: 8px;
+    border-left: 2px solid #c5a059;
+}
+
+.star-content h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 12px 0 6px;
+    padding-left: 6px;
+    border-left: 2px solid rgba(197, 160, 89, 0.6);
+}
+
+.star-content h4,
+.star-content h5,
+.star-content h6 {
+    font-size: 1.05em;
+    font-weight: 500;
+    margin: 8px 0 4px;
+    color: #5d4037;
+}
+
 .star-decoration-bottom {
     margin-top: 25px;
     text-align: right;
@@ -414,6 +459,68 @@
     color: #02060a;
 }
 
+/* 画布内音乐按钮播放状态（与顶部原按钮共用同一套类名逻辑） */
+.canvas-action-bar .music-wrapper-canvas.music-playing {
+    color: #00dfd8;
+    border-color: rgba(0, 223, 216, 0.4);
+    background: rgba(0, 223, 216, 0.08);
+    animation: musicSpin 3s linear infinite;
+}
+
+/* 旋转动画（如果已有则无需重复定义） */
+@keyframes musicSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   画布工具栏 - 朗读按钮（与音乐按钮风格统一）
+   ========================================== */
+/* 默认状态：继承工具栏金色基调 */
+.canvas-action-bar .tts-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    color: #c5a059;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* 悬停：金色反色，与工具栏其他按钮一致 */
+.canvas-action-bar .tts-btn:hover {
+    background: #c5a059;
+    color: #02060a;
+    border-color: #c5a059;
+}
+
+/* 播放中状态：青绿色呼吸效果（与音乐按钮 playing 区分） */
+.canvas-action-bar .tts-btn.tts-active {
+    color: #00dfd8;
+    border-color: rgba(0, 223, 216, 0.4);
+    background: rgba(0, 223, 216, 0.08);
+    animation: ttsPulse 2s ease-in-out infinite;
+}
+
+@keyframes ttsPulse {
+    0%, 100% { 
+        opacity: 1; 
+        box-shadow: 0 0 0 rgba(0, 223, 216, 0);
+    }
+    50% { 
+        opacity: 0.85;
+        box-shadow: 0 0 8px rgba(0, 223, 216, 0.2);
+    }
+}
+
+.canvas-action-bar .tts-btn.tts-paused {
+    color: #f59e0b;  /* 琥珀色，表示暂停中 */
+    border-color: rgba(245, 158, 11, 0.4);
+    background: rgba(245, 158, 11, 0.08);
+}
+
 /* ============================================================
    电脑端优化 (屏幕宽度 > 1024px)
    ============================================================ */
@@ -470,6 +577,113 @@
     .thought-stream { padding: 80px 15px 40px 15px !important; }
 }
 
+/* ═══════════════════════════════════════════════
+   【左侧操作按钮组】节点顶部左侧，水平排列
+   不占用内容区空间，悬浮在内容上方
+   ═══════════════════════════════════════════════ */
+.left-actions-bar {
+    position: absolute;
+    left: 8px;             /* 节点内部左侧 */
+    top: 8px;              /* 节点顶部 */
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    z-index: 10;
+}
+
+.left-action-btn {
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.left-action-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: scale(1.15);
+}
+
+/* 已导入封面高亮 */
+.left-action-btn.has-cover {
+    background: rgba(102, 126, 234, 0.9);
+    color: white;
+    opacity: 1;
+}
+
+/* 悬停显示 */
+.thought-node:hover .left-action-btn {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+
+    .left-action-btn {
+        opacity: 0.75 !important;
+    }
+
+}
+.right-actions-bar {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    z-index: 10;
+}
+
+.right-action-btn {
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.ctx-btn {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+}
+
+.ctx-btn:hover {
+    background: #ffc107;
+    color: white;
+    transform: scale(1.15);
+}
+
+.delete-btn {
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4d4f;
+}
+
+.delete-btn:hover {
+    background: #ff4d4f;
+    color: white;
+    transform: scale(1.15);
+}
+
+.thought-node:hover .right-action-btn {
+    opacity: 1;
+}
+
 /* 删除按钮样式 */
 .node-delete-btn {
     position: absolute;
@@ -498,6 +712,12 @@
 /* 鼠标悬停在节点上时显示删除按钮 */
 .thought-node:hover .node-delete-btn {
     opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .right-action-btn {
+        opacity: 0.75 !important;
+    }
 }
 
 /* 确保节点定位基准 */
@@ -703,7 +923,7 @@
     }
 
     /* ==========================================
-       专家回答区块 (恢复古典暖色调)
+       North Star 回答区块 (恢复古典暖色调)
        ========================================== */
     #print-overlay .answer-node {
         /* 【修改点】：恢复古色古香的极淡香槟米黄底色 */
@@ -797,9 +1017,28 @@
         font-size: 9pt !important;
     }
 
-    /* 底部北极星 Insight 装饰块：拉开与正文的距离 */
+    /* ==========================================
+   底部北极星 Insight 装饰块：打印修复
+   ========================================== */
     #print-overlay .star-decoration-bottom {
         margin-top: 40px !important;   /* 原为 25px，增大到 40px */
+        text-align: right !important;
+        font-size: 9pt !important;
+        color: #b8860b !important;        /* 暗金色，白底清晰 */
+        font-family: 'Cinzel', 'Times New Roman', serif !important;
+        opacity: 1 !important;            /* 移除半透明 */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 6px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    #print-overlay .star-decoration-bottom i {
+        color: #b8860b !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
     
     #print-overlay .node-divider {
@@ -869,6 +1108,34 @@
         line-height: 1.65;      /* 从1.8收紧，每行显示更多字 */
         text-align: left;       /* 手机端左对齐更易读 */
     }
+
+    /* 标题相应缩小 */
+    .star-content h1 {
+        font-size: 1.15em;
+        margin: 14px 0 8px;
+        padding-left: 8px;
+        border-left-width: 2px;
+    }
+
+    .star-content h2 {
+        font-size: 1.12em;
+        margin: 12px 0 6px;
+        padding-left: 6px;
+    }
+
+    .star-content h3 {
+        font-size: 1.08em;
+        margin: 10px 0 5px;
+        padding-left: 5px;
+        border-left-width: 2px;
+    }
+
+    .star-content h4,
+    .star-content h5,
+    .star-content h6 {
+        font-size: 1em;
+        margin: 6px 0 3px;
+    }
     
     .node-divider {
         margin: 10px 0 15px 0;
@@ -927,6 +1194,35 @@
     .star-content {
         font-size: 0.9rem;
         line-height: 1.55;   /* 更紧凑的行高 */
+    }
+
+    /* 标题进一步缩小，减少边距 */
+    .star-content h1 {
+        font-size: 1.1em;
+        margin: 12px 0 6px;
+        padding-left: 6px;
+    }
+
+    .star-content h2 {
+        font-size: 1.08em;
+        margin: 10px 0 5px;
+        padding-left: 5px;
+        border-left-width: 2px;
+    }
+
+    .star-content h3 {
+        font-size: 1.05em;
+        margin: 8px 0 4px;
+        padding-left: 4px;
+        border-left: 1px solid rgba(197, 160, 89, 0.5);
+    }
+
+    .star-content h4,
+    .star-content h5,
+    .star-content h6 {
+        font-size: 0.95em;
+        margin: 6px 0 2px;
+        color: #5d4037;
     }
     
     .leader-name {
