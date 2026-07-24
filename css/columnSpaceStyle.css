@@ -1,0 +1,1719 @@
+/* ════════════════════════════════════════════════════════════════
+   专栏空间 (Column Space) - 样式优化版 v2
+   优化：
+     1. 封面标题字体增大，增加美观装饰
+     2. 图片使用 cover 填满容器
+     3. 调整封面页布局比例
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── 模态框基础 ─── */
+.column-space-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+}
+
+.column-space-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 14, 39, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.column-space-container {
+    position: relative;
+    width: 100%; height: 100%;
+    max-width: 1400px; max-height: 90vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6), 
+                0 0 0 1px rgba(102, 126, 234, 0.1);
+}
+
+/* ─── 加载状态 ─── */
+.column-space-loading {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; height: 100%;
+    min-height: 400px;
+}
+
+.spacetime-fold-icon {
+    margin-bottom: 32px;
+    filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.4));
+}
+
+.spacetime-fold-text {
+    font-size: 20px;
+    color: #d4c4a8;
+    letter-spacing: 2px;
+    font-weight: 300;
+    text-align: center;
+    animation: textPulse 2s ease-in-out infinite;
+}
+
+.spacetime-fold-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.spacetime-fold-dots span {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #667eea;
+    animation: dotPulse 1.4s ease-in-out infinite;
+}
+
+.spacetime-fold-dots span:nth-child(2) { animation-delay: 0.2s; }
+.spacetime-fold-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes textPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(0.6); opacity: 0.4; }
+    50% { transform: scale(1); opacity: 1; }
+}
+
+/* ─── 空状态 / 错误状态 ─── */
+.column-space-empty,
+.column-space-error {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; height: 100%;
+    min-height: 400px;
+    padding: 40px;
+}
+
+.empty-icon, .error-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+
+.empty-text, .error-text {
+    font-size: 18px;
+    color: #d4c4a8;
+    margin-bottom: 12px;
+}
+
+.error-detail {
+    font-size: 13px;
+    color: #ef4444;
+    opacity: 0.8;
+    max-width: 400px;
+    text-align: center;
+    word-break: break-word;
+}
+
+.btn-close-space {
+    margin-top: 24px;
+    padding: 10px 28px;
+    border: 1px solid rgba(102, 126, 234, 0.4);
+    background: rgba(102, 126, 234, 0.1);
+    color: #d4c4a8;
+    border-radius: 24px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.btn-close-space:hover {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.6);
+    transform: translateY(-2px);
+}
+
+/* ─── 目录视图 ─── */
+.column-space-directory {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #0a0e27 0%, #11183a 50%, #0a0e27 100%);
+    transition: opacity 0.4s ease;
+    overflow: hidden;
+}
+
+.directory-header {
+    display: flex;
+    align-items: center;
+    padding: 24px 32px;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.15);
+    background: rgba(10, 14, 39, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.btn-back-close {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    background: rgba(197, 160, 89, 0.08);
+    color: #c5a059;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.btn-back-close:hover {
+    background: rgba(197, 160, 89, 0.2);
+    transform: rotate(90deg);
+    border-color: rgba(197, 160, 89, 0.5);
+}
+
+.directory-title {
+    flex: 1;
+    font-size: 22px;
+    font-weight: 500;
+    color: #d4c4a8;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.title-icon {
+    color: #c5a059;
+    font-size: 24px;
+}
+
+.title-sub {
+    font-size: 14px;
+    color: #667eea;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-left: 8px;
+    padding-left: 12px;
+    border-left: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.directory-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.directory-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.directory-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.directory-list::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.3);
+    border-radius: 3px;
+}
+
+.directory-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.5);
+}
+
+/* ─── 目录条目 ─── */
+.directory-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px 24px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(102, 126, 234, 0.08);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    animation: slideInUp 0.5s ease backwards;
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.directory-item:hover {
+    background: rgba(102, 126, 234, 0.08);
+    border-color: rgba(102, 126, 234, 0.25);
+    transform: translateX(8px);
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+}
+
+.directory-item.latest {
+    background: rgba(197, 160, 89, 0.06);
+    border-color: rgba(197, 160, 89, 0.2);
+}
+
+.directory-item.latest:hover {
+    background: rgba(197, 160, 89, 0.12);
+    border-color: rgba(197, 160, 89, 0.35);
+    box-shadow: 0 4px 20px rgba(197, 160, 89, 0.15);
+}
+
+.directory-item.error {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.item-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(circle at 50% 0%, rgba(102, 126, 234, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.directory-item:hover .item-glow {
+    opacity: 1;
+}
+
+.item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.label-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    background: rgba(102, 126, 234, 0.15);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.25);
+}
+
+.directory-item.latest .label-badge {
+    background: rgba(197, 160, 89, 0.15);
+    color: #c5a059;
+    border-color: rgba(197, 160, 89, 0.3);
+}
+
+.latest-star {
+    color: #c5a059;
+    font-size: 14px;
+    animation: starTwinkle 2s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+.item-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #e0e0e0;
+    line-height: 1.5;
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item-excerpt {
+    font-size: 13px;
+    color: #8b92b4;
+    line-height: 1.6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.item-error {
+    font-size: 12px;
+    color: #ef4444;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.item-arrow {
+    flex-shrink: 0;
+    margin-left: 16px;
+    color: #667eea;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+}
+
+.directory-item:hover .item-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+/* ─── 阅读视图 ─── */
+.column-space-reader {
+    position: relative;
+    width: 100%; height: 100%;
+    display: none;
+    flex-direction: column;
+    background: linear-gradient(135deg, #0a0e27 0%, #11183a 50%, #0a0e27 100%);
+    transition: opacity 0.4s ease;
+    overflow: hidden;
+}
+
+.reader-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 16px 32px;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.15);
+    background: rgba(10, 14, 39, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    gap: 16px;
+}
+
+.btn-back-directory {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    background: rgba(102, 126, 234, 0.08);
+    color: #d4c4a8;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.btn-back-directory:hover {
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateX(-2px);
+}
+
+.reader-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: #d4c4a8;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 16px;
+}
+
+/* 当 reader-title 为空时隐藏（封面页） */
+.reader-title:empty {
+    display: none;
+}
+
+.reader-pagination {
+    font-size: 13px;
+    color: #667eea;
+    font-weight: 500;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    min-width: 100px;
+    text-align: right;
+}
+
+/* ─── 书本容器 ─── */
+.reader-book {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    perspective: 1500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px;  /* 减小内边距，给内容更多空间 */
+}
+
+.book-pages {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    max-height: 72vh;  /* 稍微增大 */
+    transform-style: preserve-3d;
+}
+
+/* ─── 单页样式 ─── */
+.book-page {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #12183a 0%, #1a2048 100%);
+    border-radius: 12px;
+    box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(102, 126, 234, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.6s ease;
+    transform-origin: left center;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+}
+
+.book-page.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) rotateY(0);
+    z-index: 10;
+    visibility: visible;
+}
+
+.book-page.prev {
+    opacity: 0;
+    transform: translateX(-30%) rotateY(25deg) scale(0.9);
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.book-page.next {
+    opacity: 0;
+    transform: translateX(30%) rotateY(-25deg) scale(0.9);
+    pointer-events: none;
+    visibility: hidden;
+}
+
+/* 页面阴影效果 */
+.page-shadow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    border-radius: 12px;
+    box-shadow: inset -30px 0 60px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.page-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;  /* 封面页内部自己控制padding */
+    position: relative;
+    z-index: 1;
+}
+
+/* 自定义滚动条 */
+.page-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.page-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.page-content::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.3);
+    border-radius: 2px;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 16px;
+    right: 24px;
+    font-size: 12px;
+    color: rgba(102, 126, 234, 0.5);
+    font-weight: 500;
+    letter-spacing: 1px;
+    z-index: 3;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   【优化】封面页样式 - 图片占据全部空间，标题覆盖在顶部，北极星在底部
+   ═══════════════════════════════════════════════════════════════ */
+.page-cover {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ─── 标题区域：在正常文档流中，位于最上方 ─── */
+.cover-title-area {
+    position: relative; /* 移除 absolute */
+    padding: 30px 48px 16px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent; /* 移除不需要的黑色渐变遮罩 */
+    flex-shrink: 0; /* 防止被挤压 */
+}
+
+/* 标题样式 */
+.cover-title-area .cover-title,
+.cover-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f0e6d3;
+    line-height: 1.3;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* 领域标签 */
+.cover-title-area .cover-meta,
+.cover-meta {
+    font-size: 14px;
+    color: #c5a059;
+    letter-spacing: 2px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+/* ─── 图片区域：占据中间所有剩余空间 ─── */
+.cover-image-wrapper {
+    position: relative; /* 移除 absolute */
+    flex: 1; /* 自动撑满中间区域 */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 24px; /* 让海报左右留出一点呼吸空间 */
+}
+
+/* 图片完整展示不裁剪 */
+.cover-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 【关键修复】从 cover 改为 contain，保证海报完整且不被裁切 */
+    border-radius: 8px; /* 增加一点圆角让整体更和谐 */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* 加个阴影体现立体感 */
+}
+
+/* ─── 装饰区域：位于最下方 ─── */
+.cover-decoration {
+    position: relative; /* 移除 absolute */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px 48px;
+    z-index: 2;
+    background: transparent; /* 移除黑色渐变遮罩 */
+    flex-shrink: 0;
+}
+
+.deco-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.6), transparent);
+}
+
+.deco-star {
+    color: #c5a059;
+    font-size: 20px;
+    opacity: 0.8;
+}
+
+/* ─── 内容页样式 ─── */
+.page-content-body {
+    font-size: 16px;
+    line-height: 1.9;
+    color: #c5c8d6;
+    padding: 40px 48px;  /* 内容页的内边距 */
+}
+
+.page-content-body p {
+    margin-bottom: 1.2em;
+    text-align: justify;
+}
+
+.page-content-body h1,
+.page-content-body h2,
+.page-content-body h3,
+.page-content-body h4,
+.page-content-body h5,
+.page-content-body h6 {
+    color: #d4c4a8;
+    margin: 1.5em 0 0.8em;
+    line-height: 1.4;
+}
+
+.page-content-body h1 {
+    font-size: 1.5em;
+    border-left: 4px solid #c5a059;
+    padding-left: 12px;
+}
+
+.page-content-body h2 {
+    font-size: 1.3em;
+    border-left: 3px solid rgba(197, 160, 89, 0.6);
+    padding-left: 10px;
+}
+
+.page-content-body h3 {
+    font-size: 1.15em;
+    color: #d4c4a8;
+}
+
+.page-content-body strong,
+.page-content-body b {
+    color: #d4c4a8;
+    font-weight: 600;
+}
+
+.page-content-body blockquote {
+    margin: 1.2em 0;
+    padding: 12px 20px;
+    border-left: 3px solid #667eea;
+    background: rgba(102, 126, 234, 0.08);
+    color: #b0b8d0;
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+.page-content-body ul,
+.page-content-body ol {
+    margin: 1em 0;
+    padding-left: 2em;
+}
+
+.page-content-body li {
+    margin-bottom: 0.5em;
+}
+
+.page-content-body code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', Monaco, monospace;
+    font-size: 0.9em;
+    color: #e0c080;
+}
+
+.page-content-body pre {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.page-content-body pre code {
+    background: none;
+    padding: 0;
+}
+
+.page-content-body hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.3), transparent);
+    margin: 2em 0;
+}
+
+.page-content-body a {
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+    transition: border-color 0.2s ease;
+}
+
+.page-content-body a:hover {
+    border-bottom-color: #667eea;
+}
+
+/* ─── 导航按钮 ─── */
+.reader-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 32px;
+    border-top: 1px solid rgba(102, 126, 234, 0.15);
+    background: rgba(10, 14, 39, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.btn-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 24px;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    background: rgba(102, 126, 234, 0.08);
+    color: #d4c4a8;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.btn-nav:hover:not(:disabled) {
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.btn-nav:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-nav.prev svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-nav.prev:hover:not(:disabled) svg {
+    transform: translateX(-3px);
+}
+
+.btn-nav.next svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-nav.next:hover:not(:disabled) svg {
+    transform: translateX(3px);
+}
+
+/* ─── 翻页动画 ─── */
+.book-page.flip-left-out {
+    animation: flipLeftOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.book-page.flip-left-in {
+    animation: flipLeftIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.book-page.flip-right-in {
+    animation: flipRightIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes flipLeftOut {
+    from { transform: translateX(0) rotateY(0); opacity: 1; visibility: visible; }
+    to { transform: translateX(-100%) rotateY(-90deg); opacity: 0; visibility: hidden; }
+}
+
+@keyframes flipLeftIn {
+    from { transform: translateX(100%) rotateY(90deg); opacity: 0; visibility: hidden; }
+    to { transform: translateX(0) rotateY(0); opacity: 1; visibility: visible; }
+}
+
+@keyframes flipRightIn {
+    from { transform: translateX(-100%) rotateY(-90deg); opacity: 0; visibility: hidden; }
+    to { transform: translateX(0) rotateY(0); opacity: 1; visibility: visible; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   响应式适配 - 移动端
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .column-space-container {
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .directory-header {
+        padding: 16px 20px;
+    }
+
+    .directory-title {
+        font-size: 18px;
+    }
+
+    .title-sub {
+        display: none;
+    }
+
+    .directory-list {
+        padding: 16px 20px 30px;
+    }
+
+    .directory-item {
+        padding: 16px 18px;
+    }
+
+    .item-title {
+        font-size: 15px;
+    }
+
+    .reader-toolbar {
+        padding: 12px 16px;
+    }
+
+    .reader-title {
+        font-size: 13px;
+        padding: 0 8px;
+    }
+
+    .reader-book {
+        padding: 8px 12px;
+    }
+
+    .book-pages {
+        max-height: 78vh;
+    }
+
+    /* 移动端封面页 */
+    .cover-image-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+    }
+
+    .cover-title-area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 16px 24px 12px;
+        background: linear-gradient(to bottom, 
+            rgba(10, 14, 39, 0.9) 0%,
+            rgba(10, 14, 39, 0.6) 60%,
+            transparent 100%);
+    }
+
+    .cover-title-area .cover-title,
+    .cover-title {
+        font-size: 20px;
+    }
+
+    .cover-title-area .cover-meta,
+    .cover-meta {
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .cover-decoration {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 12px 24px 16px;
+        background: linear-gradient(to top, 
+            rgba(10, 14, 39, 0.9) 0%,
+            rgba(10, 14, 39, 0.6) 60%,
+            transparent 100%);
+    }
+
+    .deco-line {
+        width: 40px;
+    }
+}   /* ← 缺失的右大括号 */
+
+@media (max-width: 480px) {
+    .page-content-body {
+        font-size: 14px;
+        line-height: 1.8;
+        padding: 20px 16px;
+    }
+    .cover-meta {
+        font-size: 11px;
+        margin-top: 4px;
+    }
+
+    .btn-back-directory span {
+        display: none;
+    }
+
+    .reader-pagination {
+        min-width: auto;
+        font-size: 12px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   响应式适配修正 (覆盖原来的媒体查询，清理掉 absolute)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    /* 移动端封面页修正 */
+    .cover-image-wrapper {
+        position: relative;
+        height: auto;
+        padding: 0 16px;
+    }
+    
+    .cover-title-area {
+        position: relative;
+        padding: 24px 20px 12px;
+        background: transparent;
+    }
+
+    .cover-decoration {
+        position: relative;
+        padding: 16px 20px 20px;
+        background: transparent;
+    }
+}
+
+@media (max-width: 480px) {
+    .cover-title-area {
+        position: relative;
+        padding: 20px 16px 12px;
+        background: transparent;
+    }
+
+    .cover-decoration {
+        position: relative;
+        padding: 12px 16px 20px;
+        background: transparent;
+    }
+}
+
+/* 隐藏原本的小标题样式（双保险） */
+.reader-title {
+    display: none !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   新增：全屏图像查看器样式
+   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   全屏图像查看器 - 支持拖拽平移
+   ═══════════════════════════════════════════════════════════════ */
+
+.column-space-image-viewer {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 100005;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    overflow: hidden;  /* ═══【新增】防止拖拽时溢出 ═══ */
+}
+
+.column-space-image-viewer.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.image-viewer-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: default;
+}
+
+/* ═══【修改】图片容器，用于限制拖拽范围 ═══ */
+.image-viewer-wrapper {
+    position: relative;
+    width: 95vw;
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;  /* 拖拽时裁剪溢出部分 */
+    z-index: 2;
+}
+
+.image-viewer-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+    transform: scale(1) translate(0px, 0px);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: zoom-in;
+    user-select: none;        /* ═══【新增】防止拖拽时选中 ═══ */
+    -webkit-user-drag: none;  /* ═══【新增】防止拖拽图片 ═══ */
+}
+
+/* 放大状态 */
+.image-viewer-img.zoomed {
+    cursor: grab;  /* ═══【修改】放大时显示抓取光标 ═══ */
+    max-width: none;
+    max-height: none;
+    transition: none;  /* 拖拽时禁用过渡，更跟手 */
+}
+
+/* 拖拽中 */
+.image-viewer-img.zoomed.dragging {
+    cursor: grabbing;
+}
+
+.image-viewer-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.image-viewer-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(90deg);
+}
+
+/* ═══【新增】提示文字 ═══ */
+.image-viewer-hint {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    letter-spacing: 1px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.column-space-image-viewer.show .image-viewer-hint {
+    opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   新增：手机端底部导航按钮防折行压缩
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+    .reader-nav {
+        gap: 8px; /* 减小按钮间距 */
+        padding: 12px 8px;
+    }
+    .btn-nav {
+        padding: 10px 14px; /* 减小内边距 */
+        font-size: 13px; /* 缩小字号 */
+        gap: 6px; /* 缩小图标和文字的距离 */
+        white-space: nowrap; /* 强制文字不换行 */
+        flex: 1; /* 让按钮平分底部空间 */
+        justify-content: center;
+    }
+    .btn-nav svg {
+        width: 18px; height: 18px; /* 缩小图标 */
+    }
+}
+
+@media (max-width: 480px) {
+    .reader-nav {
+        gap: 6px;
+        padding: 10px 6px;
+    }
+    .btn-nav {
+        padding: 8px 10px; /* 极小屏幕进一步压缩 */
+        font-size: 12px;
+        gap: 4px;
+        border-radius: 18px;
+    }
+    .btn-nav svg {
+        width: 16px; height: 16px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   殿堂级视觉增强（安全覆盖版）
+   不修改结构，不影响JS，仅提升阅读与品味
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ============================================================
+   目录高级感
+   ============================================================ */
+
+.directory-item {
+    background: rgba(255,255,255,0.015);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(197,160,89,0.06);
+}
+
+.directory-item:hover {
+    background:
+        linear-gradient(
+            120deg,
+            rgba(102,126,234,0.08),
+            rgba(197,160,89,0.05)
+        );
+    border-color: rgba(197,160,89,0.28);
+    transform: translateX(10px);
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.25),
+        0 4px 20px rgba(197,160,89,0.08);
+}
+
+.item-title {
+    font-family:
+        "Palatino Linotype",
+        "Book Antiqua",
+        "Noto Serif SC",
+        "Songti SC",
+        serif;
+    font-size: 18px;
+    letter-spacing: 0.4px;
+}
+
+
+
+/* ============================================================
+   书本空间感
+   ============================================================ */
+
+.reader-book {
+    perspective: 2000px;
+    padding: 16px 40px;
+}
+
+.book-page {
+    background:
+        linear-gradient(
+            to right,
+            #0d1128 0%,
+            #131a3a 4%,
+            #1a2048 100%
+        );
+
+    border-radius: 6px 16px 16px 6px;
+
+    box-shadow:
+        inset 10px 0 20px rgba(0,0,0,0.35),
+        inset 1px 0 0 rgba(255,255,255,0.04),
+        -5px 0 15px rgba(0,0,0,0.4),
+        0 18px 45px rgba(0,0,0,0.45);
+}
+
+
+/* ============================================================
+   页面阴影提升
+   ============================================================ */
+
+.page-shadow {
+    box-shadow:
+        inset -40px 0 80px rgba(0,0,0,0.18),
+        inset 8px 0 18px rgba(0,0,0,0.15);
+}
+
+
+
+/* ============================================================
+   优雅滚动条
+   ============================================================ */
+
+.page-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.page-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.page-content::-webkit-scrollbar-thumb {
+    background: rgba(197,160,89,0.22);
+    border-radius: 3px;
+}
+
+.page-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(197,160,89,0.45);
+}
+
+
+
+/* ============================================================
+   正文排版
+   ============================================================ */
+
+.page-content-body {
+    font-family:
+        "Palatino Linotype",
+        "Book Antiqua",
+        Palatino,
+        "Noto Serif SC",
+        "Songti SC",
+        "SimSun",
+        serif;
+
+    font-size: 16.5px;
+    line-height: 2.15;
+    color: #e2e8f0;
+
+    padding: 42px 56px;
+
+    text-align: justify;
+    text-justify: inter-ideograph;
+
+    letter-spacing: 0.3px;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.page-content-body p {
+    margin-bottom: 1.7em;
+}
+
+/* 仅普通段落首行缩进，避免影响代码块和引用 */
+.page-content-body > p {
+    text-indent: 2em;
+}
+
+.page-content-body h1,
+.page-content-body h2,
+.page-content-body h3,
+.page-content-body h4,
+.page-content-body h5,
+.page-content-body h6 {
+    font-family: inherit;
+    font-weight: 400;
+    color: #d4c4a8;
+    text-indent: 0;
+}
+
+.page-content-body h1 {
+    text-align: center;
+    border: none;
+    padding: 0;
+    font-size: 1.8em;
+    margin: 2em 0 1em;
+}
+
+.page-content-body h1::after {
+    content: "✦";
+    display: block;
+    margin-top: 14px;
+    font-size: 14px;
+    color: #c5a059;
+    opacity: 0.55;
+}
+
+.page-content-body h2 {
+    font-size: 1.4em;
+    border-left: 3px solid #c5a059;
+    padding-left: 16px;
+}
+
+.page-content-body h3 {
+    font-size: 1.18em;
+}
+
+.page-content-body blockquote {
+    margin: 2em 0;
+    padding: 20px 28px;
+
+    border-left: 2px solid #c5a059;
+
+    background:
+        linear-gradient(
+            to right,
+            rgba(197,160,89,0.08),
+            transparent
+        );
+
+    border-radius: 0 12px 12px 0;
+
+    color: #b8bfd6;
+
+    font-style: italic;
+
+    text-indent: 0;
+
+    font-size: 0.95em;
+}
+
+.page-content-body img {
+    max-width: 100%;
+    border-radius: 10px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.3);
+
+    margin: 1.4em 0;
+}
+
+
+
+/* ============================================================
+   封面史诗感
+   ============================================================ */
+
+.page-cover {
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(197,160,89,0.05) 0%,
+            transparent 70%
+        );
+}
+
+.cover-title-area .cover-title,
+.cover-title {
+    font-family:
+        "Palatino Linotype",
+        "Noto Serif SC",
+        serif;
+
+    font-size: 32px;
+
+    letter-spacing: 2px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #ffffff 0%,
+            #d4c4a8 100%
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 4px 20px rgba(197,160,89,0.18);
+}
+
+.cover-image-wrapper {
+    padding: 0 40px;
+}
+
+.cover-image-wrapper img {
+    border-radius: 4px;
+
+    box-shadow:
+        0 0 0 1px rgba(197,160,89,0.2),
+        0 20px 50px rgba(0,0,0,0.6);
+
+    transform: scale(0.98);
+
+    transition:
+        transform 0.8s ease,
+        box-shadow 0.8s ease;
+}
+
+.book-page.active .cover-image-wrapper img {
+    transform: scale(1);
+}
+
+
+
+/* ============================================================
+   翻页动态优化
+   ============================================================ */
+
+.book-page {
+    transition:
+        transform 0.8s cubic-bezier(0.2,0.8,0.2,1),
+        opacity 0.8s cubic-bezier(0.2,0.8,0.2,1);
+}
+
+@keyframes flipLeftOut {
+    0% {
+        transform: translateX(0)
+                   rotateY(0)
+                   scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        transform:
+            translateX(-60%)
+            rotateY(-60deg)
+            scale(0.9);
+
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes flipLeftIn {
+    0% {
+        transform:
+            translateX(60%)
+            rotateY(60deg)
+            scale(0.9);
+
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    100% {
+        transform:
+            translateX(0)
+            rotateY(0)
+            scale(1);
+
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes flipRightIn {
+    0% {
+        transform:
+            translateX(-60%)
+            rotateY(-60deg)
+            scale(0.9);
+
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    100% {
+        transform:
+            translateX(0)
+            rotateY(0)
+            scale(1);
+
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+
+
+/* ============================================================
+   微光动画
+   ============================================================ */
+
+.book-page.active {
+    animation:
+        pageGlow 6s ease-in-out infinite;
+}
+
+@keyframes pageGlow {
+    0%,100% {
+        box-shadow:
+            inset 10px 0 20px rgba(0,0,0,0.35),
+            0 18px 45px rgba(0,0,0,0.45);
+    }
+
+    50% {
+        box-shadow:
+            inset 10px 0 20px rgba(0,0,0,0.35),
+            0 22px 55px rgba(197,160,89,0.08);
+    }
+}
+
+
+
+/* ============================================================
+   移动端阅读优化
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    .page-content-body {
+        padding: 28px 24px;
+        font-size: 15px;
+        line-height: 2;
+    }
+
+    .page-content-body > p {
+        text-indent: 1.5em;
+    }
+
+    .cover-title-area .cover-title,
+    .cover-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+
+    .cover-image-wrapper {
+        padding: 0 20px;
+    }
+
+    .reader-book {
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page-content-body {
+        padding: 20px 18px;
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+    .page-content-body > p {
+        text-indent: 1.2em;
+    }
+
+    .cover-title-area .cover-title,
+    .cover-title {
+        font-size: 20px;
+    }
+
+    .cover-image-wrapper {
+        padding: 0 12px;
+    }
+}
+
+/* iSpace 设置容器面板 */
+.ispace-settings-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 460px;
+    background: #1e1e24; /* 深色主题基调 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.settings-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.settings-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.row-group {
+    display: flex;
+    gap: 12px;
+}
+
+.half {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: #a0a0a5;
+    margin-bottom: 6px;
+}
+
+/* 输入框和下拉框通用样式 */
+.form-group input, 
+.form-group select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 14px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+/* 修复：下拉选项颜色 */
+.form-group select option {
+    background: #2a2a35;
+    color: #e0e0e0;
+}
+
+.form-group select option:checked {
+    background: #667eea;
+    color: #fff;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.settings-footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-cancel, .btn-save {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: #a0a0a5;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+}
+
+.btn-cancel:hover, .btn-save:hover {
+    opacity: 0.85;
+}
