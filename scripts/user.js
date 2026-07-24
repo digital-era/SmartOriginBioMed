@@ -87,6 +87,8 @@ function checkAuthStatus() {
             document.getElementById('loginSection').classList.add('auth-hidden');
             document.getElementById('cpwSection').classList.remove('auth-hidden');
             document.getElementById('loggedInUser').innerText = decoded.user.toUpperCase();
+            // 【新增】更新 admin UI
+            updateAdminUI();
             return true;
         } else {
             // Token 过期处理
@@ -101,6 +103,9 @@ function checkAuthStatus() {
     }
     document.getElementById('loginSection').classList.remove('auth-hidden');
     document.getElementById('cpwSection').classList.add('auth-hidden');
+
+    // 【新增】确保移除 admin 状态
+    document.body.classList.remove('admin-logged-in');
     return false;
 }
 
@@ -143,6 +148,9 @@ async function handleLogin() {
             
             showAuthMsg("authMsgSuccess", "#10B981");
             document.getElementById('auth_password').value = '';
+
+            // 【新增】更新 admin UI 状态
+            updateAdminUI();
             
             setTimeout(() => { window.location.reload(); }, 800);
         } else {
@@ -157,6 +165,9 @@ function handleLogout() {
     localStorage.removeItem('qgr_jwt_token');
     if (typeof ossClient !== 'undefined') ossClient = null;
     window.CURRENT_OSS_PREFIX = '';
+
+    // 【新增】移除 admin UI 状态
+    document.body.classList.remove('admin-logged-in');
 
     checkAuthStatus();
     showAuthMsg("authMsgLoggedOut", "#10B981");
@@ -304,4 +315,77 @@ function getSecureOssPath(filename) {
         : `${filename}_${username}`;
     
     return `${username}//${newFilename}`; 
+}
+
+
+
+// ═══════════════════════════════════════════════
+// 权限检查
+// ═══════════════════════════════════════════════
+function checkAdminPermission() {
+    const token = localStorage.getItem('qgr_jwt_token');
+    if (!token) return false;
+
+    const decoded = parseJWTClientSide(token);
+    if (!decoded) return false;
+
+    return decoded.user === 'admin';
+}
+
+// 新增：检查是否已登录（任何登录用户）
+function checkUserPermission() {
+    const token = localStorage.getItem('qgr_jwt_token');
+    if (!token) return false;
+
+    const decoded = parseJWTClientSide(token);
+    if (!decoded) return false;    
+   
+    return !!decoded.user;  // 或你的登录状态判断
+}
+
+function updateAdminUI() {
+    const isAdmin = checkAdminPermission();
+    
+    if (isAdmin) {
+        document.body.classList.add('admin-logged-in');
+        console.log('[Admin] Admin UI enabled');
+    } else {
+        document.body.classList.remove('admin-logged-in');
+        console.log('[Admin] Admin UI disabled');
+    }
+    
+    return isAdmin;
+}
+
+function checkSystemLogin(lang) {
+    //const lang = window.currentLang || 'zh-CN';
+
+    // 登录检查
+    const token = localStorage.getItem('qgr_jwt_token');
+    let isLoggedIn = false;
+
+    if (token) {
+        const decoded = parseJWTClientSide(token);
+        if (decoded) {
+            isLoggedIn = true;
+        }
+    }
+
+    if (!isLoggedIn) {
+        alert(
+            lang === 'en'
+                ? 'Please login first.'
+                : '请先登录。'
+        );
+
+        // 如果有设置窗口
+        if (typeof openApiSettingsModal === 'function') {
+            openApiSettingsModal();
+            checkAuthStatus();
+        }
+
+        return isLoggedIn;
+    }
+
+    return isLoggedIn;
 }
