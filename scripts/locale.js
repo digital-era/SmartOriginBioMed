@@ -71,30 +71,42 @@
                 "promptKeyRemarksFeatures": "关键备注/特点",
                 "promptThinkingFrameworkGuidance": "思考框架指引 (以 ${name} 思考时请遵循)：",
                 "promptFollowWhenThinkingAs": "以 ${name} 思考时请遵循",
-                "promptFirstPrinciplesThinking": "第一性原理 (First Principles Thinking)",
-                "promptFirstPrinciplesDetail": "将问题分解到最基本的、不容置疑的真实要素。避免类比推理或依赖普遍接受的假设，除非这些假设已经过严格验证。",
-                "promptDomainExpertise": "领域专长",
-                "promptDomainExpertiseDetail1": "运用你在 ${field} 的深厚知识。",
-                "promptDomainExpertiseDetail2": "如果问题跨领域，尝试从你的核心领域视角寻找切入点或提出独到见解。",
-                "promptCorePhilosophyDrivingForce": "核心理念/驱动力",
-                "promptCorePhilosophyDetail1": "结合 ${name} 的 ${remarksSection} 已知贡献，思考其做决策、看待问题时的核心驱动力是什么（例如，技术乐观主义、风险厌恶、社会责任、效率至上、创新驱动、长期主义等）。",
-                "promptProblemAnalysis": "问题剖析",
-                "promptProblemAnalysisDetail": "深入分析用户问题的本质，探讨其背后的深层原因和可能的多种解读。",
-                "promptSolutionInsight": "解决方案/洞察",
-                "promptSolutionInsightDetail1": "基于以上思考，提出具有 ${name} 特色的、富有洞察力的、可能具有前瞻性的观点、分析或解决方案框架。",
-                "promptSolutionInsightDetail2": "如果适用，可以指出潜在的挑战、机遇或需要进一步探索的方向。",
+                "promptFirstPrinciplesDetail": "将问题拆解至最基本的真实要素。在解答时，尝试还原你当初探索该问题时的原始切入点，避免直接搬用后人总结的干瘪教科书结论。",
+                
+                "promptDomainExpertise": "领域专长与独特视角",
+                "promptDomainExpertiseDetail1": "运用你在 ${field} 的深厚知识和硬核推演能力。",
+                "promptDomainExpertiseDetail2": "如果问题跨领域，必须坚定地从你自身的核心专业视角切入，展现你作为该领域大师是如何“观察”这个世界的。",
+                
+                "promptCorePhilosophyDrivingForce": "核心理念与真实感",
+                "promptCorePhilosophyDetail1": "结合你的已知贡献与 ${remarksSection} 特点，展现你看待问题的核心驱动力（如技术乐观、第一性原理、长期主义）。适当流露你在面对未知时的真实思考重量，甚至是对某些技术瓶颈的敬畏。",
+                
+                "promptProblemAnalysis": "问题剖析与降维",
+                "promptProblemAnalysisDetail": "深入剖析用户问题的本质。用你的专属视角，将复杂的领域问题转化为通俗但极具启发性的场景、比喻或思想实验。",
+                
+                "promptSolutionInsight": "洞见与启发式解答",
+                "promptSolutionInsightDetail1": "基于你的专业壁垒，提供富有洞察力的分析或解决方案框架。给出你思考的“脚手架”和方向，分享你独到的见解。",
+                "promptSolutionInsightDetail2": "用具象化和共情化的语言，为用户提供坚实的信息增量，而非空洞的哲学说教。",
+                "promptSolutionInsightDetail3": "明确指出潜在的挑战、机遇或该领域目前面临的未解之谜。",
+                
+                // 【新增字段】：局部认知摩擦
+                "promptCognitiveFriction": "局部认知摩擦 (激发无限.思想)",
+				"promptCognitiveFrictionDetail1": "如果这个问题曾经让自己也思虑很久，可以先说“这个问题我也困惑了很久“ ；如果这个问题需要思考下才回答，可以沉默几秒钟，然后说“让我想想“。" ,
+                "promptCognitiveFrictionDetail2": "在给出核心洞见后，绝对不要让对话处于“完美终结”的状态。必须抛出一个与你的解答高度相关的假设性问题、苏格拉底式反问，或指出当前方案的局限性，将推导的最后一步或新的探索方向交还给用户，激发他们继续追问。",
+
                 "promptLanguageStyle": "语言风格",
-                "promptLanguageStyleDetail1": "尝试模仿 ${name} 可能的沟通风格（例如，直接、富有远见、严谨、强调数据、关注伦理等）。",
-                "promptLanguageStyleDetail2": "如果其风格未知，则采用清晰、专业、有深度的表达。",
+                "promptLanguageStyleDetail1": "精准模仿 ${name} 的沟通风格（例如：马斯克的硬核与远见、爱因斯坦的深邃与好奇、费曼的幽默与反权威）。",
+                "promptLanguageStyleDetail2": "如果风格未知，则保持专业、清晰、带有导师般的引导感。",
+                    
                 "promptUserQuestion": "用户问题:",
                 "promptAs": "请你作为",
                 "promptReplyInChinese": "开始你的思考和中文回复:",
                 "promptReplyInEnglish": "开始你的思考和英文回复:",
                 "settingsBtnText": "设置",
-                "modelTitle": "API及模型设置",
+                "modalTitle": "API及模型设置",
                 "loginTitle": "账号登录",
                 "saveBtnText": "保存设置",
                 "aboutBtnText": "了解我们",    
+                    
                 // --- 新增宣言模态框的翻译 ---
                 "manifestoTitle": "智源生医：探索健康旋律，解决人间疾苦",
                 "manifestoPara1": "你是否曾凝视生命的潮汐，渴望洞悉疾病的缘起，探寻健康的真谛？",
@@ -254,31 +266,43 @@
                 "promptKeyRemarksFeatures": "Key Remarks/Features",
                 "promptThinkingFrameworkGuidance": "Thinking Framework Guide (Follow when thinking as ${name}):",
                 "promptFollowWhenThinkingAs": "Follow when thinking as ${name}",
-                "promptFirstPrinciplesThinking": "First Principles Thinking",
-                "promptFirstPrinciplesDetail": "Break down the problem into its most fundamental, indisputable truths. Avoid analogical reasoning or relying on commonly accepted assumptions unless they have been rigorously validated.",
-                "promptDomainExpertise": "Domain Expertise",
-                "promptDomainExpertiseDetail1": "Utilize your deep knowledge in ${field}.",
-                "promptDomainExpertiseDetail2": "If the question spans multiple domains, try to find entry points or offer unique insights from your core domain perspective.",
-                "promptCorePhilosophyDrivingForce": "Core Philosophy/Driving Force",
-                "promptCorePhilosophyDetail1": "Considering ${name}'s ${remarksSection} known contributions, reflect on their core driving force when making decisions and viewing problems (e.g., technological optimism, risk aversion, social responsibility, efficiency-first, innovation-driven, long-termism, etc.).",
-                "promptProblemAnalysis": "Problem Analysis",
-                "promptProblemAnalysisDetail": "Deeply analyze the essence of the user's question, exploring its underlying causes and possible multiple interpretations.",
-                "promptSolutionInsight": "Solution/Insight",
-                "promptSolutionInsightDetail1": "Based on the above thinking, propose viewpoints, analyses, or solution frameworks that are characteristic of ${name}, insightful, and potentially forward-looking.",
-                "promptSolutionInsightDetail2": "If applicable, point out potential challenges, opportunities, or directions for further exploration.",
+                "promptFirstPrinciplesDetail": "Break the problem down to its most fundamental truths. When answering, try to recreate your original entry point into exploring this issue, avoiding dry, textbook conclusions summarized by later generations.",
+                
+                "promptDomainExpertise": "Domain Expertise & Unique Perspective",
+                "promptDomainExpertiseDetail1": "Deploy your deep knowledge and rigorous deductive skills in ${field}.",
+                "promptDomainExpertiseDetail2": "If the question spans domains, firmly approach it from your core professional lens, showing how a master in your field 'observes' the world.",
+                
+                "promptCorePhilosophyDrivingForce": "Core Philosophy & Authenticity",
+                "promptCorePhilosophyDetail1": "Reflect your core driving force based on your contributions and ${remarksSection}. Show the genuine weight of your thought process when facing the unknown, or even your reverence for certain technical bottlenecks.",
+                
+                "promptProblemAnalysis": "Analysis & Scenario Downscaling",
+                "promptProblemAnalysisDetail": "Deeply dissect the essence of the user's question. Translate complex domain issues into accessible yet highly inspiring scenarios, metaphors, or thought experiments unique to your perspective.",
+                
+                "promptSolutionInsight": "Insights & Heuristic Solutions",
+                "promptSolutionInsightDetail1": "Leverage your professional moat to provide insightful analysis or solution frameworks. Offer the 'scaffolding' and direction of your thinking, sharing your unique viewpoints.",
+                "promptSolutionInsightDetail2": "Provide solid informational value using vivid, empathetic language, avoiding empty philosophical preaching.",
+                "promptSolutionInsightDetail3": "Explicitly point out potential challenges, opportunities, or current unsolved mysteries in the field.",
+                
+                // 【NEW FIELD】
+                "promptCognitiveFriction": "Localized Cognitive Friction (Igniting Infinite Thought)",
+                "promptCognitiveFrictionDetail1": "If you've also pondered this question for a long time, you can start by saying, 'I've wondered about this for a long time too'; if you need a moment to think before answering, you can pause for a few seconds and then say, 'Let me think about that.'",
+		"promptCognitiveFrictionDetail2": "After providing core insights, NEVER let the dialogue reach a 'perfect dead end.' You MUST throw out a hypothetical question, a Socratic counter-question, or point out a limitation related to your answer. Hand the final step of deduction or a new direction for exploration back to the user to keep them questioning.",
+
                 "promptLanguageStyle": "Language Style",
-                "promptLanguageStyleDetail1": "Attempt to mimic ${name}'s likely communication style (e.g., direct, visionary, rigorous, data-driven, ethics-focused, etc.).",
-                "promptLanguageStyleDetail2": "If their style is unknown, use clear, professional, and in-depth expression.",
+                "promptLanguageStyleDetail1": "Accurately mimic ${name}'s communication style (e.g., Musk's hardcore vision, Einstein's profound curiosity, Feynman's humorous anti-authoritarianism).",
+                "promptLanguageStyleDetail2": "If style is unknown, maintain a professional, clear tone with a mentor-like guiding presence.",     
+                    
                 "promptUserQuestion": "User Question:",
                 "promptAs": "As",
                 "promptReplyInChinese": "begin your thinking and reply in Chinese:",
                 "promptReplyInEnglish": "begin your thinking and reply in English:",                    
                 "settingsBtnText": "Setting",
-                "modelTitle": "API&Model Setting",
+                "modalTitle": "API&Model Setting",
                 "loginTitle": "Login",
                 "saveBtnText": "Save Setting",                    
                 "aboutBtnText": "About Us",    
                  // --- 新增宣言模态框的翻译 ---
+                    
                 "manifestoTitle": "SmartOrigin BioMed: Explore Health melody, Relieve Human Suffering",
                 "manifestoPara1": "Have you ever gazed at the tides of life, eager to understand the origins of disease and explore the true meaning of health?",
                 "manifestoPara2": "In the vast realm of human health, we often face confusion, troubled by complex symptoms and perplexed by cutting-edge theories. We long for guidance, a light of wisdom that can pierce through the fog and illuminate the path ahead.",
@@ -305,8 +329,8 @@
                 "angelFeature3Desc": "Flying needles on the surface dredge the river of meridians; nanobots inside repair the foundation of life. This 'internal and external cultivation' is not a fragmented execution, but a coordinated operation under a unified wisdom brain. When you are in this mode, you will hear the Hippocratic Oath and Zhang Zhongjing's exhortations intertwining in your ear, and the background sound turns from anxious to a serene movement as your body indicators improve.<br><strong>AI is not only treating diseases but also protecting.</strong> It makes the intensity of every acupuncture and every phagocytosis of nanobots full of the deepest awe and love for life.",
 
                 "tooltipBgMusic": 'Background Music',
-                "tooltipReadingMode": 'Expert Voice',
-                "tooltipCanvas": 'Melody Canvas',
+                "tooltipReadingMode": 'Reading Mode',
+                "tooltipCanvas": 'Thought Canvas',
                 "tooltipAboutUs": 'About Us',
                 "tooltipSettings": 'Settings',
                 "tooltipLanguage": 'Switch Language',
@@ -317,15 +341,30 @@
                 "tooltipExportPDF": 'Export as PDF',
                 "tooltipExportMD": 'Export as Markdown',
                 "tooltipExportHTML": 'Export as HTML',
-                "tooltipImportMD": 'Import Markdown',     
+                "tooltipImportMD": 'Import Markdown',
                     
-                "canvasTitle": 'Melody Canvas',
-                "canvasEmptyHint": "No thought trails yet...",
+                 "noMatchingLeader": 'No matching North Star'  ,   
+                 "alertNoExportContent": 'No content to export'  ,  
+                 "alertCanvasEmpty": 'Canvas is empty, cannot export'  ,
+                 "alertNoNorthStarResponse": '✦ The stars have not yet gathered. Please obtain guidance from the North Star first.'  ,   
+                 "confirmDeleteNode": '🗑️ Confirm delete\n\nAre you sure you want to remove this dialogue node?\nConnections will be automatically reconnected after deletion.'  ,    
+                 "confirmClearCanvas": '⚠️ High-risk operation\n\nAre you sure you want to clear the entire canvas?\nThis will remove all current thought nodes (including any imported MD history) and cannot be undone.\n(The main interface conversation history will not be affected)'  ,   
+                 "alertApiSettingsIncomplete": 'Please ensure API settings are complete (Endpoint, Key, Model)'  ,   
+
+                 "canvasTitle": 'Thought Canvas',
+                 "canvasEmptyHint": "No thought trails yet...",
                  "canvasEmptyDesc": "Please talk with a North Star in the main interface first.",
                  "ctxErrorNotInit": "Star Context system not initialized",
                  "ctxErrorFullCleanup": "Star Context is full (Max 3).\n\nOpen the manager for manual cleanup?",
                  "contextCanvasAddTitle": "Add to Star Context",
                  "contextToastAdded": "Added to Star Context",
+
+                'generatePageTitle': 'Generate Page',
+                'importCoverTitle': 'Import Cover',
+                'coverImportedTitle': 'Cover imported, click to change',
+                'pageGenerated': 'Page generated',
+                'coverImported': 'Cover imported',
+                'coverTooLarge': 'Image too large, please choose under 5MB',
                     
                  "loginUsernameLabel": 'Username:',
                  "loginUsernamePlaceholder": 'Enter username',
@@ -334,12 +373,12 @@
                  "loginButton": 'Login',
                  "authenticatedBadge": '[ Authenticated ]',
                  "oldPasswordLabel": 'Old Password:',
-                 "oldPasswordPlaceholder": 'Curresdnt password',
+                 "oldPasswordPlaceholder": 'Current password',
                  "newPasswordLabel": 'New Password:',
                  "newPasswordPlaceholder": 'New password',
                  "logoutButton": 'Logout',
                  "changePasswordButton": 'Change Password',
-
+                
                  "authMsgMissing": "MISSING CREDENTIALS",
                  "authMsgAuthenticating": "AUTHENTICATING...",
                  "authMsgSuccess": "ACCESS GRANTED. RELOADING...",
@@ -353,7 +392,7 @@
                  "authSessionExpired": "Session expired, please login again.",
                  "authActionDenied": "> [DENIED] Please login in Settings before performing ${action}.",
 
-                 "Server error": "Server error",     
+                  "Server error": "Server error",     
                  "Missing credentials": "Missing credentials",    
         	 "Invalid or expired token": "Invalid or expired token",  
         	 "User not found": "User not found",  
@@ -361,12 +400,86 @@
                  "Invalid username or password": "Invalid username or password",     
                  "Server error": "Server error",     
                  "Missing credentials": "Missing credentials",    
+
+                    
+
+                "contextPanelTitle": "Star Context",
+                "contextTabPaste": "Paste Text",
+                "contextTabUrl": "Web URL",
+                "contextPastePlaceholder": "Paste text here, it will be automatically formatted as Markdown…",
+                "contextAddBtn": "Add to Context",
+                "contextUrlPlaceholder": "https://example.com/article",
+                "contextParseBtn": "Parse & Add",
+                "contextUrlHint": "Supports news, blogs, and public pages. If parsing fails, switch to \"Paste Text\" tab.",
+                "contextSelectedHeader": "Selected Context",
+                "contextClearTitle": "Clear All",
+                "contextEmptyTitle": "No context",
+                "contextEmptyDesc": "Add from paste, URL, or dialogue canvas",
+                "contextBrowseTitle": "Context Content",
+                "contextBrowseTitleAttr": "View Full Content",
+                "contextRemoveTitleAttr": "Remove",
+                "contextButtonTitle": "Star Context Manager",
+                "contextCanvasAddTitle": "Add to Star Context",
+                "contextCanvasRemoveTitle": "Remove from Star Context",
+                "contextToastAdded": "Added to Star Context",
+                "contextToastRemoved": "Removed from Star Context",
+                "contextToastCleared": "Star Context cleared",
+                "contextToastUrlAdded": "Web content parsed and added",
+                "contextConfirmClear": "Are you sure you want to clear all Star Context?",
+                "contextSourceText": "Text",
+                "contextSourceUrl": "Web",
+                "contextSourceDialogue": "Dialogue",
+                "modelQwenMax": "Qwen-Max",
+                "modelQwenPlus": "Qwen-Plus",
+                "alertSelectModelToSave": "Please select a model to save",
+                "scrollLeftAria": "Scroll Left",
+                "scrollRightAria": "Scroll Right",
+                
+                "ctxErrorFull": "Star Context is full (Max 3 items)",
+                "ctxErrorEmpty": "Content cannot be empty",
+                "ctxErrorUrlInvalid": "Invalid URL format",
+                "ctxErrorUrlFail": "Failed to extract web content, please paste manually",
+                "ctxErrorFullCleanup": "Star Context is full (Max 3), please clear some items",
+                "ctxDefaultTextTitle": "Text Snippet",
+                "ctxDefaultWebTitle": "Web Content",
+                "ctxRoleUser": "Explorer",
+                "ctxRoleNorthStar": "North Star",
+                "ctxDialogueTitleTemplate": "Dialogue · ${role}",
+                "ctxInjectionTitle": "[Star Context · Reference Materials]",
+                "ctxInjectionHeader": "Context",
+                "ctxInjectionFooter": "End of Context · Please use these materials for following answers",
+                    
+                 "coverMachineTitle": "Machines · Subtract",
+                 "coverMachine1": "Strip Illusions",
+                 "coverMachine2": "Filter Noise",
+                 "coverMachine3": "Remove Scarcity",                
+                 "coverHumanTitle": "Humans · Add",
+                 "coverHuman1": "Create Meaning",
+                 "coverHuman2": "Seek authenticity",
+                 "coverHuman3": "Build Emotional Link",                
+                 "coverMainTitle": "Talk with North Star",
+                 "coverSubTitle": "Infinite · Thought",
+
+                 // ═══ 新增 ═══
+                "tooltipStarryColumn": "Starry Column",
+                "tooltipBgMusic": "Background Music",
+                    
+                 "starryColumnHint": "— Or, Enter the Starry Column —",
+                 "starryColumnBtn": "Starry Column",
+                 "starryColumnTitle": "Starry Column",
+
+                 // ═══ 新增 ═══
+                "tooltipTTS": "Read Aloud",
+                "tooltipTTSStop": "Stop Reading",
+                "tooltipTTSResume": "Resume",         // 暂停状态
+                 "tooltipTTSInclude": "Include in Reading",
                     
                 "footerRight": "© AI Paradigm Evolution. All rights reserved.",
                 "footerStatement": "This content is generated by AI models, and no warranties, express or implied, are made regarding its suitability.",
             }
         };
-        let currentLang = 'zh-CN'; // Default language
+      let currentLang = 'zh-CN'; // Default language
+
         // === NEW: Function to update manifesto modal content ===
         function updateManifestoModalContent(lang) {
             const manifestoModalTitle = document.getElementById('manifestoModalTitle');
@@ -391,34 +504,33 @@
             }
         }
 
-       /**
+        /**
          * 完整版语言切换函数
          * 修复了 contextManager 和 ContextUI 状态同步问题
          */
         function setLanguage(lang) {
-            // 1. 【核心修复】同步到全局 window 对象，确保 contextManager.js 的 _t 函数能获取最新语言
+            // 1. 同步到全局
             window.currentLang = lang; 
-            currentLang = lang; // 更新当前作用域变量
-
-            // 【关键修复：同步 UI 状态】
-            // 无论从哪里调用 setLanguage，都强制让下拉框的显示值与语言值一致
+            currentLang = lang;
+        
+            // 2. 更新下拉框
             const langSelector = document.getElementById('languageSelector');
             if (langSelector) {
                 langSelector.value = lang;
             }
                     
-            // 2. 更新 HTML 属性及持久化配置
+            // 3. 更新 HTML 属性及持久化
             document.documentElement.lang = currentLang;
             if (translations[currentLang].pageTitle) {
                 document.title = translations[currentLang].pageTitle;
             }
-            localStorage.setItem('preferredLang', lang); // 保存用户偏好
+            localStorage.setItem('preferredLang', lang);
         
-            // 3. 翻译静态元素：扫描所有 data-i18n-key
+            // 4. 翻译静态元素
             document.querySelectorAll('[data-i18n-key]').forEach(el => {
                 const key = el.dataset.i18nKey;
-                const target = el.dataset.i18nTarget || 'textContent'; // 默认为 textContent
-                let translation = translations[currentLang][key] || key; // 如果找不到翻译则显示 key
+                const target = el.dataset.i18nTarget || 'textContent';
+                let translation = translations[currentLang][key] || key;
         
                 if (target === 'innerHTML') {
                     el.innerHTML = translation;
@@ -431,7 +543,7 @@
                 }
             });
         
-            // 4. 翻译标题提示元素：扫描所有 data-i18n-title
+            // 5. 翻译标题提示
             document.querySelectorAll('[data-i18n-title]').forEach(el => {
                 const key = el.getAttribute('data-i18n-title');
                 if (translations[currentLang][key]) {
@@ -439,69 +551,61 @@
                 }
             });
                 
-            // 5. 更新业务逻辑中的动态内容
+            // 6. 更新动态内容
             if (typeof populateLeaders === 'function') {
-                populateLeaders(); // 重新填充专家列表（包含翻译标签）
+                populateLeaders();
             }
         
             const apiEndpointEl = document.getElementById('apiEndpoint');
             if (apiEndpointEl && typeof updateModelSelectByEndpoint === 'function') {
-                // 根据当前接入点重新生成模型下拉列表（包含翻译后的模型名称）
                 updateModelSelectByEndpoint(apiEndpointEl.value); 
             }
         
-            // 6. 更新“当前选择”状态显示
+            // 7. 更新选择状态
             const selectedLeaderNameEl = document.getElementById('selectedLeaderName');
-            // 如果当前没选专家，更新“无/None”的显示
             if (selectedLeaderNameEl && (typeof currentSelectedLeader === 'undefined' || !currentSelectedLeader)) {
                 selectedLeaderNameEl.textContent = translations[currentLang].noLeaderSelected;
             }
         
-            // 7. 更新宣言模态框内容 (Manifesto Modal)
+            // 8. 更新宣言模态框
             if (typeof updateManifestoModalContent === 'function') {
                 updateManifestoModalContent(lang);
             }
         
-            // 8. 【新增修复】强制刷新星语上下文 UI 面板
-            // 确保面板中的“暂无上下文”、“来源标签”等动态渲染的内容立即跟随语言变化
+            // 9. 刷新星语上下文
             if (window.ContextUI && typeof window.ContextUI._renderList === 'function') {
                 window.ContextUI._renderList();
             }
-        }  
+            
+            // ═══════════════════════════════════════════════
+            // 【关键修复】触发全局语言变更通知
+            // ═══════════════════════════════════════════════
+            if (typeof window.onLanguageChanged === 'function') {
+                window.onLanguageChanged();
+            }
+        } 
 
 
         //=== 修正后的语言初始化逻辑 ===
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. 计算初始语言
+       document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('preferredLang');
             const browserLang = navigator.language.startsWith('en') ? 'en' : 'zh-CN';
             const initialLang = savedLang || browserLang || 'zh-CN';
         
-            // 2. 【关键修正】：立即同步全局变量，不等待 Timeout
-            // 这样当 newUI.js 开始执行渲染函数时，读到的 window.currentLang 就是 'en'
             window.currentLang = initialLang;
             document.documentElement.lang = initialLang;
         
-            // 3. 同步下拉框状态
             const langSelector = document.getElementById('languageSelector');
             if (langSelector) {
                 langSelector.value = initialLang;
             }
         
-            // 4. 执行翻译逻辑
-            // 稍微延迟确保 populateLeaders 等函数已挂载
             setTimeout(() => {
-                setLanguage(initialLang);
-        
-                // 5. 【核心修复】：显式触发一次全局语言变更通知
-                // 这会强制 newUI.js 重新运行渲染函数，修正那 8 个大类和提示文字
-                if (typeof window.onLanguageChanged === 'function') {
-                    window.onLanguageChanged();
-                }
+                setLanguage(initialLang);  // 内部会调用 onLanguageChanged
             }, 60); 
         });
 
         // 在你的翻译脚本最底部添加
         window.translations = translations;
         window.currentLang = currentLang;
-        window.setLanguage = setLanguage;
+        window.setLanguage = setLanguage;d
