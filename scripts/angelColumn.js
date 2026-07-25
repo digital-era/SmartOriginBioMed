@@ -1,4 +1,4 @@
-const starryColumnTexts = {
+const angelColumnTexts = {
     title: {
         'zh-CN': '星空专栏',
         'en': 'Starry Column'
