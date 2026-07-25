@@ -130,6 +130,7 @@ function refreshChipsForActiveTab() {
 // ──────────────────────────────────────────────
 function switchUIStyle(style) {
     style = (style === 'modern') ? 'modern' : 'traditional';
+    console.log("switchUIStyle", style);
     
     // 【修复】正确设置全局变量和 body 类名
     window.currentUIStyle = style;
