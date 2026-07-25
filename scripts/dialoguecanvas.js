@@ -171,7 +171,7 @@ function renderDialogueCanvas() {
                 </div>
                 <div class="node-divider"></div>
                 <div class="node-content star-content">${processedText}</div>
-                <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> North Star Insight</div>
+                <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> SmartOrigin BioMed Insight</div>
             `;
         }
         
@@ -588,7 +588,7 @@ function exportToPDF() {
             const info = item.leaderInfo || { name: 'Unknown', field: '', contribution: '' };
     
             node.innerHTML = `
-                <div class="print-role-title ai-role">✦ North Star</div>
+                <div class="print-role-title ai-role">✦ SmartOrigin BioMed</div>
                 <div class="leader-header">
                     <div class="leader-name">${escapeHtml(info.name)}</div>
                     <div class="leader-badges">
@@ -600,7 +600,7 @@ function exportToPDF() {
                 </div>
                 <div class="node-divider"></div>
                 <div class="node-content star-content">${processedText}</div>
-                <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> North Star Insight</div>
+                <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> SmartOrigin BioMed Insight</div>
             `;
         }
     
@@ -734,7 +734,7 @@ function exportToHTML() {
                     </div>
                     <div class="node-divider"></div>
                     <div class="node-content star-content">${processedText}</div>
-                    <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> North Star Insight</div>
+                    <div class="star-decoration-bottom"><i class="fas fa-feather-alt"></i> SmartOrigin BioMed Insight</div>
                 </div>
             `;
         }
@@ -1071,7 +1071,7 @@ function exportToHTML() {
     </div>
     
     <footer>
-        Exported from Talk with North Stars • ${new Date().toLocaleString()}
+        Exported from SmartOrgin BioMed• ${new Date().toLocaleString()}
     </footer>
 </body>
 </html>`;
