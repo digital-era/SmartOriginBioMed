@@ -4,7 +4,7 @@
 // ══════════════════════════════════════════════
 // 星云水晶球 - 粒子系统 + 交互逻辑
 // ══════════════════════════════════════════════
-const NEBULA_CATEGORIES = ['TCM','WM','MultiOmics','NeuralLink','AIDrugDiscovery','AIHealthcare'];
+const NEBULA_CATEGORIES = ['TCM','WM','MO','NL','AIDis','AIHC'];
 
 // 多语言文本
 const crystalTexts = {
@@ -829,25 +829,25 @@ function updateCrystalLanguage() {
   };
 })();
 
-const categories = ['TCM','WM','MultiOmics','NeuralLink','AIDrugDiscovery','AIHealthcare'];
+const categories = ['TCM','WM','MO','NL','AIDis','AIHC'];
 
 // 图片路径映射 - key 就是原始 category 值
 const categoryImages = {
   'TCM': 'images/ambient-ai.jpg',
   'WM': 'images/ambient-quantum.jpg',
-  'MultiOmics': 'images/ambient-universe.jpg',
-  'NeuralLink': 'images/ambient-humanities.jpg',
-  'AIDrugDiscovery': 'images/ambient-art.jpg',
-  'AIHealthcare': 'images/ambient-finance.jpg'
+  'MO': 'images/ambient-universe.jpg',
+  'NL': 'images/ambient-humanities.jpg',
+  'AIDis': 'images/ambient-art.jpg',
+  'AIHC': 'images/ambient-finance.jpg'
 };
 
 const categoryNames = {
   'TCM': { 'zh-CN': '中医', 'en': 'Chinese Med' },
   'WM': { 'zh-CN': '西医', 'en': 'Western Med' },
-  'MultiOmics': { 'zh-CN': '多组学', 'en': 'Multi-Omics' },
-  'NeuralLink': { 'zh-CN': '脑机接口', 'en': 'Neural Link' },
-  'AIDrugDiscovery': { 'zh-CN': 'AI制药', 'en': 'AI Drug Discovery' },
-  'AIHealthcare': { 'zh-CN': 'AI医疗', 'en': 'AI Healthcare' }
+  'MO': { 'zh-CN': '多组学', 'en': 'Multi-Omics' },
+  'NL': { 'zh-CN': '脑机接口', 'en': 'Neural Link' },
+  'AIDis': { 'zh-CN': 'AI制药', 'en': 'AI Drug Discovery' },
+  'AIHC': { 'zh-CN': 'AI医疗', 'en': 'AI Healthcare' }
 };
 
 // 按钮/提示文本映射
