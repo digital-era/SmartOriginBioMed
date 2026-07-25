@@ -272,7 +272,8 @@ function switchUIStyle(style) {
 // 6. 初始化恢复上次风格
 // ──────────────────────────────────────────────
 function initUIStyle() {
-    const saved = localStorage.getItem('northstarUIStyle') || 'traditional';
+    //const saved = localStorage.getItem('northstarUIStyle') || 'traditional';
+    const saved = localStorage.getItem('northstarUIStyle') || 'modern';
     const select = document.getElementById('uiStyle');
     if (select) select.value = saved;
     switchUIStyle(saved);
