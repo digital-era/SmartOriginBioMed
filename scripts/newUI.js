@@ -1707,11 +1707,26 @@ function renderCategoryLayout(category) {
     };
   }
   
-  // ... 初始化第一个领袖 ...
-  const leaders = allData[category];
+  // // ... 初始化第一个领袖 ...
+  // const leaders = allData[category];
+  // if (leaders && leaders.length > 0) {
+  //   selectLeader(leaders[0], category, null);
+  //   updateSingleCard(leaders[0]);
+  // }
+  // 【修复】用映射后的 key 读取数据
+  const tabIdMap = {
+      'TCM': 'TCM',
+      'WM': 'WM',
+      'MO': 'MultiOmics',
+      'NL': 'NeuralLink',
+      'AIDis': 'AIDrugDiscovery',
+      'AIHC': 'AIHealthcare'
+  };
+  const dataKey = tabIdMap[category] || category;
+  const leaders = allData[dataKey];  // ← 用 dataKey 而不是 category
   if (leaders && leaders.length > 0) {
-    selectLeader(leaders[0], category, null);
-    updateSingleCard(leaders[0]);
+      selectLeader(leaders[0], category, null);
+      updateSingleCard(leaders[0]);
   }
 }
 
