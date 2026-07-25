@@ -330,10 +330,23 @@ function selectLeader(leader, category, cardElement) {
     document.getElementById('generatedPromptText').value = '';
     document.getElementById('aiResponseText').textContent = '';
 
-    if (!document.getElementById(category).classList.contains('active')) {
+    // 【修复】映射短代码到 HTML 中实际的 tab id
+    const tabIdMap = {
+        'TCM': 'TCM',
+        'WM': 'WM',
+        'MO': 'MultiOmics',
+        'NL': 'NeuralLink',
+        'AIDis': 'AIDrugDiscovery',
+        'AIHC': 'AIHealthcare'
+    };
+    const tabId = tabIdMap[category] || category;
+    const tabElement = document.getElementById(tabId);
+    
+    // 【修复】加空值检查，防止 tab 元素不存在时报错
+    if (tabElement && !tabElement.classList.contains('active')) {
         const tabButtons = document.getElementsByClassName("tab-button");
         for(let btn of tabButtons) {
-            if(btn.onclick.toString().includes(category)){
+            if(btn.onclick && btn.onclick.toString().includes(tabId)){
                 btn.click();
                 break;
             }
