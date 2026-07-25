@@ -221,9 +221,9 @@ function showToast(message, type = 'info') {
 function getColumnTitle(lang) {
     const mode = window.starryColumnViewMode || 'list';
     if (mode === 'card') {
-        return getFieldValue(starryColumnTexts.columnNameCard, lang);
+        return getFieldValue(angelColumnTexts.columnNameCard, lang);
     }
-    return getFieldValue(starryColumnTexts.columnNameList, lang);
+    return getFieldValue(angelColumnTexts.columnNameList, lang);
 }
 
 // ═══════════════════════════════════════════════
@@ -300,20 +300,20 @@ function renderStarryColumnLayout() {
         <div class="layout-left" id="starryLeft">
             <div class="starry-cover-wrapper">
 		        <img src="images/starry.jpg"
-                     alt="${getFieldValue(starryColumnTexts.title, lang)}"
+                     alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">	
                 <img src="images/starry.jpg"
-                     alt="${getFieldValue(starryColumnTexts.title, lang)}"
+                     alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">
                      
                 <div class="starry-cover-overlay">
                     <h2 class="starry-cover-title">
-                        ${getFieldValue(starryColumnTexts.title, lang)}
+                        ${getFieldValue(angelColumnTexts.title, lang)}
                     </h2>
                     <p class="starry-cover-subtitle">
-                        ${getFieldValue(starryColumnTexts.subtitle, lang)}
+                        ${getFieldValue(angelColumnTexts.subtitle, lang)}
                     </p>
                 </div>
             </div>
@@ -321,7 +321,7 @@ function renderStarryColumnLayout() {
         <div class="layout-right" id="starryRight">
             <div class="starry-header">
                 <button class="back-btn-inline" id="btn-starry-back" 
-                        title="${getFieldValue(starryColumnTexts.backTooltip, lang)}">
+                        title="${getFieldValue(angelColumnTexts.backTooltip, lang)}">
                     <svg viewBox="0 0 24 24">
                         <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                     </svg>
@@ -332,7 +332,7 @@ function renderStarryColumnLayout() {
 				${isAdmin || isUser ? `
                     <div class="starry-admin-actions" id="starryAdminActions">
                         <button class="btn-starry-icon" id="btn-starry-export" 
-                                title="${getFieldValue(starryColumnTexts.exportConfig, lang)}">
+                                title="${getFieldValue(angelColumnTexts.exportConfig, lang)}">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                 <polyline points="7 10 12 15 17 10"/>
@@ -340,7 +340,7 @@ function renderStarryColumnLayout() {
                             </svg>
                         </button>
                         <label class="btn-starry-icon" for="btn-starry-import-input" 
-                               title="${getFieldValue(starryColumnTexts.importConfig, lang)}">
+                               title="${getFieldValue(angelColumnTexts.importConfig, lang)}">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                 <polyline points="17 8 12 3 7 8"/>
@@ -470,7 +470,7 @@ function renderStarryCardsList(isAdmin = false) {
 
 		// ═══【新增】长按提示语 ═══
 		const longPressHint = lang === 'zh-CN' ? '长按修改配置' : 'Long press to configure';
-		const iSpaceTitle = getFieldValue(starryColumnTexts.iSpace, lang) + iSpaceTypeLabel + ' — ' + longPressHint;
+		const iSpaceTitle = getFieldValue(angelColumnTexts.iSpace, lang) + iSpaceTypeLabel + ' — ' + longPressHint;
 
 		
 		// ═══ 配置按钮：内置仅 admin，自定义所有登录用户 ═══
@@ -487,7 +487,7 @@ function renderStarryCardsList(isAdmin = false) {
                 <!-- 第二行：按钮组 -->
                 <div class="starry-card-actions">
                     <button class="starry-card-system" data-card-id="${card.id}" 
-                            title="${getFieldValue(starryColumnTexts.systemColumn, lang)}">
+                            title="${getFieldValue(angelColumnTexts.systemColumn, lang)}">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                             <polyline points="14 2 14 8 20 8"/>
@@ -499,7 +499,7 @@ function renderStarryCardsList(isAdmin = false) {
 
 					<!-- 【新增】专栏空间按钮 -->
 		            <button class="starry-card-space" data-card-id="${card.id}" 
-							title="${getFieldValue(starryColumnTexts.ColumnSpace, lang)}">
+							title="${getFieldValue(angelColumnTexts.ColumnSpace, lang)}">
 		                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
 		                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
 		                    <line x1="3" y1="9" x2="21" y2="9"/>
@@ -525,7 +525,7 @@ function renderStarryCardsList(isAdmin = false) {
                     
                     ${showConfig ? `
                         <button class="starry-card-config" data-card-id="${card.id}" 
-                                title="${getFieldValue(starryColumnTexts.configureCard, lang)}">
+                                title="${getFieldValue(angelColumnTexts.configureCard, lang)}">
                             <!-- 把这里的 ⚙️ 换成上面的 SVG -->
 							    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" 
 							         stroke="currentColor" stroke-width="2">
@@ -534,7 +534,7 @@ function renderStarryCardsList(isAdmin = false) {
 							    </svg>
                         </button>
                         <button class="starry-card-delete" data-card-id="${card.id}" 
-                            title="${getFieldValue(starryColumnTexts.deleteCard, lang)}">
+                            title="${getFieldValue(angelColumnTexts.deleteCard, lang)}">
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"/>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
@@ -656,7 +656,7 @@ function renderStarryCardsList(isAdmin = false) {
         const addBtn = document.createElement('button');
         addBtn.className = 'add-card-btn';
         addBtn.id = 'btn-add-card';
-        addBtn.innerHTML = `<span>+</span> ${getFieldValue(starryColumnTexts.addCard, lang)}`;
+        addBtn.innerHTML = `<span>+</span> ${getFieldValue(angelColumnTexts.addCard, lang)}`;
         addBtn.addEventListener('click', showAddCardModal);
         container.appendChild(addBtn);
     }
@@ -779,19 +779,19 @@ function renderStarryColumnLayoutForLeader(hostCategory) {
         <div class="layout-left" id="starryLeft">
             <div class="starry-cover-wrapper">
 				<img src="images/starry.jpg"
-                     alt="${getFieldValue(starryColumnTexts.title, lang)}"
+                     alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">	
                 <img src="images/starry.jpg"
-                     alt="${getFieldValue(starryColumnTexts.title, lang)}"
+                     alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">
                 <div class="starry-cover-overlay">
                     <h2 class="starry-cover-title">
-                        ${getFieldValue(starryColumnTexts.title, lang)}
+                        ${getFieldValue(angelColumnTexts.title, lang)}
                     </h2>
                     <p class="starry-cover-subtitle">
-                        ${getFieldValue(starryColumnTexts.subtitle, lang)}
+                        ${getFieldValue(angelColumnTexts.subtitle, lang)}
                     </p>
                 </div>
             </div>
@@ -800,7 +800,7 @@ function renderStarryColumnLayoutForLeader(hostCategory) {
             <div class="starry-header">
                 <!-- 左上角：返回首页 -->
                 <button class="back-btn-inline" id="btn-starry-back" 
-                        title="${getFieldValue(starryColumnTexts.backTooltip, lang)}">
+                        title="${getFieldValue(angelColumnTexts.backTooltip, lang)}">
                     <svg viewBox="0 0 24 24">
                         <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                     </svg>
@@ -1057,9 +1057,9 @@ function showConfigModal(card) {
     const currentRemarksOther = getFieldValue(card.remarks, otherLang);
 
     const modeOptions = [
-        { value: 'roundtable', label: getFieldValue(starryColumnTexts.modeRoundtable, lang) },
-        { value: 'synthesis', label: getFieldValue(starryColumnTexts.modeSynthesis, lang) },
-        { value: 'debate', label: getFieldValue(starryColumnTexts.modeDebate, lang) }
+        { value: 'roundtable', label: getFieldValue(angelColumnTexts.modeRoundtable, lang) },
+        { value: 'synthesis', label: getFieldValue(angelColumnTexts.modeSynthesis, lang) },
+        { value: 'debate', label: getFieldValue(angelColumnTexts.modeDebate, lang) }
     ];
 
     const modal = document.createElement('div');
@@ -1070,7 +1070,7 @@ function showConfigModal(card) {
         <div class="starry-modal-overlay" onclick="if(event.target===this)closeConfigModal()"></div>
         <div class="starry-modal-content">
             <div class="starry-modal-header">
-                <h3>${getFieldValue(starryColumnTexts.configureCard, lang)}: ${currentName}</h3>
+                <h3>${getFieldValue(angelColumnTexts.configureCard, lang)}: ${currentName}</h3>
                 <button class="modal-close" onclick="closeConfigModal()">×</button>
             </div>
             
@@ -1145,7 +1145,7 @@ function showConfigModal(card) {
 
                 <!-- 融合模式 -->
                 <div class="config-section">
-                    <label class="config-label">${getFieldValue(starryColumnTexts.fusionMode, lang)}</label>
+                    <label class="config-label">${getFieldValue(angelColumnTexts.fusionMode, lang)}</label>
                     <select class="config-select" id="configFusionMode">
                         ${modeOptions.map(opt => `
                             <option value="${opt.value}" ${card.fusionStrategy?.mode === opt.value ? 'selected' : ''}>
@@ -1158,7 +1158,7 @@ function showConfigModal(card) {
                 <!-- 专家选择（模糊匹配） -->
                 <div class="config-section">
                     <label class="config-label">
-                        ${getFieldValue(starryColumnTexts.selectExperts, lang)}
+                        ${getFieldValue(angelColumnTexts.selectExperts, lang)}
                         <span class="hint-text">${lang === 'zh-CN' ? '输入名称或领域，模糊匹配' : 'Type name or field to search'}</span>
                     </label>
                     
@@ -1183,10 +1183,10 @@ function showConfigModal(card) {
             
             <div class="starry-modal-footer">
                 <button class="btn-secondary" onclick="closeConfigModal()">
-                    ${getFieldValue(starryColumnTexts.cancel, lang)}
+                    ${getFieldValue(angelColumnTexts.cancel, lang)}
                 </button>
                 <button class="btn-primary" onclick="saveCardConfig('${card.id}')">
-                    ${getFieldValue(starryColumnTexts.save, lang)}
+                    ${getFieldValue(angelColumnTexts.save, lang)}
                 </button>
             </div>
         </div>
@@ -1383,21 +1383,21 @@ function showAddCardModal() {
 
                 <!-- 融合模式 -->
                 <div class="config-section">
-                    <label class="config-label">${getFieldValue(starryColumnTexts.fusionMode, lang)}</label>
+                    <label class="config-label">${getFieldValue(angelColumnTexts.fusionMode, lang)}</label>
                     <select class="config-select" id="newCardFusionMode">
-                        <option value="roundtable">${getFieldValue(starryColumnTexts.modeRoundtable, lang)}</option>
-                        <option value="synthesis" selected>${getFieldValue(starryColumnTexts.modeSynthesis, lang)}</option>
-                        <option value="debate">${getFieldValue(starryColumnTexts.modeDebate, lang)}</option>
+                        <option value="roundtable">${getFieldValue(angelColumnTexts.modeRoundtable, lang)}</option>
+                        <option value="synthesis" selected>${getFieldValue(angelColumnTexts.modeSynthesis, lang)}</option>
+                        <option value="debate">${getFieldValue(angelColumnTexts.modeDebate, lang)}</option>
                     </select>
                 </div>
             </div>
             
             <div class="starry-modal-footer">
                 <button class="btn-secondary" onclick="closeAddCardModal()">
-                    ${getFieldValue(starryColumnTexts.cancel, lang)}
+                    ${getFieldValue(angelColumnTexts.cancel, lang)}
                 </button>
                 <button class="btn-primary" onclick="saveNewCard()">
-                    ${getFieldValue(starryColumnTexts.save, lang)}
+                    ${getFieldValue(angelColumnTexts.save, lang)}
                 </button>
             </div>
         </div>
@@ -1729,18 +1729,18 @@ function fuzzySearchExperts(query, lang = 'zh-CN', limit = 10) {
 function deleteStarryCard(cardId) {
     const lang = window.currentLang || 'zh-CN';
     
-    if (!confirm(getFieldValue(starryColumnTexts.deleteCardConfirm, lang))) return;
+    if (!confirm(getFieldValue(angelColumnTexts.deleteCardConfirm, lang))) return;
 
     const cardIndex = starryColumnCards.findIndex(c => c.id === cardId);
     if (cardIndex === -1) {
-        showToast(getFieldValue(starryColumnTexts.deleteCardNotFound, lang), 'error');
+        showToast(getFieldValue(angelColumnTexts.deleteCardNotFound, lang), 'error');
         return;
     }
 
     const card = starryColumnCards[cardIndex];
 
     if (card.builtIn) {
-        showToast(getFieldValue(starryColumnTexts.deleteCardBuiltIn, lang), 'error');
+        showToast(getFieldValue(angelColumnTexts.deleteCardBuiltIn, lang), 'error');
         return;
     }
 
@@ -1756,7 +1756,7 @@ function deleteStarryCard(cardId) {
     const isAdmin = checkAdminPermission();
     renderStarryCardsList(isAdmin);
 
-    showToast(getFieldValue(starryColumnTexts.deleteCardSuccess, lang), 'success');
+    showToast(getFieldValue(angelColumnTexts.deleteCardSuccess, lang), 'success');
 }
 
 /**
@@ -1769,10 +1769,10 @@ function updateStarryColumnLanguage() {
     
     // 1. 更新左侧封面
     const coverTitle = layout.querySelector('.starry-cover-title');
-    if (coverTitle) coverTitle.textContent = getFieldValue(starryColumnTexts.title, lang);
+    if (coverTitle) coverTitle.textContent = getFieldValue(angelColumnTexts.title, lang);
     
     const coverSubtitle = layout.querySelector('.starry-cover-subtitle');
-    if (coverSubtitle) coverSubtitle.textContent = getFieldValue(starryColumnTexts.subtitle, lang);
+    if (coverSubtitle) coverSubtitle.textContent = getFieldValue(angelColumnTexts.subtitle, lang);
     
     // 2. 更新右侧头部
     const listTitle = layout.querySelector('.starry-list-title');
@@ -1780,7 +1780,7 @@ function updateStarryColumnLanguage() {
     
     // 3. 更新按钮 title
     const backBtn = document.getElementById('btn-starry-back');
-    if (backBtn) backBtn.title = getFieldValue(starryColumnTexts.backTooltip, lang);
+    if (backBtn) backBtn.title = getFieldValue(angelColumnTexts.backTooltip, lang);
     
     const backToListBtn = document.getElementById('btn-back-to-list');
     if (backToListBtn) {
@@ -1792,12 +1792,12 @@ function updateStarryColumnLanguage() {
     // ═══════════════════════════════════════════════════
     const exportBtn = document.getElementById('btn-starry-export');
     if (exportBtn) {
-        exportBtn.title = getFieldValue(starryColumnTexts.exportConfig, lang);
+        exportBtn.title = getFieldValue(angelColumnTexts.exportConfig, lang);
     }
     
     const importLabel = document.querySelector('label[for="btn-starry-import-input"]');
     if (importLabel) {
-        importLabel.title = getFieldValue(starryColumnTexts.importConfig, lang);
+        importLabel.title = getFieldValue(angelColumnTexts.importConfig, lang);
     }
     
     // 4. 根据模式更新内容
