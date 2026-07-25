@@ -4,9 +4,7 @@
 // ══════════════════════════════════════════════
 // 星云水晶球 - 粒子系统 + 交互逻辑
 // ══════════════════════════════════════════════
-
-const NEBULA_CATEGORIES = ['ai','quantum','universe','humanities','art','finance','sport','chinaEntrepreneurs'];
-
+const NEBULA_CATEGORIES = ['TCM','WM','MultiOmics','NeuralLink','AIDrugDiscovery','AIHealthcare'];
 
 // 多语言文本
 const crystalTexts = {
@@ -14,13 +12,13 @@ const crystalTexts = {
     touchHint: '触碰以启动潜能',
     holdStatus: '长按水晶球以充能',
     chargingStatus: '充能中...',
-    releasing: '释放思维之力...'
+    releasing: '释放身心...'
   },
   'en': {
     touchHint: 'Touch to unlock potential',
     holdStatus: 'Hold the crystal to charge',
     chargingStatus: 'Charging...',
-    releasing: 'Releasing power of mind...'
+    releasing: 'Releasing mind and body...'
   }
 };
 
