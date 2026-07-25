@@ -928,7 +928,8 @@ function copyConversationToClipboard() {
 
 const endpointModelMap = {
     "https://api.deepseek.com": [
-        { value: "deepseek-chat", labelKey: "modelDeepSeekV3" }
+        //{ value: "deepseek-chat", labelKey: "modelDeepSeekV3" }
+        { value: "deepseek-v4-flash", labelKey: "modelDeepSeekV4" }
     ],
     // 新增：你的自定义 Cloudflare Gemin代理接入点
     "https://geminiapi.aivibeinvest.com": [
