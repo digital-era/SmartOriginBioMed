@@ -1102,6 +1102,27 @@ function generateAndShowPrompt() {
     window.currentGeneratedPrompt = currentGeneratedPrompt;
 }
 
+function fillSampleQuestion(type) {
+    const textarea = document.getElementById('userQuestion');
+    const key = 'sampleQuestionText' + type;
+    
+    const text = translations[currentLang]?.[key] 
+              || translations['zh-CN']?.[key] 
+              || '';
+    
+    textarea.value = text;
+    
+    // 对应图标触发点击反馈动画
+    const iconClass = type === 1 ? '.sample-q-icon' 
+                    : type === 2 ? '.sample-q-icon2' 
+                    : '.sample-q-icon3';
+    const icon = document.querySelector(iconClass);
+    if (icon) {
+        icon.classList.add('active');
+        setTimeout(() => icon.classList.remove('active'), 600);
+    }
+}
+
 // 天使模式逻辑处理函数
 function handleAngelMode() {
     // 1. 获取所有参数 (虽然根据需求，只有参数1用于逻辑分支，但这里演示获取所有参数)
