@@ -79,9 +79,53 @@
             "en": "Ming Dynasty naturalist; completed the monumental work over 27 years, influencing global pharmacology."
         }
     },
+   {
+      "id": "zhang_zhi_shun", "name": "张至顺 (Zhang Zhishun / Mi Jingzi)",
+      "contribution": {
+        "zh-CN": "全真龙门派第二十一代传人，著《炁体源流》《金刚长寿功》等，毕生隐修内丹，晚年弘道讲学，传播道教养生与修真智慧。",
+        "en": "21st-generation successor of the Quanzhen Longmen School. Authored works such as 'Origins of the Vital Energy Body' and 'Vajra Longevity Exercises'. Devoted his life to secluded cultivation of internal alchemy, later propagating the Dao through lectures. Spread Taoist wellness and cultivation wisdom."
+      },
+      "field": {
+        "zh-CN": "道教内丹、全真龙门派、养生修真、道教文化传承。",
+        "en": "Taoist Internal Alchemy, Quanzhen Longmen School, Health Cultivation and Immortality Practice, Taoist Cultural Transmission."
+      },
+      "remarks": {
+        "zh-CN": "被尊为‘陆地神仙’的百岁高道，隐修与弘道并重，以朴素清静的修行实践诠释道教真谛，为后世留下珍贵典范。",
+        "en": "Revered as a 'Terrestrial Immortal', a centenarian high Taoist. He balanced secluded cultivation with public propagation. Through simple and serene practice, he embodied the true essence of Taoism, leaving a valuable model for future generations."
+      }
+    },    
     {
-        id: "zhu_zongxiang",
-        name: "祝总骧 (Zhu Zongxiang)",
+      "id": "li_zai_feng", "name": "李再峰 (Li Zaifeng / Li Zai Feng)",
+      "contribution": {
+        "zh-CN": "作为武当玄武派第十四代传人，推广武当太极与八段锦养生功法，结合中医与道家内养，开发适合现代人的简易教学体系，帮助众多学员提升体质。",
+        "en": "As the 14th-generation successor of the Wudang Xuanwu School, he promotes Wudang Tai Chi and Baduanjin health-preserving exercises. Integrates traditional Chinese medicine with Taoist internal cultivation, developing accessible teaching systems for modern people and helping numerous students improve their physical condition."
+      },
+      "field": {
+        "zh-CN": "武当太极、八段锦养生、道家功法、中医与武术结合。",
+        "en": "Wudang Tai Chi, Baduanjin Health Cultivation, Taoist Exercises, Integration of TCM and Martial Arts."
+      },
+      "remarks": {
+        "zh-CN": "从体弱少年到太极养生名师，以亲身实践与通俗教学弘扬道家养生文化，受南怀瑾、曾仕强等影响，注重身心调养与文化传承。",
+        "en": "From a frail youth to a renowned Tai Chi and health cultivation teacher. Through personal practice and accessible teaching, he promotes Taoist wellness culture. Influenced by masters like Nan Huai-Chin and Zeng Shiqiang, he emphasizes physical-mental cultivation and cultural inheritance."
+      }
+    },
+    {
+      "id": "liang_shou_yu", "name": "梁守瑜 (Liang Shouyu)",
+      "contribution": {
+        "zh-CN": "杨式太极拳及峨眉武术传承人，推广传统内家拳法与养生功法，积极参与国际武术赛事与教学，推动中国武术文化海外传播。",
+        "en": "Successor and promoter of Yang-style Tai Chi and Emei Wushu. Spreads traditional internal martial arts and health cultivation methods. Actively participates in international Wushu competitions and teaching, advancing the global dissemination of Chinese martial arts culture."
+      },
+      "field": {
+        "zh-CN": "杨式太极拳、峨眉武术、内家拳法、武术养生、国际武术交流。",
+        "en": "Yang-style Tai Chi, Emei Wushu, Internal Martial Arts, Martial Arts Health Cultivation, International Wushu Exchange."
+      },
+      "remarks": {
+        "zh-CN": "正宗内家风格武术名师，以技击养生并重的方式传承传统武学，在海内外武术圈推广天人合一的武道理念。",
+        "en": "A renowned martial arts master of authentic internal style. Emphasizes both combat skills and health preservation in inheriting traditional Wushu. He promotes the martial Dao philosophy of unity between heaven and man domestically and abroad."
+      }
+    },
+    {
+        id: "zhu_zongxiang", name: "祝总骧 (Zhu Zongxiang)",
         contribution: {
             "zh-CN": "著名经络学家，首创“312经络锻炼法”。运用现代生物物理技术（如高振动声法）首次客观证实了人体经络线的存在。",
             "en": "Renowned meridian scientist, pioneered the '312 Meridian Exercise Method'. Utilized modern biophysical techniques to objectively verify for the first time the existence and distribution of human meridian lines."
