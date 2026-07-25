@@ -362,7 +362,7 @@
 	   ═══════════════════════════════════════════════ */
 	.manual-selector-chips {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(3, 1fr);  /* 3列，6个元素正好两行 */
 		gap: 12px;
 		padding: 0;
 		width: 100%;
@@ -758,9 +758,9 @@
 			margin-bottom: 12px;
 		}
 
-		/* 手机端芯片：4列两行对称 */
+		/* 手机端芯片：3列两行 */
 		.manual-selector-chips {
-			grid-template-columns: repeat(4, 1fr);
+			grid-template-columns: repeat(3, 1fr);  /* 保持3列 */
 			gap: 8px;
 			max-width: 360px;
 		}
@@ -922,9 +922,9 @@
 			font-size: 10px;
 		}
 
-		/* 超小屏保持4列但缩小 */
+		/* 超小屏保持3列 */
 		.manual-selector-chips {
-			grid-template-columns: repeat(4, 1fr);
+			grid-template-columns: repeat(3, 1fr);
 			gap: 6px;
 			max-width: 300px;
 		}
