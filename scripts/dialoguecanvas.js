@@ -586,9 +586,6 @@ function exportToPDF() {
             }
     
             const info = item.leaderInfo || { name: 'Unknown', field: '', contribution: '' };
-    
-            node.innerHTML = `
-                <div class="print-role-title ai-role">✦ SmartOrigin BioMed</div>
 
             node.innerHTML = `
                 <div class="print-role-title ai-role">
