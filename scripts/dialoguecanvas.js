@@ -778,20 +778,37 @@ function exportToHTML() {
     
     document.body.appendChild(tempWrapper);
     
+    // ═══════════════════════════════════════════════
+    // 【关键修复】强制浏览器完成布局计算后再测量
+    // ═══════════════════════════════════════════════
+    // 使用 requestAnimationFrame 确保在下一帧渲染完成后测量
+    // 但为了保持同步流程，我们先用 offsetHeight 强制同步重排
+    const stream = tempWrapper.querySelector('#temp-thought-stream');
+    
+    // 强制同步布局（读取属性触发重排）
+    streamWidth = stream.offsetWidth;
+    let _forceReflow = stream.scrollHeight; // 强制浏览器计算布局
+    
+    const nodes = stream.querySelectorAll('.thought-node');
+    
+    // 再次强制每个节点重排，确保尺寸正确
+    nodes.forEach(node => {
+        _forceReflow = node.offsetHeight;
+    });
+    
+    streamHeight = stream.scrollHeight;
+    
     try {
-        // 计算连线
-        const stream = tempWrapper.querySelector('#temp-thought-stream');
-        const nodes = stream.querySelectorAll('.thought-node');
-        
-        streamWidth = stream.offsetWidth;
-        streamHeight = stream.scrollHeight;
-        
         if (nodes.length >= 2) {
             const streamRect = stream.getBoundingClientRect();
             
             for (let i = 0; i < nodes.length - 1; i++) {
                 const current = nodes[i];
                 const next = nodes[i + 1];
+                
+                // 【修复】确保在测量前强制重排
+                _forceReflow = current.offsetHeight;
+                _forceReflow = next.offsetHeight;
                 
                 const currentRect = current.getBoundingClientRect();
                 const nextRect = next.getBoundingClientRect();
@@ -801,6 +818,9 @@ function exportToHTML() {
                 const startY = currentRect.top - streamRect.top + currentRect.height;
                 const endX = nextRect.left - streamRect.left + nextRect.width / 2;
                 const endY = nextRect.top - streamRect.top;
+                
+                // 【调试日志】如仍有问题可打开查看
+                // console.log(`Node ${i} -> ${i+1}: startY=${startY.toFixed(1)}, endY=${endY.toFixed(1)}, gap=${(endY - startY).toFixed(1)}`);
                 
                 // 只连接垂直方向上有间距的节点
                 if (startY < endY) {
