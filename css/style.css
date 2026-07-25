@@ -874,17 +874,17 @@ h1 {
     background: linear-gradient(135deg, #4a90e2 0%, #6ab0ff 100%);
 }
 
-/* 针对"天使模式"按钮，做差异化处理（幽灵按钮风格） */
-.interaction-area button#angelModeButton {
-    background: transparent;
-    border: 1px solid var(--dark-accent);
-    color: var(--dark-accent);
-    box-shadow: none;
-}
-.interaction-area button#angelModeButton:hover {
-    background: rgba(74, 144, 226, 0.1);
-    box-shadow: 0 0 15px rgba(74, 144, 226, 0.2);
-}
+  /* 针对“星语上下文”按钮，做差异化处理（按钮风格），避免喧宾夺主 */
+  .interaction-area button#ContextButton {
+      background: transparent;
+      border: 1px solid var(--dark-accent);
+      color: var(--dark-accent);
+      box-shadow: none;
+  }
+  .interaction-area button#ContextButton:hover {
+      background: rgba(74, 144, 226, 0.1);
+      box-shadow: 0 0 15px rgba(74, 144, 226, 0.2);
+  }
 
 /* 针对"获取专家回复"按钮，做强调处理 */
 .interaction-area button#getAIResponseButton {
