@@ -758,8 +758,8 @@ function renderNebulaManualSelector() {
     // 【修改点】：确保判断条件使用 window.currentLang
     const lang = window.currentLang || 'zh-CN';
     hintText.textContent = (lang === 'en') 
-        ? '— Or, Choose your star —' 
-        : '— 或，亲自选择星辰 —';
+        ? '— Or, Choose your Expert —' 
+        : '— 或，亲自选择专家 —';
   
     selector.appendChild(hintText);
 
