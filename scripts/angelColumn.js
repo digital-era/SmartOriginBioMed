@@ -232,7 +232,7 @@ function getColumnTitle(lang) {
 /**
  * 进入星空专栏页面
  */
-function enterStarryColumn() {
+function enterAngelColumn () {
     if (crystalInstance) {
         crystalInstance.stopDemoLoop();
         crystalInstance._pauseDemo(Infinity);
