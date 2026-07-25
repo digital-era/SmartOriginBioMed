@@ -15,9 +15,20 @@ function debounce(fn, delay = 250) {
 // 1. 获取分类数据（增强版：合并自定义数据）
 // ──────────────────────────────────────────────
 function getMastersByCategory(category) {
+    // 【修复】短代码转长代码，统一映射
+    const categoryIdMap = {
+        'TCM': 'TCM',
+        'WM': 'WM',
+        'MO': 'MultiOmics',
+        'NL': 'NeuralLink',
+        'AIDis': 'AIDrugDiscovery',
+        'AIHC': 'AIHealthcare'
+    };
+    const dataKey = categoryIdMap[category] || category;
+
     let builtIn = [];
-    if (window.allData && allData[category]) {
-        builtIn = allData[category] || [];
+    if (window.allData && allData[dataKey]) {
+        builtIn = allData[dataKey] || [];
     } else {
         const map = {
             'TCM': typeof TCMMasters !== 'undefined' ? TCMMasters : [],
@@ -27,11 +38,11 @@ function getMastersByCategory(category) {
             'AIDrugDiscovery': typeof AIDrugDiscoveryMasters !== 'undefined' ? AIDrugDiscoveryMasters : [],
             'AIHealthcare': typeof AIHealthcareMasters !== 'undefined' ? AIHealthcareMasters : []
         };
-        builtIn = map[category] || [];
+        builtIn = map[dataKey] || [];
     }
 
     // 【新增】合并自定义专家数据
-    const custom = window.customAllData?.[category] || [];
+    const custom = window.customAllData?.[dataKey] || [];
     
     return [...builtIn, ...custom];
 }
