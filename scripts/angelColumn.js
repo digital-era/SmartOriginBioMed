@@ -438,7 +438,7 @@ function renderStarryCardsList(isAdmin = false) {
 	
     container.innerHTML = '';
 
-    starryColumnCards.forEach(card => {
+    angelColumnCards.forEach(card => {
         // ═══ 安全读取 localStorage，不强行注入默认的 type: 'local' ═══
         let savedISpaceConfig = null;
         try {
@@ -1444,7 +1444,7 @@ function saveNewCard() {
         .replace(/\s+/g, '_');            // 空格替换为下划线
 
     // 校验 ID 唯一性
-    if (starryColumnCards.some(c => c.id === newId)) {
+    if (angelColumnCards.some(c => c.id === newId)) {
         alert(lang === 'zh-CN' ? '卡片标识已存在，请修改英文名称' : 'Card ID already exists, please change the English name');
         return;
     }
@@ -1488,12 +1488,12 @@ function saveNewCard() {
         }
     };
 
-    starryColumnCards.push(newCard);
+    angelColumnCards.push(newCard);
     
     closeAddCardModal();
     const isAdmin = checkAdminPermission();
     renderStarryCardsList(isAdmin);
-    persistStarryColumnCards();
+    persistangelColumnCards();
 }
 
 
@@ -1598,7 +1598,7 @@ function removeSelectedExpert(expertId) {
  * 保存卡片配置
  */
 function saveCardConfig(cardId) {
-    const card = starryColumnCards.find(c => c.id === cardId);
+    const card = angelColumnCards.find(c => c.id === cardId);
     if (!card) return;
 
     const lang = window.currentLang || 'zh-CN';
@@ -1641,7 +1641,7 @@ function saveCardConfig(cardId) {
     closeConfigModal();
     const isAdmin = checkAdminPermission();
     renderStarryCardsList(isAdmin);
-    persistStarryColumnCards();
+    persistangelColumnCards();
 }
 
 // ═══════════════════════════════════════════════
@@ -1731,27 +1731,27 @@ function deleteStarryCard(cardId) {
     
     if (!confirm(getFieldValue(angelColumnTexts.deleteCardConfirm, lang))) return;
 
-    const cardIndex = starryColumnCards.findIndex(c => c.id === cardId);
+    const cardIndex = angelColumnCards.findIndex(c => c.id === cardId);
     if (cardIndex === -1) {
         showToast(getFieldValue(angelColumnTexts.deleteCardNotFound, lang), 'error');
         return;
     }
 
-    const card = starryColumnCards[cardIndex];
+    const card = angelColumnCards[cardIndex];
 
     if (card.builtIn) {
         showToast(getFieldValue(angelColumnTexts.deleteCardBuiltIn, lang), 'error');
         return;
     }
 
-    starryColumnCards.splice(cardIndex, 1);
+    angelColumnCards.splice(cardIndex, 1);
 
     if (window.currentSelectedCard?.id === cardId) {
         window.currentSelectedCard = null;
         window.currentSelectedLeader = null;
     }
 
-    persistStarryColumnCards();
+    persistangelColumnCards();
 
     const isAdmin = checkAdminPermission();
     renderStarryCardsList(isAdmin);
