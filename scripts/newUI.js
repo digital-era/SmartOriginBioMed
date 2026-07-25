@@ -829,28 +829,25 @@ function updateCrystalLanguage() {
   };
 })();
 
-const categories = ['ai','quantum','universe','humanities','art','finance','sport','chinaEntrepreneurs'];
+const categories = ['TCM','WM','MultiOmics','NeuralLink','AIDrugDiscovery','AIHealthcare'];
+
 // 图片路径映射 - key 就是原始 category 值
 const categoryImages = {
-  'ai': 'images/ambient-ai.jpg',
-  'quantum': 'images/ambient-quantum.jpg',
-  'universe': 'images/ambient-universe.jpg',
-  'humanities': 'images/ambient-humanities.jpg',
-  'art': 'images/ambient-art.jpg',
-  'finance': 'images/ambient-finance.jpg',
-  'sport': 'images/ambient-sport.jpg',
-  'chinaEntrepreneurs': 'images/ambient-chinaEntrepreneurs.jpg'
+  'TCM': 'images/ambient-ai.jpg',
+  'WM': 'images/ambient-quantum.jpg',
+  'MultiOmics': 'images/ambient-universe.jpg',
+  'NeuralLink': 'images/ambient-humanities.jpg',
+  'AIDrugDiscovery': 'images/ambient-art.jpg',
+  'AIHealthcare': 'images/ambient-finance.jpg'
 };
 
 const categoryNames = {
-  'ai': { 'zh-CN': '人工智能', 'en': 'AI' },
-  'quantum': { 'zh-CN': '量子', 'en': 'Quantum' },
-  'universe': { 'zh-CN': '宇宙', 'en': 'Universe' },
-  'humanities': { 'zh-CN': '人文', 'en': 'Humanities' },
-  'art': { 'zh-CN': '艺术', 'en': 'Art' },
-  'finance': { 'zh-CN': '金融', 'en': 'Finance' },
-  'sport': { 'zh-CN': '竞技', 'en': 'Sport' },
-  'chinaEntrepreneurs': { 'zh-CN': '中华', 'en': 'Chinese' }
+  'TCM': { 'zh-CN': '中医', 'en': 'Chinese Med' },
+  'WM': { 'zh-CN': '西医', 'en': 'Western Med' },
+  'MultiOmics': { 'zh-CN': '多组学', 'en': 'Multi-Omics' },
+  'NeuralLink': { 'zh-CN': '脑机接口', 'en': 'Neural Link' },
+  'AIDrugDiscovery': { 'zh-CN': 'AI制药', 'en': 'AI Drug Discovery' },
+  'AIHealthcare': { 'zh-CN': 'AI医疗', 'en': 'AI Healthcare' }
 };
 
 // 按钮/提示文本映射
