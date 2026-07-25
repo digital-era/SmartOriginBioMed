@@ -5,7 +5,7 @@
 
 const PERSISTENCE = {
     API_BASE: '/api/starry-column',     // 同域 API
-    STORAGE_KEY: 'starryColumnCards',    // localStorage key
+    STORAGE_KEY: 'angelColumnCards',    // localStorage key
     SCHEMA_VERSION: 2,
     SAVE_DEBOUNCE_MS: 800,               // 防抖间隔
     MAX_RETRIES: 3,                      // 网络失败重试
@@ -58,7 +58,7 @@ async function initStarryColumn() {
     _updateHashCache();
     _isLoading = false;
 
-    console.log('[StarryColumn] Initialized. Total cards:', starryColumnCards.length);
+    console.log('[StarryColumn] Initialized. Total cards:', angelColumnCards.length);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -69,10 +69,10 @@ async function initStarryColumn() {
  * 触发持久化（防抖）
  * 自动检测数据变更，无变化则跳过
  */
-function persistStarryColumnCards() {
+function persistangelColumnCards() {
     const cardsToPersist = checkAdminPermission()
-        ? starryColumnCards.filter(c => c.configurable)
-        : starryColumnCards.filter(c => c.builtIn === false);
+        ? angelColumnCards.filter(c => c.configurable)
+        : angelColumnCards.filter(c => c.builtIn === false);
     
     const payload = {
         _schema: PERSISTENCE.SCHEMA_VERSION,
@@ -177,7 +177,7 @@ async function _mergeServerData(serverData) {
             continue;
         }
 
-        const existing = starryColumnCards.find(c => c.id === savedCard.id);
+        const existing = angelColumnCards.find(c => c.id === savedCard.id);
         /*
         console.log('[Merge] Found existing:', !!existing, 
                     'configurable:', existing?.configurable,
@@ -203,14 +203,14 @@ async function _mergeServerData(serverData) {
 
         } else if (!existing) {
             console.log('[Merge] Adding new card');
-            starryColumnCards.push(savedCard);
+            angelColumnCards.push(savedCard);
             
         } else {
             console.log('[Merge] Skipped builtIn card:', existing.id);
         }
     }
 
-    console.log('[Merge] Complete. Total cards:', starryColumnCards.length);
+    console.log('[Merge] Complete. Total cards:', angelColumnCards.length);
 
     // 缓存到 localStorage
     try {
@@ -226,7 +226,7 @@ async function _mergeServerData(serverData) {
 function _flushPendingSave() {
     clearTimeout(_pendingSaveTimer);
 
-    const customCards = starryColumnCards.filter(c => c.builtIn === false);
+    const customCards = angelColumnCards.filter(c => c.builtIn === false);
     const payload = {
         _schema: PERSISTENCE.SCHEMA_VERSION,
         _savedAt: Date.now(),
@@ -272,7 +272,7 @@ function _loadFromLocalStorage() {
         for (const savedCard of cards) {
             if (!_isValidCard(savedCard)) continue;
 
-            const existing = starryColumnCards.find(c => c.id === savedCard.id);
+            const existing = angelColumnCards.find(c => c.id === savedCard.id);
             if (existing && existing.configurable) {
                 Object.assign(existing, {
                     name: savedCard.name || existing.name,
@@ -283,7 +283,7 @@ function _loadFromLocalStorage() {
                     fusionStrategy: savedCard.fusionStrategy || { mode: 'synthesis' }
                 });
             } else if (!existing) {
-                starryColumnCards.push(savedCard);
+                angelColumnCards.push(savedCard);
             }
         }
 
@@ -345,7 +345,7 @@ function _simpleHash(str) {
  * 更新哈希缓存
  */
 function _updateHashCache() {
-    const customCards = starryColumnCards.filter(c => c.configurable);
+    const customCards = angelColumnCards.filter(c => c.configurable);
     const payload = { _schema: PERSISTENCE.SCHEMA_VERSION, cards: customCards };
     _lastPersistedHash = _simpleHash(JSON.stringify(payload));
 }
@@ -497,7 +497,7 @@ function exportStarryColumnData() {
 
     if (checkAdminPermission()) {
         // Admin：导出内存中所有自定义卡片（含 KV 同步的数据）
-        exportCards = starryColumnCards.filter(c => c.configurable);
+        exportCards = angelColumnCards.filter(c => c.configurable);
     } else {
         // 普通用户：仅从 localStorage 导出（本设备数据）
         const raw = localStorage.getItem(PERSISTENCE.STORAGE_KEY);
@@ -593,13 +593,13 @@ async function importStarryColumnData(file) {
                 let added = 0, updated = 0;
 
                 for (const card of validCards) {
-                    const existing = starryColumnCards.find(c => c.id === card.id);
+                    const existing = angelColumnCards.find(c => c.id === card.id);
 
                     if (existing && existing.configurable) {
                         Object.assign(existing, card);
                         updated++;
                     } else if (!existing) {
-                        starryColumnCards.push(card);
+                        angelColumnCards.push(card);
                         added++;
                     }
                     // builtIn 卡片跳过
@@ -638,7 +638,7 @@ async function importStarryColumnData(file) {
  * 仅写入 localStorage（普通用户导入/保存用）
  */
 function persistToLocalStorageOnly() {
-    const customCards = starryColumnCards.filter(c => c.builtIn === false);
+    const customCards = angelColumnCards.filter(c => c.builtIn === false);
     const payload = {
         _schema: PERSISTENCE.SCHEMA_VERSION,
         _savedAt: Date.now(),
@@ -660,7 +660,7 @@ function persistToLocalStorageOnly() {
  * 同步到 KV（admin 专用）
  */
 async function persistToKV() {
-    const customCards = starryColumnCards.filter(c => c.builtIn === false);
+    const customCards = angelColumnCards.filter(c => c.builtIn === false);
     const payload = {
         _schema: PERSISTENCE.SCHEMA_VERSION,
         cards: customCards
