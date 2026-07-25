@@ -337,58 +337,56 @@
         </div>
         
         <div class="interaction-area">
-            <h2 data-i18n-key="interactWithLeader">与专家对话</h2>
-			<div class="sample-icons-group">					
-			        <i class="fas fa-compass sample-q-icon2"
-			           onclick="fillSampleQuestion(2)"
-			           data-i18n-key="tooltipSampleQuestionPractice"
-			           data-i18n-target="aria-label"						
-				       data-i18n-title="tooltipSampleQuestionPractice"
-				       title="实践"
-			           aria-label="Sample question: Practice"></i>
-			        <i class="fas fa-lightbulb sample-q-icon"
-			           onclick="fillSampleQuestion(1)"
-			           data-i18n-key="tooltipSampleQuestionThought"
-			           data-i18n-target="aria-label"
-					   data-i18n-title="tooltipSampleQuestionThought"
-      				   title="思想"
-			           aria-label="Sample question: Thought"></i>
-			        <i class="fas fa-mountain sample-q-icon3"
-			           onclick="fillSampleQuestion(3)"
-			           data-i18n-key="tooltipSampleQuestionPotential"							
-			           data-i18n-target="aria-label"
-				       data-i18n-title="tooltipSampleQuestionPotential"
-				       title="潜能"
-			           aria-label="Sample question: Potential"></i>
-			    </div>
-			</div>
-            <div id="selected-leader-info">
-                <div>
-                    <span data-i18n-key="currentSelectedLeaderPrefix">当前选择的专家: </span>
-                    <span id="selectedLeaderName" data-i18n-key="noLeaderSelectedInitial">无</span>
-                </div>
-                <i class="fas fa-copy copy-leader-btn"
-                   onclick="copyConversationToClipboard()"
-                   aria-label="Copy conversation"
-                   data-i18n-key="tooltipCopyConversation"
-                   data-i18n-target="aria-label"></i>
-            </div>
-            
-            <textarea id="userQuestion" data-i18n-key="placeholderUserQuestion" data-i18n-target="placeholder"></textarea>
-            
-            <div class="interaction-buttons">
-                <button onclick="if(checkActionAuth('1. 生成 问题')) generateAndShowPrompt()" data-i18n-key="btnGeneratePrompt">1. 生成 问题</button>
-                <button id="getAIResponseButton" onclick="if(checkActionAuth('2. 获取 专家 回复')) getAIResponse()">
-                    <span data-i18n-key="btnGetAiResponse">2. 获取 专家 回复</span>
-                    <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
-                </button>                
-				<!-- --- 修改开始：按钮改名，移除原有 onclick --- -->
-                <!-- --- <button id="angelModeButton" onclick="handleAngelMode()" data-i18n-key="btnAngelMode">天使模式 (未来构想)</button> --- -->
-                <!-- --- 修改结束 --- -->
-				<!-- --- 新增：星语上下文 --- -->
-                <button id="ContextButton" onclick="handleContext()" data-i18n-key="btnContext">智源上下文</button>
-                <!-- --- 修改结束 --- -->
-            </div>
+		    <!-- 用 interaction-header 包裹标题和图标 -->
+		    <div class="interaction-header">
+		        <h2 data-i18n-key="interactWithLeader">与专家对话</h2>
+		        <div class="sample-icons-group">
+		            <i class="fas fa-compass sample-q-icon2"
+		               onclick="fillSampleQuestion(2)"
+		               data-i18n-key="tooltipSampleQuestionPractice"
+		               data-i18n-target="aria-label"
+		               data-i18n-title="tooltipSampleQuestionPractice"
+		               title="实践"
+		               aria-label="Sample question: Practice"></i>
+		            <i class="fas fa-lightbulb sample-q-icon"
+		               onclick="fillSampleQuestion(1)"
+		               data-i18n-key="tooltipSampleQuestionThought"
+		               data-i18n-target="aria-label"
+		               data-i18n-title="tooltipSampleQuestionThought"
+		               title="思想"
+		               aria-label="Sample question: Thought"></i>
+		            <i class="fas fa-mountain sample-q-icon3"
+		               onclick="fillSampleQuestion(3)"
+		               data-i18n-key="tooltipSampleQuestionPotential"
+		               data-i18n-target="aria-label"
+		               data-i18n-title="tooltipSampleQuestionPotential"
+		               title="潜能"
+		               aria-label="Sample question: Potential"></i>
+		        </div>
+		    </div>
+		
+		    <div id="selected-leader-info">
+		        <div>
+		            <span data-i18n-key="currentSelectedLeaderPrefix">当前选择的专家: </span>
+		            <span id="selectedLeaderName" data-i18n-key="noLeaderSelectedInitial">无</span>
+		        </div>
+		        <i class="fas fa-copy copy-leader-btn"
+		           onclick="copyConversationToClipboard()"
+		           aria-label="Copy conversation"
+		           data-i18n-key="tooltipCopyConversation"
+		           data-i18n-target="aria-label"></i>
+		    </div>
+		
+		    <textarea id="userQuestion" data-i18n-key="placeholderUserQuestion" data-i18n-target="placeholder"></textarea>
+		
+		    <div class="interaction-buttons">
+		        <button onclick="if(checkActionAuth('1. 生成 问题')) generateAndShowPrompt()" data-i18n-key="btnGeneratePrompt">1. 生成 问题</button>
+		        <button id="getAIResponseButton" onclick="if(checkActionAuth('2. 获取 专家 回复')) getAIResponse()">
+		            <span data-i18n-key="btnGetAiResponse">2. 获取 专家 回复</span>
+		            <span id="loadingIndicator" style="display:none;" class="loading-spinner"></span>
+		        </button>
+		        <button id="ContextButton" onclick="handleContext()" data-i18n-key="btnContext">智源上下文</button>
+		    </div>
 
             <div id="prompt-display-area" class="response-display" style="display:none;">
                 <div class="collapsible-header" onclick="togglePromptCollapse()" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
