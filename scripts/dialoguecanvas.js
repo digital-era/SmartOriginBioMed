@@ -159,7 +159,7 @@ function renderDialogueCanvas() {
             const info = item.leaderInfo || { name: 'Unknown', field: '', contribution: '' };
 
             contentHTML = `
-                <div class="star-decoration-top"><i class="fas fa-star-of-life"></i></div>
+                <div class="star-decoration-top"><span style="font-family: 'Font Awesome 6 Free'; font-weight: 900;">&#xf4ba;</span></div>
                 <div class="leader-header">
                     <div class="leader-name">${info.name}</div>
                     <div class="leader-badges">
@@ -724,7 +724,7 @@ function exportToHTML() {
 
             nodesHtml += `
                 <div class="thought-node answer-node" id="${nodeId}">
-                    <div class="star-decoration-top"><i class="fas fa-star-of-life"></i></div>
+                    <div class="star-decoration-top"><span style="font-family: 'Font Awesome 6 Free'; font-weight: 900;">&#xf4ba;</span></div>
                     <div class="leader-header">
                         <div class="leader-name">${escapeHtml(info.name)}</div>
                         <div class="leader-badges">
@@ -1073,7 +1073,7 @@ function exportToHTML() {
     </div>
     
     <footer>
-        Exported from SmartOrgin BioMed• ${new Date().toLocaleString()}
+        Exported from SmartOrgin BioMed • ${new Date().toLocaleString()}
     </footer>
 </body>
 </html>`;
