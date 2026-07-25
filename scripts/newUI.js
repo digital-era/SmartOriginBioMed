@@ -1771,22 +1771,30 @@ function updateSingleCard(leader) {
 
 function getFilteredCandidates(category) {
   const lang = window.currentLang || 'zh-CN';
+  // 【修复】短代码转长代码
+  const tabIdMap = {
+      'TCM': 'TCM',
+      'WM': 'WM',
+      'MO': 'MultiOmics',
+      'NL': 'NeuralLink',
+      'AIDis': 'AIDrugDiscovery',
+      'AIHC': 'AIHealthcare'
+  };
+  const dataKey = tabIdMap[category] || category;
+  
   const chipsContainer = document.getElementById(`chips-${category}`);
   let activeSub = null;
   
-  // ── 获取激活的子类（排除"全部/All"）──
   if (chipsContainer) {
     const activeChip = Array.from(chipsContainer.querySelectorAll('.chip.active'))
       .find(chip => chip.dataset.filter && chip.dataset.filter !== 'all');
     if (activeChip) activeSub = activeChip.dataset.filter;
   }
   
-  // ═══════════════════════════════════════════════
-  // 【关键修复】合并内置数据 + 定制数据
-  // ═══════════════════════════════════════════════
-  const builtIn = allData[category] || [];
-  const custom = window.customAllData?.[category] || [];
-  let candidates = [...builtIn, ...custom];  // ← 合并定制北极星
+  // 【修复】用 dataKey 读取 allData
+  const builtIn = allData[dataKey] || [];
+  const custom = window.customAllData?.[dataKey] || [];
+  let candidates = [...builtIn, ...custom];
   
   // ═══════════════════════════════════════════════
   // 【子类过滤】与传统样式 field 读取完全一致
