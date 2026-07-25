@@ -1175,10 +1175,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. 【关键】处理 Tab 状态
     if (typeof openTab === 'function') {
-        openTab(null, 'ai'); // 默认打开 AI Tab
+        openTab(null, 'TCM'); // 默认打开 TCM Tab
     }
     
-    const firstTabButton = document.querySelector('.tab-button[onclick*="ai"]');
+    const firstTabButton = document.querySelector('.tab-button[onclick*="TCM"]');
     if (firstTabButton && !document.querySelector('.tab-button.active')) {
          firstTabButton.classList.add('active');
     }
