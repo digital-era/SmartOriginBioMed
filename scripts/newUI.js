@@ -6,6 +6,16 @@
 // ══════════════════════════════════════════════
 const NEBULA_CATEGORIES = ['TCM','WM','MO','NL','AIDis','AIHC'];
 
+// 在文件顶部添加映射表
+const CATEGORY_TO_TAB_ID = {
+  'TCM': 'TCM',
+  'WM': 'WM',
+  'MO': 'MultiOmics',
+  'NL': 'NeuralLink',
+  'AIDis': 'AIDrugDiscovery',
+  'AIHC': 'AIHealthcare'
+};
+
 // 多语言文本
 const crystalTexts = {
   'zh-CN': {
@@ -1426,8 +1436,16 @@ function selectCategory(category) {
     
     const tabsBar = document.querySelector('.tabs');
     if (tabsBar) tabsBar.style.display = 'none';
-    
-    openTab(null, category);
+
+
+    // 【修复】映射到正确的 tab id
+    //openTab(null, category);
+    const tabId = CATEGORY_TO_TAB_ID[category] || category;
+    const tabElement = document.getElementById(tabId);
+    if (tabElement && typeof openTab === 'function') {
+        openTab(null, tabId);
+    }   
+  
     document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
     
     renderCategoryLayout(category);
