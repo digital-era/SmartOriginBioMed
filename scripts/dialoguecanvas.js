@@ -825,7 +825,7 @@ function exportToHTML() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${escapeHtml(fileName)}</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -1091,7 +1091,6 @@ function exportToHTML() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
-
 
 /* ═══════════════════════════════════════════════
    画布节点上下文按钮处理器
