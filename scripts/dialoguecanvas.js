@@ -591,7 +591,6 @@ function exportToPDF() {
                 <div class="print-role-title ai-role">
                     <span style='font-family: "Font Awesome 6 Free"; font-weight: 900; margin-right: 5px;'>&#xf4ba;</span>Expert
                 </div>
-                `;
                 <div class="leader-header">
                     <div class="leader-name">${escapeHtml(info.name)}</div>
                     <div class="leader-badges">
