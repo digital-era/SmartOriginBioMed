@@ -1123,7 +1123,7 @@ function showConfigModal(card) {
                         <span class="lang-tag secondary">${lang === 'zh-CN' ? 'English' : '中文'}</span>
                     </label>
                     <input type="text" class="config-input" id="configFieldSecondary" 
-                           value="${currentFieldOther}" placeholder="${lang === 'zh-CN' ? 'e.g. AI Fusion' : '如：AI融合'}">
+                           value="${currentFieldOther}" placeholder="${lang === 'zh-CN' ? 'e.g. TCM health preservation' : '如：中医养生、经络研究'}">
                 </div>
 
                 <!-- 评注 -->
@@ -1361,7 +1361,7 @@ function showAddCardModal() {
                         <span class="lang-tag secondary">${lang === 'zh-CN' ? 'English' : '中文'}</span>
                     </label>
                     <input type="text" class="config-input" id="newCardFieldSecondary" 
-                           placeholder="${lang === 'zh-CN' ? 'e.g. AI Fusion' : '如：AI融合'}">
+                           placeholder="${lang === 'zh-CN' ? 'e.g. TCM health preservation' : '如：中医养生、经络研究'}">
                 </div>
 
                 <!-- 备注格言 -->
