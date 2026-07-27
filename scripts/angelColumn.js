@@ -1116,7 +1116,7 @@ function showConfigModal(card) {
                         <span class="lang-tag">${lang === 'zh-CN' ? '中文' : 'English'}</span>
                     </label>
                     <input type="text" class="config-input" id="configFieldPrimary" 
-                           value="${currentField}" placeholder="${lang === 'zh-CN' ? '如：AI融合、人文跨界' : 'e.g. AI Fusion'}">
+                           value="${currentField}" placeholder="${lang === 'zh-CN' ? '如：中医养生、经络研究' : 'e.g. TCM health preservation'}">
                     
                     <label class="config-label secondary">
                         ${lang === 'zh-CN' ? '英文标签' : '中文标签'}
@@ -1354,7 +1354,7 @@ function showAddCardModal() {
                         <span class="lang-tag">${lang === 'zh-CN' ? '中文' : 'English'}</span>
                     </label>
                     <input type="text" class="config-input" id="newCardFieldPrimary" 
-                           placeholder="${lang === 'zh-CN' ? '如：AI融合、人文跨界' : 'e.g. AI Fusion'}">
+                           placeholder="${lang === 'zh-CN' ? '如：中医养生、经络研究' : 'e.g. TCM health preservation'}">
                     
                     <label class="config-label secondary">
                         ${lang === 'zh-CN' ? '英文标签' : 'Chinese Tag'}
