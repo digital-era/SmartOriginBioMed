@@ -575,7 +575,7 @@ function exportCustomNorthStars() {
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = `custom-northstars-${timestamp}.json`;
+    a.download = `custom-experts-${timestamp}.json`;
     document.body.appendChild(a);
     a.click();
     
