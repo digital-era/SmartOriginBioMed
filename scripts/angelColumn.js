@@ -1,7 +1,7 @@
 const angelColumnTexts = {
     title: {
-        'zh-CN': '星空专栏',
-        'en': 'Starry Column'
+        'zh-CN': '天使专栏',
+        'en': 'Angel Column'
     },
     subtitle: {
         'zh-CN': '跨领域智慧融合',
@@ -38,8 +38,8 @@ const angelColumnTexts = {
         'en': 'Fusion Mode'
     },
     selectExperts: {
-        'zh-CN': '选择北极星',
-        'en': 'Select NorthStar'
+        'zh-CN': '选择专家',
+        'en': 'Select Expert'
     },
     modeRoundtable: {
         'zh-CN': '圆桌会议',
