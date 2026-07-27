@@ -7,7 +7,7 @@ const customExpertexts = {
         'zh-CN': '添加专家',
         'en': 'Add Expert'
     },
-    editNorthStar: {  // ← 新增
+    editNorthStar: {
         'zh-CN': '修改专家',
         'en': 'Edit Expert'
     },
@@ -37,7 +37,6 @@ const customExpertexts = {
         'zh-CN': '领域',
         'en': 'Field'
     },
-    // 删除 fieldFixed，改为可编辑提示
     fieldPlaceholder: {
         'zh-CN': '如：中医诊断学、神经学',
         'en': 'e.g. TCM Diagnostics, Neurology'
@@ -95,19 +94,50 @@ const customExpertexts = {
 };
 
 // ═══════════════════════════════════════════════
+// 类别映射表（外部键名 → 内部键名）
+// ═══════════════════════════════════════════════
+const CATEGORY_TO_TAB_ID = {
+    'TCM': 'TCM',
+    'WM': 'WM',
+    'MO': 'MultiOmics',
+    'NL': 'NeuralLink',
+    'AIDis': 'AIDrugDiscovery',
+    'AIHC': 'AIHealthcare'
+};
+
+// 反向映射表（内部键名 → 外部键名），运行时构建
+const TAB_ID_TO_CATEGORY = Object.fromEntries(
+    Object.entries(CATEGORY_TO_TAB_ID).map(([k, v]) => [v, k])
+);
+
+// ═══════════════════════════════════════════════
+// 辅助函数：外部键名 → 内部键名
+// ═══════════════════════════════════════════════
+function toInternalCategory(externalCategory) {
+    return CATEGORY_TO_TAB_ID[externalCategory] || externalCategory;
+}
+
+// ═══════════════════════════════════════════════
+// 辅助函数：内部键名 → 外部键名
+// ═══════════════════════════════════════════════
+function toExternalCategory(internalCategory) {
+    return TAB_ID_TO_CATEGORY[internalCategory] || internalCategory;
+}
+
+// ═══════════════════════════════════════════════
 // 全局定制数据存储
 // ═══════════════════════════════════════════════
 window.customAllData = {};  // 格式与 allData 一致: { category: [leader, ...] }
 
 const CUSTOM_NS_PERSISTENCE = {
-    STORAGE_KEY: 'customNorthStars',    // localStorage key
+    STORAGE_KEY: 'customNorthStars',
     SCHEMA_VERSION: 1
 };
 
 // ═══════════════════════════════════════════════
 // 初始化：从 localStorage 加载定制数据
+// 【修改】加载时自动将外部键名映射为内部键名
 // ═══════════════════════════════════════════════
-//定制数据为了支持多语言，name存储的是对象！在 initCustomNorthStars 中，加载数据后自动转换
 function initCustomNorthStars() {
     const raw = localStorage.getItem(CUSTOM_NS_PERSISTENCE.STORAGE_KEY);
     if (!raw) {
@@ -118,7 +148,15 @@ function initCustomNorthStars() {
     try {
         const data = JSON.parse(raw);
         if (data._schema === CUSTOM_NS_PERSISTENCE.SCHEMA_VERSION && data.customAllData) {
-            window.customAllData = data.customAllData;
+            // 加载时统一映射为内部键名
+            window.customAllData = {};
+            for (const [key, leaders] of Object.entries(data.customAllData)) {
+                const internalKey = toInternalCategory(key);
+                window.customAllData[internalKey] = (leaders || []).map(leader => ({
+                    ...leader,
+                    _category: internalKey
+                }));
+            }
             console.log('[CustomNS] Loaded from localStorage:', Object.keys(window.customAllData));
         } else {
             window.customAllData = {};
@@ -133,18 +171,16 @@ function initCustomNorthStars() {
 // 持久化到 localStorage（按领域排序）
 // ═══════════════════════════════════════════════
 function persistCustomNorthStars() {
-    // 按领域名称排序
     const sortedKeys = Object.keys(window.customAllData).sort();
     const sortedData = {};
     for (const key of sortedKeys) {
-        // 每个领域内的北极星按姓名排序
         sortedData[key] = [...window.customAllData[key]].sort((a, b) => {
             const nameA = getFieldValue(a.name, 'zh-CN') || '';
             const nameB = getFieldValue(b.name, 'zh-CN') || '';
             return nameA.localeCompare(nameB, 'zh-CN');
         });
     }
-    window.customAllData = sortedData;  // 更新为排序后的数据
+    window.customAllData = sortedData;
     
     const payload = {
         _schema: CUSTOM_NS_PERSISTENCE.SCHEMA_VERSION,
@@ -162,20 +198,16 @@ function persistCustomNorthStars() {
     }
 }
 
-
 // ═══════════════════════════════════════════════
 // 渲染北极星卡片四角图标
-// 在 updateSingleCard 或渲染卡片的函数中调用
 // ═══════════════════════════════════════════════
 function renderCustomNorthStarControls(cardContainer, leader, category) {
     const lang = window.currentLang || 'zh-CN';
     const isCustom = leader._isCustom === true;
     
-    // 创建四角容器
     const corners = document.createElement('div');
     corners.className = 'ns-corners';
     
-    // 右上角图标：自定义=编辑（铅笔），内置=增加（加号）
     const topRightIcon = isCustom 
         ? `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" 
                  stroke="currentColor" stroke-width="2">
@@ -188,12 +220,8 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
                 <line x1="5" y1="12" x2="19" y2="12"/>
            </svg>`;
     
-    // ═══════════════════════════════════════════════
-    // 【修改1】内置北极星彻底去掉删除按钮
-    // ═══════════════════════════════════════════════
     let cornersHTML = '';
     
-    // 左上：删除（仅自定义显示）
     if (isCustom) {
         cornersHTML += `
         <button class="ns-corner-btn ns-corner-tl" 
@@ -207,7 +235,6 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
         </button>`;
     }
     
-    // 右上：增加/编辑
     cornersHTML += `
         <button class="ns-corner-btn ns-corner-tr" 
                 data-action="${isCustom ? 'edit' : 'add'}"
@@ -215,7 +242,6 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
             ${topRightIcon}
         </button>`;
     
-    // 左下：导入
     cornersHTML += `
         <button class="ns-corner-btn ns-corner-bl" 
                 data-action="import"
@@ -228,7 +254,6 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
             </svg>
         </button>`;
     
-    // 右下：导出
     cornersHTML += `
         <button class="ns-corner-btn ns-corner-br" 
                 data-action="export"
@@ -241,18 +266,12 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
             </svg>
         </button>`;
     
-    // 隐藏的文件输入（用于导入）
     cornersHTML += `
         <input type="file" class="ns-import-input" accept=".json,application/json" 
                style="display:none">`;
     
     corners.innerHTML = cornersHTML;
     
-    // ═══════════════════════════════════════════════
-    // 绑定事件
-    // ═══════════════════════════════════════════════
-    
-    // 删除：仅自定义可删（DOM 存在时才绑定）
     if (isCustom) {
         const deleteBtn = corners.querySelector('[data-action="delete"]');
         deleteBtn.addEventListener('click', (e) => {
@@ -261,18 +280,16 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
         });
     }
     
-    // 右上：自定义=编辑，内置=新增
     const topRightBtn = corners.querySelector('[data-action="edit"], [data-action="add"]');
     topRightBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (isCustom) {
-            showCustomNorthStarModal(category, leader);  // 编辑
+            showCustomNorthStarModal(category, leader);
         } else {
-            showCustomNorthStarModal(category);            // 新增
+            showCustomNorthStarModal(category);
         }
     });
     
-    // 导入
     const importBtn = corners.querySelector('[data-action="import"]');
     const importInput = corners.querySelector('.ns-import-input');
     importBtn.addEventListener('click', (e) => {
@@ -285,7 +302,6 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
         e.target.value = '';
     });
     
-    // 导出
     const exportBtn = corners.querySelector('[data-action="export"]');
     exportBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -303,11 +319,9 @@ function showCustomNorthStarModal(category, editLeader = null) {
     const otherLang = lang === 'zh-CN' ? 'en' : 'zh-CN';
     const isEdit = !!editLeader;
     
-    // 当前值（编辑模式）
     const currentName = isEdit ? getFieldValue(editLeader.name, lang) : '';
     const currentNameOther = isEdit ? getFieldValue(editLeader.name, otherLang) : '';
     
-    // 领域值：编辑时取leader的值，新增时取category默认值
     let currentField, currentFieldOther;
     if (isEdit) {
         currentField = getFieldValue(editLeader.field, lang);
@@ -335,7 +349,6 @@ function showCustomNorthStarModal(category, editLeader = null) {
             </div>
             
             <div class="starry-modal-body">
-                <!-- 1. 姓名（保持第一） -->
                 <div class="config-section">
                     <label class="config-label">
                         ${getFieldValue(customExpertexts.nameLabel, lang)}
@@ -352,7 +365,6 @@ function showCustomNorthStarModal(category, editLeader = null) {
                            value="${currentNameOther}" placeholder="${lang === 'zh-CN' ? 'Enter English name' : '输入英文姓名'}">
                 </div>
 
-                <!-- 2. 贡献 -->
                 <div class="config-section">
                     <label class="config-label">
                         ${getFieldValue(customExpertexts.contributionLabel, lang)}
@@ -369,7 +381,6 @@ function showCustomNorthStarModal(category, editLeader = null) {
                         placeholder="${lang === 'zh-CN' ? 'Describe in English...' : '用英文描述...'}">${currentContribOther}</textarea>
                 </div>
 
-                <!-- 3. 领域【修改：可编辑，移到贡献后面】 -->
                 <div class="config-section">
                     <label class="config-label">
                         ${getFieldValue(customExpertexts.fieldLabel, lang)}
@@ -388,7 +399,6 @@ function showCustomNorthStarModal(category, editLeader = null) {
                            placeholder="${lang === 'zh-CN' ? 'e.g. AI' : '如：人工智能'}">
                 </div>
 
-                <!-- 4. 评注 -->
                 <div class="config-section">
                     <label class="config-label">
                         ${getFieldValue(customExpertexts.remarksLabel, lang)}
@@ -426,12 +436,12 @@ function closeCustomNSModal() {
 
 // ═══════════════════════════════════════════════
 // 保存定制北极星
+// 【修改】存储时用内部键名
 // ═══════════════════════════════════════════════
 function saveCustomNorthStar(editId = '') {
     const lang = window.currentLang || 'zh-CN';
     const otherLang = lang === 'zh-CN' ? 'en' : 'zh-CN';
     
-    // 【修复】直接从全局状态获取 category
     const category = window.currentSelectedCategory;
     if (!category) {
         console.error('[CustomNS] currentSelectedCategory is empty');
@@ -439,32 +449,28 @@ function saveCustomNorthStar(editId = '') {
         return;
     }
     
-    // 读取字段
+    // 外部键名 → 内部键名
+    const internalCategory = toInternalCategory(category);
+    
     const namePrimary = document.getElementById('nsNamePrimary')?.value.trim();
     const nameSecondary = document.getElementById('nsNameSecondary')?.value.trim();
-    
     const fieldPrimary = document.getElementById('nsFieldPrimary')?.value.trim();
     const fieldSecondary = document.getElementById('nsFieldSecondary')?.value.trim();
-    
     const contribPrimary = document.getElementById('nsContributionPrimary')?.value.trim();
     const contribSecondary = document.getElementById('nsContributionSecondary')?.value.trim();
     const remarksPrimary = document.getElementById('nsRemarksPrimary')?.value.trim();
     const remarksSecondary = document.getElementById('nsRemarksSecondary')?.value.trim();
     
-    // 校验
     if (!namePrimary) {
         alert(getFieldValue(customExpertexts.nameRequired, lang));
         return;
     }
     
-    // 领域默认值处理
     const finalFieldPrimary = fieldPrimary || getCategoryName(category);
     const finalFieldSecondary = fieldSecondary || categoryNames[category]?.[otherLang] || getCategoryName(category);
     
-    // 生成 ID
-    const id = editId || generateCustomNSId(namePrimary, category);
+    const id = editId || generateCustomNSId(namePrimary, internalCategory);
     
-    // 构建对象
     const northStar = {
         id: id,
         name: {
@@ -484,44 +490,41 @@ function saveCustomNorthStar(editId = '') {
             [otherLang]: remarksSecondary || remarksPrimary
         },
         _isCustom: true,
-        _category: category
+        _category: internalCategory
     };
     
-    // 保存到 customAllData
-    if (!window.customAllData[category]) {
-        window.customAllData[category] = [];
+    if (!window.customAllData[internalCategory]) {
+        window.customAllData[internalCategory] = [];
     }
     
     if (editId) {
-        const idx = window.customAllData[category].findIndex(n => n.id === editId);
+        const idx = window.customAllData[internalCategory].findIndex(n => n.id === editId);
         if (idx > -1) {
-            window.customAllData[category][idx] = northStar;
+            window.customAllData[internalCategory][idx] = northStar;
         }
     } else {
-        window.customAllData[category].push(northStar);
+        window.customAllData[internalCategory].push(northStar);
     }
     
-    // 持久化
     persistCustomNorthStars();
-    
     closeCustomNSModal();
     showToast(getFieldValue(customExpertexts.saveSuccess, lang), 'success');
     
-    // 刷新显示
     if (window.currentSelectedCategory === category) {
         refreshCategoryDisplay(category);
     }
 }
 
 // 生成唯一 ID
-function generateCustomNSId(name, category) {
+function generateCustomNSId(name, internalCategory) {
     const base = name.toLowerCase().replace(/[^\w\s]/g, '').trim().replace(/\s+/g, '_');
     const timestamp = Date.now().toString(36);
-    return `custom_${category}_${base}_${timestamp}`;
+    return `custom_${internalCategory}_${base}_${timestamp}`;
 }
 
 // ═══════════════════════════════════════════════
 // 删除定制北极星
+// 【修改】删除时用内部键名
 // ═══════════════════════════════════════════════
 function deleteCustomNorthStar(leader, category) {
     const lang = window.currentLang || 'zh-CN';
@@ -533,14 +536,15 @@ function deleteCustomNorthStar(leader, category) {
     
     if (!confirm(getFieldValue(customExpertexts.deleteConfirm, lang))) return;
     
-    const list = window.customAllData[category];
+    const internalCategory = toInternalCategory(category);
+    const list = window.customAllData[internalCategory];
     if (!list) return;
     
     const idx = list.findIndex(n => n.id === leader.id);
     if (idx > -1) {
         list.splice(idx, 1);
         if (list.length === 0) {
-            delete window.customAllData[category];
+            delete window.customAllData[internalCategory];
         }
         persistCustomNorthStars();
         refreshCategoryDisplay(category);
@@ -550,11 +554,11 @@ function deleteCustomNorthStar(leader, category) {
 
 // ═══════════════════════════════════════════════
 // 导出定制北极星
+// 【修改】内部键名 → 外部键名导出
 // ═══════════════════════════════════════════════
 function exportCustomNorthStars() {
     const lang = window.currentLang || 'zh-CN';
     
-    // 检查是否有数据
     const allCustom = window.customAllData || {};
     const totalCount = Object.values(allCustom).reduce((sum, arr) => sum + arr.length, 0);
     
@@ -563,15 +567,9 @@ function exportCustomNorthStars() {
         return { success: false, error: 'empty' };
     }
     
-    // 构建反向映射表（内部键名 → 外部键名）
-    const INTERNAL_TO_CATEGORY = Object.fromEntries(
-        Object.entries(CATEGORY_TO_TAB_ID).map(([k, v]) => [v, k])
-    );
-    
-    // 导出时将内部键名转回原始键名
     const exportCustomAllData = {};
     for (const [internalKey, leaders] of Object.entries(allCustom)) {
-        const externalKey = INTERNAL_TO_CATEGORY[internalKey] || internalKey;
+        const externalKey = toExternalCategory(internalKey);
         exportCustomAllData[externalKey] = leaders.map(leader => ({
             ...leader,
             _category: externalKey
@@ -606,6 +604,7 @@ function exportCustomNorthStars() {
 
 // ═══════════════════════════════════════════════
 // 导入定制北极星
+// 【修改】外部键名 → 内部键名导入
 // ═══════════════════════════════════════════════
 async function importCustomNorthStars(file) {
     const lang = window.currentLang || 'zh-CN';
@@ -614,7 +613,6 @@ async function importCustomNorthStars(file) {
         return { success: false, error: 'Invalid file type' };
     }
     
-    // 确认覆盖
     const confirmMsg = getFieldValue(customExpertexts.importConfirm, lang);
     if (!confirm(confirmMsg)) {
         return { success: false, error: 'cancelled' };
@@ -627,7 +625,6 @@ async function importCustomNorthStars(file) {
             try {
                 const data = JSON.parse(e.target.result);
                 
-                // 校验
                 if (data._type !== 'customNorthStars' || !data.customAllData) {
                     resolve({ success: false, error: 'Invalid file format' });
                     return;
@@ -635,12 +632,10 @@ async function importCustomNorthStars(file) {
                 
                 let added = 0, updated = 0;
                 
-                // 合并数据
                 for (const [category, leaders] of Object.entries(data.customAllData)) {
                     if (!Array.isArray(leaders)) continue;
                     
-                    // 将导入的类别键名映射为内部键名
-                    const internalCategory = CATEGORY_TO_TAB_ID[category] || category;
+                    const internalCategory = toInternalCategory(category);
                     
                     if (!window.customAllData[internalCategory]) {
                         window.customAllData[internalCategory] = [];
@@ -649,7 +644,6 @@ async function importCustomNorthStars(file) {
                     for (const leader of leaders) {
                         if (!leader.id || !leader.name) continue;
                         
-                        // 修正 leader 内部的 _category 字段为内部键名
                         const mappedLeader = {
                             ...leader,
                             _category: internalCategory
@@ -673,7 +667,6 @@ async function importCustomNorthStars(file) {
                     .replace('{updated}', updated);
                 showToast(msg, 'success');
                 
-                // 刷新当前显示
                 if (window.currentSelectedCategory) {
                     refreshCategoryDisplay(window.currentSelectedCategory);
                 }
@@ -698,20 +691,16 @@ async function importCustomNorthStars(file) {
 
 // ═══════════════════════════════════════════════
 // 刷新领域显示（合并内置 + 定制）
+// 【修改】用内部键名获取定制数据
 // ═══════════════════════════════════════════════
 function refreshCategoryDisplay(category) {
-    // 合并内置数据和定制数据
+    const internalCategory = toInternalCategory(category);
     const builtIn = allData[category] || [];
-    const custom = window.customAllData[category] || [];
-    
-    // 创建临时合并数组（不修改原始 allData）
+    const custom = window.customAllData[internalCategory] || [];
     const merged = [...builtIn, ...custom];
     
-    // 更新显示
-    // 这里需要根据你的实际渲染逻辑调整
-    // 例如：重新渲染 chips、更新大卡片等
+    // 你的渲染逻辑...
     
-    // 如果当前选中的领袖是定制的，需要刷新
     if (window.currentSelectedLeader?._isCustom) {
         const updated = custom.find(n => n.id === window.currentSelectedLeader.id);
         if (updated) {
@@ -722,10 +711,20 @@ function refreshCategoryDisplay(category) {
 
 // ═══════════════════════════════════════════════
 // 获取合并后的领域数据（用于搜索、筛选等）
+// 【修改】支持外部键名传入，自动查找内部键名
 // ═══════════════════════════════════════════════
 function getMergedCategoryData(category) {
     const builtIn = allData[category] || [];
-    const custom = window.customAllData[category] || [];
+    
+    let custom = window.customAllData[category] || [];
+    
+    if (custom.length === 0) {
+        const internalKey = toInternalCategory(category);
+        if (internalKey !== category) {
+            custom = window.customAllData[internalKey] || [];
+        }
+    }
+    
     return [...builtIn, ...custom];
 }
 
@@ -734,7 +733,4 @@ function getMergedCategoryData(category) {
 // ═══════════════════════════════════════════════
 function initCustomNorthStarSystem() {
     initCustomNorthStars();
-    
-    // 将定制数据注入到全局搜索/筛选中
-    // 例如：修改 getFilteredCandidates 使用 getMergedCategoryData
 }
