@@ -162,6 +162,7 @@ function persistCustomNorthStars() {
     }
 }
 
+
 // ═══════════════════════════════════════════════
 // 渲染北极星卡片四角图标
 // 在 updateSingleCard 或渲染卡片的函数中调用
@@ -562,11 +563,26 @@ function exportCustomNorthStars() {
         return { success: false, error: 'empty' };
     }
     
+    // 构建反向映射表（内部键名 → 外部键名）
+    const INTERNAL_TO_CATEGORY = Object.fromEntries(
+        Object.entries(CATEGORY_TO_TAB_ID).map(([k, v]) => [v, k])
+    );
+    
+    // 导出时将内部键名转回原始键名
+    const exportCustomAllData = {};
+    for (const [internalKey, leaders] of Object.entries(allCustom)) {
+        const externalKey = INTERNAL_TO_CATEGORY[internalKey] || internalKey;
+        exportCustomAllData[externalKey] = leaders.map(leader => ({
+            ...leader,
+            _category: externalKey
+        }));
+    }
+    
     const exportData = {
         _schema: CUSTOM_NS_PERSISTENCE.SCHEMA_VERSION,
         _exportedAt: Date.now(),
         _type: 'customNorthStars',
-        customAllData: allCustom
+        customAllData: exportCustomAllData
     };
     
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
@@ -623,19 +639,28 @@ async function importCustomNorthStars(file) {
                 for (const [category, leaders] of Object.entries(data.customAllData)) {
                     if (!Array.isArray(leaders)) continue;
                     
-                    if (!window.customAllData[category]) {
-                        window.customAllData[category] = [];
+                    // 将导入的类别键名映射为内部键名
+                    const internalCategory = CATEGORY_TO_TAB_ID[category] || category;
+                    
+                    if (!window.customAllData[internalCategory]) {
+                        window.customAllData[internalCategory] = [];
                     }
                     
                     for (const leader of leaders) {
                         if (!leader.id || !leader.name) continue;
                         
-                        const existing = window.customAllData[category].find(n => n.id === leader.id);
+                        // 修正 leader 内部的 _category 字段为内部键名
+                        const mappedLeader = {
+                            ...leader,
+                            _category: internalCategory
+                        };
+                        
+                        const existing = window.customAllData[internalCategory].find(n => n.id === mappedLeader.id);
                         if (existing) {
-                            Object.assign(existing, leader);
+                            Object.assign(existing, mappedLeader);
                             updated++;
                         } else {
-                            window.customAllData[category].push(leader);
+                            window.customAllData[internalCategory].push(mappedLeader);
                             added++;
                         }
                     }
