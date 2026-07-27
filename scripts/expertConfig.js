@@ -1,37 +1,37 @@
 // ═══════════════════════════════════════════════
 // 用户定制北极星 - 全球化文本
 // ═══════════════════════════════════════════════
-const customNorthStarTexts = {
+const customExpertexts = {
     // 四角图标 tooltip
     addNorthStar: {
-        'zh-CN': '添加北极星',
-        'en': 'Add North Star'
+        'zh-CN': '添加专家',
+        'en': 'Add Expert'
     },
     editNorthStar: {  // ← 新增
-        'zh-CN': '修改北极星',
-        'en': 'Edit North Star'
+        'zh-CN': '修改专家',
+        'en': 'Edit Expert'
     },
     deleteNorthStar: {
-        'zh-CN': '删除北极星',
-        'en': 'Delete North Star'
+        'zh-CN': '删除专家',
+        'en': 'Delete Expert'
     },
     importNorthStars: {
-        'zh-CN': '导入北极星',
-        'en': 'Import North Stars'
+        'zh-CN': '导入专家',
+        'en': 'Import Experts'
     },
     exportNorthStars: {
-        'zh-CN': '导出北极星',
-        'en': 'Export North Stars'
+        'zh-CN': '导出专家',
+        'en': 'Export Experts'
     },
     
     // 模态框文本
     modalTitleAdd: {
-        'zh-CN': '定制北极星',
-        'en': 'Customize North Star'
+        'zh-CN': '定制专家',
+        'en': 'Customize Expert'
     },
     modalTitleEdit: {
-        'zh-CN': '编辑北极星',
-        'en': 'Edit North Star'
+        'zh-CN': '编辑专家',
+        'en': 'Edit Expert'
     },
     fieldLabel: {
         'zh-CN': '领域',
@@ -39,8 +39,8 @@ const customNorthStarTexts = {
     },
     // 删除 fieldFixed，改为可编辑提示
     fieldPlaceholder: {
-        'zh-CN': '如：人工智能、量子计算',
-        'en': 'e.g. AI, Quantum Computing'
+        'zh-CN': '如：中医诊断学、神经学',
+        'en': 'e.g. TCM Diagnostics, Neurology'
     },
     nameLabel: {
         'zh-CN': '姓名',
@@ -57,16 +57,16 @@ const customNorthStarTexts = {
     
     // 提示信息
     deleteConfirm: {
-        'zh-CN': '确定要删除这位北极星吗？此操作不可恢复。',
-        'en': 'Are you sure you want to delete this North Star? This cannot be undone.'
+        'zh-CN': '确定要删除这位专家吗？此操作不可恢复。',
+        'en': 'Are you sure you want to delete this Expert? This cannot be undone.'
     },
     deleteBuiltIn: {
-        'zh-CN': '内置北极星不能删除',
-        'en': 'Built-in North Stars cannot be deleted'
+        'zh-CN': '内置专家不能删除',
+        'en': 'Built-in Experts cannot be deleted'
     },
     importConfirm: {
-        'zh-CN': '导入将覆盖现有定制北极星，确定继续？',
-        'en': 'Import will overwrite existing custom North Stars. Continue?'
+        'zh-CN': '导入将覆盖现有定制专家，确定继续？',
+        'en': 'Import will overwrite existing custom experts. Continue?'
     },
     importSuccess: {
         'zh-CN': '导入成功：新增 {added} 位，更新 {updated} 位',
@@ -77,16 +77,16 @@ const customNorthStarTexts = {
         'en': 'Import failed: {error}'
     },
     exportSuccess: {
-        'zh-CN': '已导出 {count} 位定制北极星',
-        'en': 'Exported {count} custom North Stars'
+        'zh-CN': '已导出 {count} 位定制专家',
+        'en': 'Exported {count} custom Experts'
     },
     exportEmpty: {
         'zh-CN': '没有可导出的定制北极星',
-        'en': 'No custom North Stars to export'
+        'en': 'No custom Experts to export'
     },
     saveSuccess: {
-        'zh-CN': '北极星已保存',
-        'en': 'North Star saved'
+        'zh-CN': '专家已保存',
+        'en': 'Expert saved'
     },
     nameRequired: {
         'zh-CN': '请填写姓名',
@@ -197,7 +197,7 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
         cornersHTML += `
         <button class="ns-corner-btn ns-corner-tl" 
                 data-action="delete"
-                title="${getFieldValue(customNorthStarTexts.deleteNorthStar, lang)}">
+                title="${getFieldValue(customExpertexts.deleteNorthStar, lang)}">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" 
                  stroke="currentColor" stroke-width="2">
                 <polyline points="3 6 5 6 21 6"/>
@@ -210,7 +210,7 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
     cornersHTML += `
         <button class="ns-corner-btn ns-corner-tr" 
                 data-action="${isCustom ? 'edit' : 'add'}"
-                title="${getFieldValue(isCustom ? customNorthStarTexts.editNorthStar : customNorthStarTexts.addNorthStar, lang)}">
+                title="${getFieldValue(isCustom ? customExpertexts.editNorthStar : customExpertexts.addNorthStar, lang)}">
             ${topRightIcon}
         </button>`;
     
@@ -218,7 +218,7 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
     cornersHTML += `
         <button class="ns-corner-btn ns-corner-bl" 
                 data-action="import"
-                title="${getFieldValue(customNorthStarTexts.importNorthStars, lang)}">
+                title="${getFieldValue(customExpertexts.importNorthStars, lang)}">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" 
                  stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -231,7 +231,7 @@ function renderCustomNorthStarControls(cardContainer, leader, category) {
     cornersHTML += `
         <button class="ns-corner-btn ns-corner-br" 
                 data-action="export"
-                title="${getFieldValue(customNorthStarTexts.exportNorthStars, lang)}">
+                title="${getFieldValue(customExpertexts.exportNorthStars, lang)}">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" 
                  stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -329,7 +329,7 @@ function showCustomNorthStarModal(category, editLeader = null) {
         <div class="starry-modal-overlay" onclick="if(event.target===this)closeCustomNSModal()"></div>
         <div class="starry-modal-content">
             <div class="starry-modal-header">
-                <h3>${getFieldValue(isEdit ? customNorthStarTexts.modalTitleEdit : customNorthStarTexts.modalTitleAdd, lang)}</h3>
+                <h3>${getFieldValue(isEdit ? customExpertexts.modalTitleEdit : customExpertexts.modalTitleAdd, lang)}</h3>
                 <button class="modal-close" onclick="closeCustomNSModal()">×</button>
             </div>
             
@@ -337,7 +337,7 @@ function showCustomNorthStarModal(category, editLeader = null) {
                 <!-- 1. 姓名（保持第一） -->
                 <div class="config-section">
                     <label class="config-label">
-                        ${getFieldValue(customNorthStarTexts.nameLabel, lang)}
+                        ${getFieldValue(customExpertexts.nameLabel, lang)}
                         <span class="lang-tag">${lang === 'zh-CN' ? '中文' : 'English'}</span>
                     </label>
                     <input type="text" class="config-input" id="nsNamePrimary" 
@@ -354,7 +354,7 @@ function showCustomNorthStarModal(category, editLeader = null) {
                 <!-- 2. 贡献 -->
                 <div class="config-section">
                     <label class="config-label">
-                        ${getFieldValue(customNorthStarTexts.contributionLabel, lang)}
+                        ${getFieldValue(customExpertexts.contributionLabel, lang)}
                         <span class="lang-tag">${lang === 'zh-CN' ? '中文' : 'English'}</span>
                     </label>
                     <textarea class="config-textarea" id="nsContributionPrimary" rows="3"
@@ -371,12 +371,12 @@ function showCustomNorthStarModal(category, editLeader = null) {
                 <!-- 3. 领域【修改：可编辑，移到贡献后面】 -->
                 <div class="config-section">
                     <label class="config-label">
-                        ${getFieldValue(customNorthStarTexts.fieldLabel, lang)}
+                        ${getFieldValue(customExpertexts.fieldLabel, lang)}
                         <span class="lang-tag">${lang === 'zh-CN' ? '中文' : 'English'}</span>
                     </label>
                     <input type="text" class="config-input" id="nsFieldPrimary" 
                            value="${currentField}" 
-                           placeholder="${getFieldValue(customNorthStarTexts.fieldPlaceholder, lang)}">
+                           placeholder="${getFieldValue(customExpertexts.fieldPlaceholder, lang)}">
                     
                     <label class="config-label secondary">
                         ${lang === 'zh-CN' ? '英文领域' : 'Chinese Field'}
@@ -390,7 +390,7 @@ function showCustomNorthStarModal(category, editLeader = null) {
                 <!-- 4. 评注 -->
                 <div class="config-section">
                     <label class="config-label">
-                        ${getFieldValue(customNorthStarTexts.remarksLabel, lang)}
+                        ${getFieldValue(customExpertexts.remarksLabel, lang)}
                         <span class="lang-tag">${lang === 'zh-CN' ? '中文' : 'English'}</span>
                     </label>
                     <input type="text" class="config-input" id="nsRemarksPrimary" 
@@ -452,7 +452,7 @@ function saveCustomNorthStar(editId = '') {
     
     // 校验
     if (!namePrimary) {
-        alert(getFieldValue(customNorthStarTexts.nameRequired, lang));
+        alert(getFieldValue(customExpertexts.nameRequired, lang));
         return;
     }
     
@@ -504,7 +504,7 @@ function saveCustomNorthStar(editId = '') {
     persistCustomNorthStars();
     
     closeCustomNSModal();
-    showToast(getFieldValue(customNorthStarTexts.saveSuccess, lang), 'success');
+    showToast(getFieldValue(customExpertexts.saveSuccess, lang), 'success');
     
     // 刷新显示
     if (window.currentSelectedCategory === category) {
@@ -526,11 +526,11 @@ function deleteCustomNorthStar(leader, category) {
     const lang = window.currentLang || 'zh-CN';
     
     if (!leader._isCustom) {
-        showToast(getFieldValue(customNorthStarTexts.deleteBuiltIn, lang), 'error');
+        showToast(getFieldValue(customExpertexts.deleteBuiltIn, lang), 'error');
         return;
     }
     
-    if (!confirm(getFieldValue(customNorthStarTexts.deleteConfirm, lang))) return;
+    if (!confirm(getFieldValue(customExpertexts.deleteConfirm, lang))) return;
     
     const list = window.customAllData[category];
     if (!list) return;
@@ -558,7 +558,7 @@ function exportCustomNorthStars() {
     const totalCount = Object.values(allCustom).reduce((sum, arr) => sum + arr.length, 0);
     
     if (totalCount === 0) {
-        showToast(getFieldValue(customNorthStarTexts.exportEmpty, lang), 'info');
+        showToast(getFieldValue(customExpertexts.exportEmpty, lang), 'info');
         return { success: false, error: 'empty' };
     }
     
@@ -584,7 +584,7 @@ function exportCustomNorthStars() {
         URL.revokeObjectURL(url);
     }, 100);
     
-    showToast(getFieldValue(customNorthStarTexts.exportSuccess, lang).replace('{count}', totalCount), 'success');
+    showToast(getFieldValue(customExpertexts.exportSuccess, lang).replace('{count}', totalCount), 'success');
     return { success: true, count: totalCount };
 }
 
@@ -599,7 +599,7 @@ async function importCustomNorthStars(file) {
     }
     
     // 确认覆盖
-    const confirmMsg = getFieldValue(customNorthStarTexts.importConfirm, lang);
+    const confirmMsg = getFieldValue(customExpertexts.importConfirm, lang);
     if (!confirm(confirmMsg)) {
         return { success: false, error: 'cancelled' };
     }
@@ -643,7 +643,7 @@ async function importCustomNorthStars(file) {
                 
                 persistCustomNorthStars();
                 
-                const msg = getFieldValue(customNorthStarTexts.importSuccess, lang)
+                const msg = getFieldValue(customExpertexts.importSuccess, lang)
                     .replace('{added}', added)
                     .replace('{updated}', updated);
                 showToast(msg, 'success');
@@ -656,7 +656,7 @@ async function importCustomNorthStars(file) {
                 resolve({ success: true, added, updated });
                 
             } catch (err) {
-                const msg = getFieldValue(customNorthStarTexts.importFailed, lang)
+                const msg = getFieldValue(customExpertexts.importFailed, lang)
                     .replace('{error}', err.message);
                 showToast(msg, 'error');
                 resolve({ success: false, error: err.message });
