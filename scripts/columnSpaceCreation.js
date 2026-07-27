@@ -43,7 +43,7 @@ const iSpaceTexts = {
     
     // 表单字段
     localPath: { 'zh-CN': '本地绝对路径', 'en': 'Local Absolute Path' },
-    localPathPlaceholder: { 'zh-CN': '例如: D:/NorthStar/iSpace', 'en': 'e.g. D:/NorthStar/iSpace' },
+    localPathPlaceholder: { 'zh-CN': '例如: D:/Angel/iSpace', 'en': 'e.g. D:/Angel/iSpace' },
     
     repo: { 'zh-CN': '仓库地址', 'en': 'Repository' },
     repoPlaceholder: { 'zh-CN': '例如: username/private-repo', 'en': 'e.g. username/private-repo' },
@@ -133,7 +133,7 @@ window._isImageDragging = false;  // 是否正在拖拽（防止触发 click）
 // ═══════════════════════════════════════════════════════════════
 
 async function fetchColumnSpaceFiles(fileName) {
-    const basePath = '/StarryColumn/';
+    const basePath = '/AngelColumn/';
 
     try {
         const indexResponse = await fetch(`${basePath}index.json?t=${Date.now()}`, {
@@ -180,7 +180,7 @@ function filterAndSortFiles(files, fileName) {
         if (match8 && validateDate(match8[1], 8)) {
             validFiles.push({
                 name: name,
-                path: `/StarryColumn/${name}`,
+                path: `/AngelColumn/${name}`,
                 rawDate: match8[1],      // 原始日期，如 20260621
                 sortKey: match8[1]        // 8位可直接排序
             });
@@ -192,7 +192,7 @@ function filterAndSortFiles(files, fileName) {
         if (match6 && validateDate(match6[1], 6)) {
             validFiles.push({
                 name: name,
-                path: `/StarryColumn/${name}`,
+                path: `/AngelColumn/${name}`,
                 rawDate: match6[1],      // 原始日期，如 260621
                 sortKey: '20' + match6[1] // 转为8位用于排序：20260621
             });
@@ -463,7 +463,7 @@ async function openUnifiedSpace(card, mode) {
 
     if (mode === 'column') {
         if (!checkSystemLogin(lang)) return;
-        source = createSpaceSource(SpaceType.COLUMN, { basePath: '/StarryColumn/' });
+        source = createSpaceSource(SpaceType.COLUMN, { basePath: '/AngelColumn/' });
     }
     else if (mode === 'ispace') {
         if (!checkSystemLogin(lang)) return;
