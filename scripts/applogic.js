@@ -1039,6 +1039,9 @@ window.addEventListener('click', function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. 加载定制数据
+    initCustomNorthStars();
+    
     // 1. 【优先】初始化语言设置
     const preferredLang = localStorage.getItem('preferredLang');
     const browserLang = navigator.language || navigator.userLanguage;
