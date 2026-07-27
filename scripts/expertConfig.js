@@ -93,17 +93,6 @@ const customExpertexts = {
     }
 };
 
-// ═══════════════════════════════════════════════
-// 类别映射表（外部键名 → 内部键名）
-// ═══════════════════════════════════════════════
-const CATEGORY_TO_TAB_ID = {
-    'TCM': 'TCM',
-    'WM': 'WM',
-    'MO': 'MultiOmics',
-    'NL': 'NeuralLink',
-    'AIDis': 'AIDrugDiscovery',
-    'AIHC': 'AIHealthcare'
-};
 
 // 反向映射表（内部键名 → 外部键名），运行时构建
 const TAB_ID_TO_CATEGORY = Object.fromEntries(
