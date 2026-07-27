@@ -407,10 +407,10 @@ function showCustomNorthStarModal(category, editLeader = null) {
             
             <div class="starry-modal-footer">
                 <button class="btn-secondary" onclick="closeCustomNSModal()">
-                    ${getFieldValue(expertColumnTexts.cancel, lang)}
+                    ${getFieldValue(angelColumnTexts.cancel, lang)}
                 </button>
                 <button class="btn-primary" onclick="saveCustomNorthStar('${editLeader?.id || ''}')">
-                    ${getFieldValue(expertColumnTexts.save, lang)}
+                    ${getFieldValue(angelColumnTexts.save, lang)}
                 </button>
             </div>
         </div>
@@ -543,7 +543,7 @@ function deleteCustomNorthStar(leader, category) {
         }
         persistCustomNorthStars();
         refreshCategoryDisplay(category);
-        showToast(getFieldValue(expertColumnTexts.deleteCardSuccess, lang), 'success');
+        showToast(getFieldValue(angelColumnTexts.deleteCardSuccess, lang), 'success');
     }
 }
 
