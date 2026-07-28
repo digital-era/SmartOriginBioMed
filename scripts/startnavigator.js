@@ -3,16 +3,6 @@
 // 依赖：复用 newUI.js 已定义的 getFieldValue / getCategoryName
 // ═══════════════════════════════════════════════
 
-// 在文件顶部已有的映射表基础上，添加反向映射
-const TAB_ID_TO_CATEGORY = {
-  'TCM': 'TCM\r',           // 注意：实际键可能带 \r
-  'WM': 'WM\r',
-  'MO': 'MultiOmics\r',
-  'NL': 'NeuralLink\r',
-  'AIDis': 'AIDrugDiscovery\r',
-  'AIHC': 'AIHealthcare\r'
-};
-
 // 或者更健壮的方式：运行时查找
 function getCategoryKey(tabId) {
     // 先直接尝试
