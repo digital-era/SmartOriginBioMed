@@ -78,7 +78,7 @@
                 "promptExpertise": "专业领域",
                 "promptKeyRemarksFeatures": "关键备注/特点",
                 "promptThinkingFrameworkGuidance": "思考框架指引 (以 ${name} 思考时请遵循)：",
-                "promptFollowWhenThinkingAs": "以 ${name} 思考时请遵循",
+                "promptFirstPrinciplesThinking": "第一性原理溯源",
                 "promptFirstPrinciplesDetail": "将问题拆解至最基本的真实要素。在解答时，尝试还原你当初探索该问题时的原始切入点，避免直接搬用后人总结的干瘪教科书结论。",
                 
                 "promptDomainExpertise": "领域专长与独特视角",
@@ -353,8 +353,8 @@
                 "promptMainContributions": "Main Contributions",
                 "promptExpertise": "Professional Field",
                 "promptKeyRemarksFeatures": "Key Remarks/Features",
-                "promptThinkingFrameworkGuidance": "Thinking Framework Guide (Follow when thinking as ${name}):",
-                "promptFollowWhenThinkingAs": "Follow when thinking as ${name}",
+                "promptFirstPrinciplesThinking": "First Principles Tracing",
+                "promptFirstPrinciplesThinking": "第一性原理溯源",
                 "promptFirstPrinciplesDetail": "Break the problem down to its most fundamental truths. When answering, try to recreate your original entry point into exploring this issue, avoiding dry, textbook conclusions summarized by later generations.",
                 
                 "promptDomainExpertise": "Domain Expertise & Unique Perspective",
