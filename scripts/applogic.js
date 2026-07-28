@@ -424,7 +424,7 @@ function generateBasePrompt() {
     const question = document.getElementById('userQuestion').value.trim();
     const lang = currentLang;
 
-    if (!currentSelectedLeader) {
+    if (!window.currentSelectedLeader) {
         alert(translations[lang].alertSelectLeaderFirst);
         return "";
     }
@@ -433,12 +433,19 @@ function generateBasePrompt() {
         return "";
     }
 
-    const leader = currentSelectedLeader;
+    const leader = window.currentSelectedLeader;
 
-    // 【增强】统一转换 name 为字符串
+    // 【新增】统一转换 name 为字符串
     const leaderName = getFieldValue(leader.name, lang) || getFieldValue(leader.name, 'zh-CN') || '';
 
-    // 【增强】兼容普通领袖（多语言对象）和星空专栏虚拟领袖（_raw对象）
+    // ═══════════════════════════════════════════════════
+    // 【修复】兼容普通领袖（多语言对象）和星空专栏虚拟领袖（_raw对象）
+    // 逻辑：
+    // 1. 优先使用 _raw 对象（星空专栏有，普通领袖无）
+    // 2. 回退到 leader.xxx（普通领袖是多语言对象，星空专栏是字符串）
+    // 3. getFieldValue 统一处理：字符串直接返回，对象按语言解析
+    // ═══════════════════════════════════════════════════
+
     const contributionObj = leader._rawContribution || leader.contribution;
     const fieldObj = leader._rawField || leader.field;
     const remarksObj = leader._rawRemarks || leader.remarks;
@@ -462,16 +469,22 @@ function generateBasePrompt() {
 
     const replyInstructionKey = lang === 'zh-CN' ? 'promptReplyInChinese' : 'promptReplyInEnglish';
 
-    // 【增强】判断是否为星空专栏卡片
-    const isStarryCard = leader._isStarryCard === true;
-    
-    // 星空专栏使用简化模板（6条），普通领袖使用完整模板（8条）
+    // ═══════════════════════════════════════════════════
+    // 【判断】是否为星空专栏卡片（通过全局数组匹配名称）
+    // ═══════════════════════════════════════════════════
+    const isStarryCard = starryColumnCards.some(card => 
+        card.name["zh-CN"] === leaderName || card.name["en"] === leaderName
+    );
+
+    // ═══════════════════════════════════════════════════
+    // 【构建】思考框架（根据类型选择6条或8条）
+    // ═══════════════════════════════════════════════════
     const thinkingFrameworks = isStarryCard ? `
 1.  **${translations[lang].promptFirstPrinciplesThinking}**: ${translations[lang].promptFirstPrinciplesDetail}
 2.  **${translations[lang].promptDomainExpertise}**: ${translations[lang].promptDomainExpertiseDetail1.replace('${field}', leaderField)} ${translations[lang].promptDomainExpertiseDetail2}
 3.  **${translations[lang].promptCorePhilosophyDrivingForce}**: ${translations[lang].promptCorePhilosophyDetail1.replace('${name}', leaderName).replace('${remarksSection}', remarksSection)}
 4.  **${translations[lang].promptProblemAnalysis}**: ${translations[lang].promptProblemAnalysisDetail}
-5.  **${translations[lang].promptSolutionInsight}**: ${translations[lang].promptSolutionInsightDetail1.replace('${name}', leaderName)} ${translations[lang].promptSolutionInsightDetail2}
+5.  **${translations[lang].promptSolutionInsight}**: ${translations[lang].promptSolutionInsightDetail1.replace('${name}', leaderName)} ${translations[lang].promptSolutionInsightDetail2} ${translations[lang].promptSolutionInsightDetail3}
 6.  **${translations[lang].promptLanguageStyle}**: ${translations[lang].promptLanguageStyleDetail1.replace('${name}', leaderName)} ${translations[lang].promptLanguageStyleDetail2}
 ` : `
 1.  **${translations[lang].promptFirstPrinciplesThinking}**: ${translations[lang].promptFirstPrinciplesDetail}
@@ -484,6 +497,9 @@ function generateBasePrompt() {
 8.  **${translations[lang].promptLanguageStyle}**: ${translations[lang].promptLanguageStyleDetail1.replace('${name}', leaderName)} ${translations[lang].promptLanguageStyleDetail2}
 `;
 
+    // ═══════════════════════════════════════════════════
+    // 【组装】最终 Prompt（公共部分只写一次）
+    // ═══════════════════════════════════════════════════
     return `
 ${translations[lang].promptBackgroundSetting}
 ${translations[lang].promptYouAre} ${leaderName}. ${translations[lang].promptBasedOnPublicContributions}
