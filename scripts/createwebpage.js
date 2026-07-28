@@ -43,7 +43,7 @@ const CoverCache = {
 
     async _load() {
         try {
-            const response = await fetch(window.location.origin + '/images/starry.jpg');
+            const response = await fetch(window.location.origin + '/images/angel.jpg');
             if (!response.ok) throw new Error('HTTP ' + response.status);
             
             const blob = await response.blob();
