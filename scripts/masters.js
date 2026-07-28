@@ -282,6 +282,36 @@
             "zh-CN": "山东中医药大学教授，临床与教学双优，影响深远。",
             "en": "Professor at Shandong University of TCM; excels in both clinical practice and teaching with profound influence."
         }
+    },
+    {
+        "id": "interstellar_navigator",   "name": "Interstellar Navigator (星际领航员)",
+        "contribution": {
+        "zh-CN": "作为‘智源生医’领航员，针对用户问题，提供三位领域互补的专家建议。",
+        "en": "As navigator for SmartOrigin BioMed,  provide recommendations for three complementary experts based on user questions."
+        },
+        "field": {
+        "zh-CN": "星际领航",
+        "en": "Stellar Navigation Guide"
+        },
+        "remarks": {
+        "zh-CN": "追求专家之间的跨学科洞见和化学反应。",
+        "en": "Pursuing interdisciplinary insights and chemical reactions among the experts."
+        }
+    },
+    {
+        "id": "intrastellar_navigator",  "name": "Intra-stellar Navigator (星内领航员)",
+        "contribution": {
+            "zh-CN": "作为用户问题所在具体领域的领航员，引导用户将AI化作‘认知棱镜’。通过剥离碎片化信息，带领用户快速建立该领域的底层认知地图。",
+            "en": "As a navigator in specific fields for user's question, guides users to transform AI into a 'cognitive prism'. By stripping away fragmented information, it leads users rapidly building a foundational cognitive map of the field."
+        },
+        "field": {
+            "zh-CN": "认知加速与深度重构",
+            "en": "Cognitive Acceleration and Deep Reconstruction"
+        },
+        "remarks": {
+            "zh-CN": "践行‘提问+建构’的学习终极形态。",
+            "en": "Practices the ultimate form of learning: 'questioning + construction'. "
+        }
     }
 ];
 
@@ -460,6 +490,36 @@ const WMMasters = [
         "remarks": {
         "zh-CN": "纽约大学医学院教授，著《治愈背痛》等著作，帮助数千人。",
         "en": "Professor at NYU School of Medicine, authored 'Healing Back Pain' and other works, aiding thousands."
+        }
+    },
+    {
+        "id": "interstellar_navigator",   "name": "Interstellar Navigator (星际领航员)",
+        "contribution": {
+        "zh-CN": "作为‘智源生医’领航员，针对用户问题，提供三位领域互补的专家建议。",
+        "en": "As navigator for SmartOrigin BioMed,  provide recommendations for three complementary experts based on user questions."
+        },
+        "field": {
+        "zh-CN": "星际领航",
+        "en": "Stellar Navigation Guide"
+        },
+        "remarks": {
+        "zh-CN": "追求专家之间的跨学科洞见和化学反应。",
+        "en": "Pursuing interdisciplinary insights and chemical reactions among the experts."
+        }
+    },
+    {
+        "id": "intrastellar_navigator",  "name": "Intra-stellar Navigator (星内领航员)",
+        "contribution": {
+            "zh-CN": "作为用户问题所在具体领域的领航员，引导用户将AI化作‘认知棱镜’。通过剥离碎片化信息，带领用户快速建立该领域的底层认知地图。",
+            "en": "As a navigator in specific fields for user's question, guides users to transform AI into a 'cognitive prism'. By stripping away fragmented information, it leads users rapidly building a foundational cognitive map of the field."
+        },
+        "field": {
+            "zh-CN": "认知加速与深度重构",
+            "en": "Cognitive Acceleration and Deep Reconstruction"
+        },
+        "remarks": {
+            "zh-CN": "践行‘提问+建构’的学习终极形态。",
+            "en": "Practices the ultimate form of learning: 'questioning + construction'. "
         }
     }
 ];
@@ -656,7 +716,37 @@ const MultiOmicsMasters = [
         "zh-CN": "The Longevity Initiative总监与联合创始人，《老而不衰的科学》作者，柏林基地科学作家与活动家。",
         "en": "Director and Co-Founder of The Longevity Initiative,author of Ageless, Berlin-based science writer and campaigner."
         }
-    }    
+    },
+    {
+        "id": "interstellar_navigator",   "name": "Interstellar Navigator (星际领航员)",
+        "contribution": {
+        "zh-CN": "作为‘智源生医’领航员，针对用户问题，提供三位领域互补的专家建议。",
+        "en": "As navigator for SmartOrigin BioMed,  provide recommendations for three complementary experts based on user questions."
+        },
+        "field": {
+        "zh-CN": "星际领航",
+        "en": "Stellar Navigation Guide"
+        },
+        "remarks": {
+        "zh-CN": "追求专家之间的跨学科洞见和化学反应。",
+        "en": "Pursuing interdisciplinary insights and chemical reactions among the experts."
+        }
+    },
+    {
+        "id": "intrastellar_navigator",  "name": "Intra-stellar Navigator (星内领航员)",
+        "contribution": {
+            "zh-CN": "作为用户问题所在具体领域的领航员，引导用户将AI化作‘认知棱镜’。通过剥离碎片化信息，带领用户快速建立该领域的底层认知地图。",
+            "en": "As a navigator in specific fields for user's question, guides users to transform AI into a 'cognitive prism'. By stripping away fragmented information, it leads users rapidly building a foundational cognitive map of the field."
+        },
+        "field": {
+            "zh-CN": "认知加速与深度重构",
+            "en": "Cognitive Acceleration and Deep Reconstruction"
+        },
+        "remarks": {
+            "zh-CN": "践行‘提问+建构’的学习终极形态。",
+            "en": "Practices the ultimate form of learning: 'questioning + construction'. "
+        }
+    }
 ];
 
 const NeuralLinkMasters = [
@@ -834,6 +924,36 @@ const NeuralLinkMasters = [
         remarks: {
             "zh-CN": "2025年实现100词/分钟自然语音输出，接近正常对话速度。",
             "en": "Achieved 100 words/minute natural speech output in 2025, approaching normal conversation speed."
+        }
+    },
+    {
+        "id": "interstellar_navigator",   "name": "Interstellar Navigator (星际领航员)",
+        "contribution": {
+        "zh-CN": "作为‘智源生医’领航员，针对用户问题，提供三位领域互补的专家建议。",
+        "en": "As navigator for SmartOrigin BioMed,  provide recommendations for three complementary experts based on user questions."
+        },
+        "field": {
+        "zh-CN": "星际领航",
+        "en": "Stellar Navigation Guide"
+        },
+        "remarks": {
+        "zh-CN": "追求专家之间的跨学科洞见和化学反应。",
+        "en": "Pursuing interdisciplinary insights and chemical reactions among the experts."
+        }
+    },
+    {
+        "id": "intrastellar_navigator",  "name": "Intra-stellar Navigator (星内领航员)",
+        "contribution": {
+            "zh-CN": "作为用户问题所在具体领域的领航员，引导用户将AI化作‘认知棱镜’。通过剥离碎片化信息，带领用户快速建立该领域的底层认知地图。",
+            "en": "As a navigator in specific fields for user's question, guides users to transform AI into a 'cognitive prism'. By stripping away fragmented information, it leads users rapidly building a foundational cognitive map of the field."
+        },
+        "field": {
+            "zh-CN": "认知加速与深度重构",
+            "en": "Cognitive Acceleration and Deep Reconstruction"
+        },
+        "remarks": {
+            "zh-CN": "践行‘提问+建构’的学习终极形态。",
+            "en": "Practices the ultimate form of learning: 'questioning + construction'. "
         }
     }
 ];
@@ -1093,6 +1213,36 @@ const AIDrugDiscoveryMasters = [
         remarks: {
             "zh-CN": "Nature Medicine社论作者，2025年临床里程碑验证AI发现药物安全性和疗效。",
             "en": "Nature Medicine editorial author; 2025 clinical milestone validating AI-discovered drug safety and efficacy."
+        }
+    },
+    {
+        "id": "interstellar_navigator",   "name": "Interstellar Navigator (星际领航员)",
+        "contribution": {
+        "zh-CN": "作为‘智源生医’领航员，针对用户问题，提供三位领域互补的专家建议。",
+        "en": "As navigator for SmartOrigin BioMed,  provide recommendations for three complementary experts based on user questions."
+        },
+        "field": {
+        "zh-CN": "星际领航",
+        "en": "Stellar Navigation Guide"
+        },
+        "remarks": {
+        "zh-CN": "追求专家之间的跨学科洞见和化学反应。",
+        "en": "Pursuing interdisciplinary insights and chemical reactions among the experts."
+        }
+    },
+    {
+        "id": "intrastellar_navigator",  "name": "Intra-stellar Navigator (星内领航员)",
+        "contribution": {
+            "zh-CN": "作为用户问题所在具体领域的领航员，引导用户将AI化作‘认知棱镜’。通过剥离碎片化信息，带领用户快速建立该领域的底层认知地图。",
+            "en": "As a navigator in specific fields for user's question, guides users to transform AI into a 'cognitive prism'. By stripping away fragmented information, it leads users rapidly building a foundational cognitive map of the field."
+        },
+        "field": {
+            "zh-CN": "认知加速与深度重构",
+            "en": "Cognitive Acceleration and Deep Reconstruction"
+        },
+        "remarks": {
+            "zh-CN": "践行‘提问+建构’的学习终极形态。",
+            "en": "Practices the ultimate form of learning: 'questioning + construction'. "
         }
     }
 ];
@@ -1400,6 +1550,36 @@ const AIHealthcareMasters = [
         remarks: {
             "zh-CN": "试点项目覆盖10万用户，跌倒事件下降40%。",
             "en": "Pilot covered 100,000 users, reducing fall incidents by 40%."
+        }
+    },
+    {
+        "id": "interstellar_navigator",   "name": "Interstellar Navigator (星际领航员)",
+        "contribution": {
+        "zh-CN": "作为‘智源生医’领航员，针对用户问题，提供三位领域互补的专家建议。",
+        "en": "As navigator for SmartOrigin BioMed,  provide recommendations for three complementary experts based on user questions."
+        },
+        "field": {
+        "zh-CN": "星际领航",
+        "en": "Stellar Navigation Guide"
+        },
+        "remarks": {
+        "zh-CN": "追求专家之间的跨学科洞见和化学反应。",
+        "en": "Pursuing interdisciplinary insights and chemical reactions among the experts."
+        }
+    },
+    {
+        "id": "intrastellar_navigator",  "name": "Intra-stellar Navigator (星内领航员)",
+        "contribution": {
+            "zh-CN": "作为用户问题所在具体领域的领航员，引导用户将AI化作‘认知棱镜’。通过剥离碎片化信息，带领用户快速建立该领域的底层认知地图。",
+            "en": "As a navigator in specific fields for user's question, guides users to transform AI into a 'cognitive prism'. By stripping away fragmented information, it leads users rapidly building a foundational cognitive map of the field."
+        },
+        "field": {
+            "zh-CN": "认知加速与深度重构",
+            "en": "Cognitive Acceleration and Deep Reconstruction"
+        },
+        "remarks": {
+            "zh-CN": "践行‘提问+建构’的学习终极形态。",
+            "en": "Practices the ultimate form of learning: 'questioning + construction'. "
         }
     }
 ];
