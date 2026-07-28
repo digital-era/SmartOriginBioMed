@@ -2,9 +2,9 @@
 const shareTextKeys = {
     'noAIContent': { 'zh-CN': '只能生成AI回答节点的页面', 'en-US': 'Can only generate pages for AI response nodes' },
     'msgNotFound': { 'zh-CN': '消息不存在', 'en-US': 'Message not found' },
-    'pageTitleSuffix': { 'zh-CN': '· 对话北极星', 'en-US': '· Talk with North Stars' },
-    'defaultTitle': { 'zh-CN': '星空夜话', 'en-US': 'Starry Night' },
-    'exploreBoundary': { 'zh-CN': '书写思想旋律，点燃潜能火花', 'en-US': 'Compose the melody of thought, ignite the spark of potentiality.' },
+    'pageTitleSuffix': { 'zh-CN': '· 智源生医', 'en-US': '· SmartOrigin BioMed' },
+    'defaultTitle': { 'zh-CN': '大道修真', 'en-US': 'Cultivating the Great Dao' },
+    'exploreBoundary': { 'zh-CN': '探索健康旋律，解决人间疾苦', 'en-US': 'Explore Health melody, Relieve Human Suffering.' },
     'pageGenerated': { 'zh-CN': '页面已生成', 'en-US': 'Page generated' },
     'coverTooLarge': { 'zh-CN': '图片过大，请选择5MB以内', 'en-US': 'Image too large, please choose under 5MB' },
     'coverImported': { 'zh-CN': '封面已导入', 'en-US': 'Cover imported' },
