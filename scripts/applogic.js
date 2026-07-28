@@ -769,14 +769,14 @@ async function getAIResponse() {
     
         // 2. 准备专家的元数据 (防止当前没选人报错)
         const leaderMeta = currentSelectedLeader ? {
-            name: getFieldValue(currentSelectedLeader.name, currentLang) 
-                || getFieldValue(currentSelectedLeader.name, 'zh-CN') 
+            name: getFieldValue(currentSelectedLeader._rawName || currentSelectedLeader.name, currentLang) 
+                || getFieldValue(currentSelectedLeader._rawName || currentSelectedLeader.name, 'zh-CN') 
                 || 'Expert',
-            field: getFieldValue(currentSelectedLeader.field, currentLang) 
-                || getFieldValue(currentSelectedLeader.field, 'zh-CN') 
+            field: getFieldValue(currentSelectedLeader._rawField || currentSelectedLeader.field, currentLang) 
+                || getFieldValue(currentSelectedLeader._rawField || currentSelectedLeader.field, 'zh-CN') 
                 || 'TCM Diagnostics',
-            contribution: getFieldValue(currentSelectedLeader.contribution, currentLang) 
-                || getFieldValue(currentSelectedLeader.contribution, 'zh-CN') 
+            contribution: getFieldValue(currentSelectedLeader._rawContribution || currentSelectedLeader.contribution, currentLang) 
+                || getFieldValue(currentSelectedLeader._rawContribution || currentSelectedLeader.contribution, 'zh-CN') 
                 || ''
         } : { name: 'Expert', field: 'TCM Diagnostics', contribution: '' };
     
