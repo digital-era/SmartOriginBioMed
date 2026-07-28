@@ -299,11 +299,11 @@ function renderStarryColumnLayout() {
     layout.innerHTML = `
         <div class="layout-left" id="starryLeft">
             <div class="starry-cover-wrapper">
-		        <img src="images/starry.jpg"
+		        <img src="images/angel.jpg"
                      alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">	
-                <img src="images/starry.jpg"
+                <img src="images/angel.jpg"
                      alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">
@@ -778,11 +778,11 @@ function renderStarryColumnLayoutForLeader(hostCategory) {
     layout.innerHTML = `
         <div class="layout-left" id="starryLeft">
             <div class="starry-cover-wrapper">
-				<img src="images/starry.jpg"
+				<img src="images/angel.jpg"
                      alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">	
-                <img src="images/starry.jpg"
+                <img src="images/angel.jpg"
                      alt="${getFieldValue(angelColumnTexts.title, lang)}"
                      class="starry-cover"
                      id="starryCover">
