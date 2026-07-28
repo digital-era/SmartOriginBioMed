@@ -843,12 +843,12 @@ const categories = ['TCM','WM','MO','NL','AIDis','AIHC'];
 
 // 图片路径映射 - key 就是原始 category 值
 const categoryImages = {
-  'TCM': 'images/ambient-ai.jpg',
-  'WM': 'images/ambient-quantum.jpg',
-  'MO': 'images/ambient-universe.jpg',
-  'NL': 'images/ambient-humanities.jpg',
-  'AIDis': 'images/ambient-art.jpg',
-  'AIHC': 'images/ambient-finance.jpg'
+  'TCM': 'images/ambient-TCM.jpg',
+  'WM': 'images/ambient-WM.jpg',
+  'MO': 'images/ambient-MO.jpg',
+  'NL': 'images/ambient-NL.jpg',
+  'AIDis': 'images/ambient-AIDis.jpg',
+  'AIHC': 'images/ambient-AIHC.jpg'
 };
 
 const categoryNames = {
