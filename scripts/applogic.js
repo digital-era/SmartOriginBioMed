@@ -518,7 +518,6 @@ function togglePromptCollapse() {
 }
 
 
-
 async function getAIResponse() {
     const promptText = document.getElementById('generatedPromptText').value.trim();
 
@@ -529,7 +528,7 @@ async function getAIResponse() {
 
     const apiBaseUrl = apiEndpointSelect.value;
     const apiKey = apiKeyInput.value;
-     const modelWithSuffix = apiModelSelect.value; // 这是带后缀的名字，如 gemini-1.5-flash@proxy
+    const modelWithSuffix = apiModelSelect.value; // 这是带后缀的名字，如 gemini-1.5-flash@proxy
     // 【新增这一行】：去掉 @ 符号及其后面的内容，恢复成 Google 认识的真实名称
     const model = modelWithSuffix.split('@')[0]; 
 
@@ -539,7 +538,7 @@ async function getAIResponse() {
     const loadingIndicator = document.getElementById('loadingIndicator');
 
     if (!apiBaseUrl || !apiKey || !model) {
-        alert("请确保 API 设置完整（接入点、Key、模型）");
+        alert(translations[currentLang].alertApiSettingsIncomplete);
         return;
     }
 
@@ -554,6 +553,45 @@ async function getAIResponse() {
     //const isQwenModel = apiBaseUrl.includes("dashscope.aliyuncs.com") || 
     //                model.startsWith("qwen-");
  
+    // ═══════════════════════════════════════════════
+    // 【星语上下文注入】与 Prompt 完全解耦
+    // ═══════════════════════════════════════════════
+    const ctxMessages = (window.starContext && window.starContext.getAll().length > 0)
+      ? window.starContext.getContextMessages()
+      : [];
+    const ctxSystemContent = ctxMessages.length > 0 ? ctxMessages[0].content : '';
+
+    // ═══════════════════════════════════════════════
+    // 【星际领航员模式】判断
+    // ═══════════════════════════════════════════════
+    const isNavigatorMode = window.currentSelectedLeader?.id === 'interstellar_navigator' 
+                         || window.currentSelectedLeader?.id === 'intrastellar_navigator';
+
+    // ═══════════════════════════════════════════════
+    // 【星空专栏融合模式】判断 —— 新增
+    // ═══════════════════════════════════════════════
+    const isStarryFusionMode = window.currentSelectedLeader?._isStarryCard === true 
+                            && window.currentSelectedLeader?._cardType === 'fusion';
+
+    // ═══════════════════════════════════════════════
+    // 【系统指令合并】上下文 + 领航员指令 + 融合体指令（可叠加）
+    // ═══════════════════════════════════════════════
+    let finalSystemContent = '';
+    if (ctxSystemContent) finalSystemContent += ctxSystemContent + '\n\n';
+    
+    if (isNavigatorMode) {
+        if (window.currentSelectedLeader?.id === 'interstellar_navigator') {
+            finalSystemContent += buildNavigatorSystemPrompt(currentLang);
+        } else {
+            finalSystemContent += buildIntraStellarSystemPrompt(window.currentSelectedLeaderCategory, currentLang);
+        }
+    } else if (isStarryFusionMode) {
+        // 直接传 virtualLeader，函数内部兼容处理
+        finalSystemContent += buildFusionSystemPrompt(window.currentSelectedLeader, currentLang);
+    }
+    
+    finalSystemContent = finalSystemContent.trim();
+
     // 2. 构造 URL
     let fullApiUrl;
     if (isGeminiModel) {
@@ -585,17 +623,44 @@ async function getAIResponse() {
     // 3. 构造 Body
     let requestBody;
     if (isGeminiModel) {
+        const contents = [];
+        
+        if (isNavigatorMode) {
+            // 领航员模式：合并 system 内容 + 用户原始问题
+            const userQuestion = document.getElementById('userQuestion').value.trim();
+            const geminiUserContent = finalSystemContent 
+                ? finalSystemContent + "\n\n用户问题：" + userQuestion
+                : userQuestion;
+            contents.push({ role: "user", parts: [{ text: geminiUserContent }] });
+        } else {
+            // 普通模式：原有逻辑
+            if (finalSystemContent) {
+                contents.push({ role: "user", parts: [{ text: finalSystemContent }] });
+            }
+            contents.push({ role: "user", parts: [{ text: promptText }] });
+        }
+        
         requestBody = {
-            contents: [{ role: "user", parts: [{ text: promptText }] }],
+            contents: contents,
             generationConfig: { temperature: 0.7 }
         };
-    }  else if (isQwenModel) {
-        // Qwen 请求体（支持插件）
+    } else if (isQwenModel) {
+        const messages = [];
+        
+        if (finalSystemContent) {
+            messages.push({ role: "system", content: finalSystemContent });
+        }
+        
+        messages.push({ 
+            role: "user", 
+            content: isNavigatorMode 
+                ? document.getElementById('userQuestion').value.trim() 
+                : promptText 
+        });
+        
         requestBody = {
             model: model,
-            input: {
-                messages: [{ role: "user", content: promptText }]
-            },
+            input: { messages: messages },
             parameters: {
                 temperature: 0.7,
                 // 【关键】启用代搜索插件
@@ -606,11 +671,25 @@ async function getAIResponse() {
                 // 加上这一行！关键！
                 function_call: "auto"
             }
-        };    
-   } else {
+        };
+    } else {
+        // OpenAI 兼容格式
+        const messages = [];
+        
+        if (finalSystemContent) {
+            messages.push({ role: "system", content: finalSystemContent });
+        }
+        
+        messages.push({ 
+            role: "user", 
+            content: isNavigatorMode 
+                ? document.getElementById('userQuestion').value.trim() 
+                : promptText 
+        });
+        
         requestBody = {
             model: model,
-            messages: [{ role: "user", content: promptText }],
+            messages: messages,
             temperature: 0.7,
         };
     }
@@ -643,7 +722,7 @@ async function getAIResponse() {
             } else {
                 throw new Error("Gemini 返回数据结构异常");
             }
-         } else if (isQwenModel) {
+        } else if (isQwenModel) {
             // Qwen 响应解析
             if (data.output && data.output.text) {
                 rawContent = data.output.text.trim();
@@ -668,7 +747,7 @@ async function getAIResponse() {
         // 建议：如果主界面也想好看，也可以变成 aiResponseTextElement.innerHTML = marked.parse(rawContent);    
         aiResponseTextElement.innerHTML = rawContent.replace(/\n/g, "<br>");
         
-         // --- [新增]画布保存到对话历史 ---
+        // --- [新增]画布保存到对话历史 ---
         // 1. 获取纯净的用户问题 (不带Prompt指令)
         const rawUserQuestion = document.getElementById('userQuestion').value.trim();
     
@@ -717,6 +796,7 @@ async function getAIResponse() {
         getAIResponseButton.disabled = false;
     }
 }
+
 
 async function copyContentToClipboard() {
     const aiResponseArea = document.getElementById('ai-response-area');
