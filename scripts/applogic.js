@@ -768,10 +768,16 @@ async function getAIResponse() {
         const rawUserQuestion = document.getElementById('userQuestion').value.trim();
     
         // 2. 准备专家的元数据 (防止当前没选人报错)
-        const leaderMeta = window.currentSelectedLeader ? {
-            name: getFieldValue(window.currentSelectedLeader.name, currentLang),
-            field: getFieldValue(window.currentSelectedLeader.field, currentLang),
-            contribution: getFieldValue(window.currentSelectedLeader.contribution, currentLang)
+        const leaderMeta = currentSelectedLeader ? {
+            name: getFieldValue(currentSelectedLeader.name, currentLang) 
+                || getFieldValue(currentSelectedLeader.name, 'zh-CN') 
+                || 'Expert',
+            field: getFieldValue(currentSelectedLeader.field, currentLang) 
+                || getFieldValue(currentSelectedLeader.field, 'zh-CN') 
+                || 'TCM Diagnostics',
+            contribution: getFieldValue(currentSelectedLeader.contribution, currentLang) 
+                || getFieldValue(currentSelectedLeader.contribution, 'zh-CN') 
+                || ''
         } : { name: 'Expert', field: 'TCM Diagnostics', contribution: '' };
     
         // 3. 存入历史 - 用户提问
