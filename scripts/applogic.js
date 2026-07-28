@@ -472,14 +472,14 @@ function generateBasePrompt() {
     // ═══════════════════════════════════════════════════
     // 【判断】是否为星空专栏卡片（通过全局数组匹配名称）
     // ═══════════════════════════════════════════════════
-    const isStarryCard = starryColumnCards.some(card => 
+    const isAngelCard = angelColumnCards.some(card => 
         card.name["zh-CN"] === leaderName || card.name["en"] === leaderName
     );
 
     // ═══════════════════════════════════════════════════
     // 【构建】思考框架（根据类型选择6条或8条）
     // ═══════════════════════════════════════════════════
-    const thinkingFrameworks = isStarryCard ? `
+    const thinkingFrameworks = isAngelCard ? `
 1.  **${translations[lang].promptFirstPrinciplesThinking}**: ${translations[lang].promptFirstPrinciplesDetail}
 2.  **${translations[lang].promptDomainExpertise}**: ${translations[lang].promptDomainExpertiseDetail1.replace('${field}', leaderField)} ${translations[lang].promptDomainExpertiseDetail2}
 3.  **${translations[lang].promptCorePhilosophyDrivingForce}**: ${translations[lang].promptCorePhilosophyDetail1.replace('${name}', leaderName).replace('${remarksSection}', remarksSection)}
@@ -586,7 +586,7 @@ async function getAIResponse() {
     // ═══════════════════════════════════════════════
     // 【星空专栏融合模式】判断 —— 新增
     // ═══════════════════════════════════════════════
-    const isStarryFusionMode = window.currentSelectedLeader?._isStarryCard === true 
+    const isStarryFusionMode = window.currentSelectedLeader?._isAngelCard === true 
                             && window.currentSelectedLeader?._cardType === 'fusion';
 
     // ═══════════════════════════════════════════════
