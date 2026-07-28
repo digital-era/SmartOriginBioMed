@@ -3,6 +3,38 @@
 // 依赖：复用 newUI.js 已定义的 getFieldValue / getCategoryName
 // ═══════════════════════════════════════════════
 
+// 在文件顶部已有的映射表基础上，添加反向映射
+const TAB_ID_TO_CATEGORY = {
+  'TCM': 'TCM\r',           // 注意：实际键可能带 \r
+  'WM': 'WM\r',
+  'MO': 'MultiOmics\r',
+  'NL': 'NeuralLink\r',
+  'AIDis': 'AIDrugDiscovery\r',
+  'AIHC': 'AIHealthcare\r'
+};
+
+// 或者更健壮的方式：运行时查找
+function getCategoryKey(tabId) {
+    // 先直接尝试
+    if (allData[tabId]) return tabId;
+    
+    // 尝试映射
+    const mapped = CATEGORY_TO_TAB_ID[tabId];
+    if (mapped && allData[mapped]) return mapped;
+    
+    // 尝试带 \r 的版本
+    if (allData[tabId + '\r']) return tabId + '\r';
+    
+    // 遍历模糊匹配
+    for (const key of Object.keys(allData)) {
+        if (key.trim() === tabId || key.trim() === mapped) {
+            return key;
+        }
+    }
+    
+    return null;
+}
+
 /**
  * 构建精简人物快照（仅当前语言，不含领航员自身）
  */
@@ -77,7 +109,8 @@ function activateInterstellarNavigator() {
     // 注意：currentSelectedCategory 是 let 声明的全局变量，
     //       不是 window 的属性，不能加 window. 前缀！
     // ═══════════════════════════════════════════════
-    const currentCat = currentSelectedCategory;
+    // const currentCat = currentSelectedCategory;
+    const currentCat = getCategoryKey(currentSelectedCategory);  // ← 转换
 
     if (currentCat && allData[currentCat]) {
         const found = allData[currentCat].find(l => l.id === 'interstellar_navigator');
@@ -266,7 +299,8 @@ Question 3 · Depth Verification & Reconstruction:
  */
 function activateIntraStellarNavigator() {
     // 星内领航必须依附于当前所在领域
-    const currentCat = currentSelectedCategory;
+    // const currentCat = currentSelectedCategory;
+    const currentCat = getCategoryKey(currentSelectedCategory);  // ← 同样转换
 
     if (!currentCat || !allData[currentCat]) {
         const lang = currentLang || 'zh-CN';
