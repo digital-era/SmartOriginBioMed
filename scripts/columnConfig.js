@@ -492,7 +492,7 @@ async function loadSystemColumn(card) {
 /**
  * 导出星空专栏配置为 JSON 文件下载
  */
-function exportStarryColumnData() {
+function exportAngelColumnData() {
     let exportCards;
 
     if (checkAdminPermission()) {
@@ -720,7 +720,7 @@ function renderImportExportButtons(container) {
     
     // 绑定事件
     document.getElementById('btn-export-data')?.addEventListener('click', () => {
-        const result = exportStarryColumnData();
+        const result = exportAngelColumnData();
         if (result.success) {
             alert(lang === 'zh-CN' 
                 ? `已导出 ${result.count} 张卡片配置` 
