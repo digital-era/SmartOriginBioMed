@@ -264,7 +264,7 @@ function enterAngelColumn () {
         // ═══════════════════════════════════════════════════
         // 【关键】先加载持久化数据，再渲染
         // ═══════════════════════════════════════════════════
-        await initAngelColumn();  // ✅ 加载 KV/localStorage 数据
+        await initangelColumn();  // ✅ 加载 KV/localStorage 数据
 
         renderAngelColumnLayout();
 
