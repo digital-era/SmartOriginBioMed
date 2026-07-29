@@ -20,7 +20,7 @@ const angelColumnCards =  [
         "en": "When the mind is still, the infinite naturally arises."
       },
       "configurable": true,
-      "builtIn": false,
+      "builtIn": true,
       "type": "fusion",
       "experts": [
         "zhang_zhi_shun"
@@ -54,7 +54,7 @@ const angelColumnCards =  [
         "en": "Skeletal alignment (Form), depth of breath (Qi), and the relaxing and sinking of intent (Spirit)."
       },
       "configurable": true,
-      "builtIn": false,
+      "builtIn": true,
       "type": "fusion",
       "experts": [
         "li_zai_feng"
