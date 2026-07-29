@@ -1238,7 +1238,6 @@ function bindModernEvents() {
     });
 }
 
-
 /* --- 音乐播放控制逻辑 --- */
 // 1. 主按钮点击：播放/暂停指定音乐
 function toggleMusic(btnElement) {
