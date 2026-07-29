@@ -531,7 +531,7 @@ function exportStarryColumnData() {
 
     const a = document.createElement('a');
     a.href = url;
-    a.download = `starry-column-backup-${timestamp}.json`;
+    a.download = `angel-column-backup-${timestamp}.json`;
     document.body.appendChild(a);
     a.click();
 
