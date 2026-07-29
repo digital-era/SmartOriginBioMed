@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-29T01:27:46Z",
+  "totalFiles": 6,
+  "totalColumns": 2,
+  "files": [
+    "大道修真-20260727.html",
+    "大道修真-20260728.html",
+    "大道修真.html",
+    "道家内养-20260727.html",
+    "道家内养-20260728.html",
+    "道家内养.html"
+  ],
+  "byColumn": {
+    "大道修真": {
+      "files": [
+        {
+          "name": "大道修真.html",
+          "type": "latest"
+        },
+        {
+          "name": "大道修真-20260728.html",
+          "type": "dated",
+          "date": "20260728"
+        },
+        {
+          "name": "大道修真-20260727.html",
+          "type": "dated",
+          "date": "20260727"
+        }
+      ],
+      "count": 3
+    },
+    "道家内养": {
+      "files": [
+        {
+          "name": "道家内养.html",
+          "type": "latest"
+        },
+        {
+          "name": "道家内养-20260728.html",
+          "type": "dated",
+          "date": "20260728"
+        },
+        {
+          "name": "道家内养-20260727.html",
+          "type": "dated",
+          "date": "20260727"
+        }
+      ],
+      "count": 3
+    }
+  }
+}
