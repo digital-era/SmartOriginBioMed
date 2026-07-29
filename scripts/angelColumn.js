@@ -219,7 +219,7 @@ function showToast(message, type = 'info') {
  * 根据当前视图模式返回对应的标题文案
  */
 function getColumnTitle(lang) {
-    const mode = window.starryColumnViewMode || 'list';
+    const mode = window.AngelColumnViewMode || 'list';
     if (mode === 'card') {
         return getFieldValue(angelColumnTexts.columnNameCard, lang);
     }
@@ -256,17 +256,17 @@ function enterAngelColumn () {
         });
 
         // 设置全局状态
-        window.currentSelectedCategory = 'starryColumn';
-        window.starryColumnViewMode = 'list';
+        window.currentSelectedCategory = 'AngelColumn';
+        window.AngelColumnViewMode = 'list';
         window.currentSelectedLeader = null;
         window.currentSelectedCard = null;
 
         // ═══════════════════════════════════════════════════
         // 【关键】先加载持久化数据，再渲染
         // ═══════════════════════════════════════════════════
-        await initStarryColumn();  // ✅ 加载 KV/localStorage 数据
+        await initAngelColumn();  // ✅ 加载 KV/localStorage 数据
 
-        renderStarryColumnLayout();
+        renderAngelColumnLayout();
 
         if (overlay) overlay.classList.remove('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -277,7 +277,7 @@ function enterAngelColumn () {
 /**
  * 渲染星空专栏布局（图标按钮，无文字，支持语言切换）
  */
-function renderStarryColumnLayout() {
+function renderAngelColumnLayout() {
     const layout = document.getElementById('category-layout-container');
     if (!layout) {
         console.error('category-layout-container not found');
@@ -289,7 +289,7 @@ function renderStarryColumnLayout() {
 	const isUser = checkUserPermission();
 
     // 确保状态正确
-    window.starryColumnViewMode = 'list';
+    window.AngelColumnViewMode = 'list';
 
     layout.style.display = 'flex';
 
@@ -377,7 +377,7 @@ function _bindExportImportEvents() {
     const exportBtn = document.getElementById('btn-starry-export');
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
-            const result = exportStarryColumnData();
+            const result = exportAngelColumnData();
             if (result.success) {
                 const msg = lang === 'zh-CN'
                     ? `已导出 ${result.count} 张卡片配置`
@@ -403,7 +403,7 @@ function _bindExportImportEvents() {
                 return;
             }
 
-            const result = await importStarryColumnData(file);
+            const result = await importAngelColumnData(file);
 
             if (result.success) {
                 const msg = lang === 'zh-CN'
@@ -566,7 +566,7 @@ function renderStarryCardsList(isAdmin = false) {
             systemBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const fileName = getFieldValue(card.name, 'zh-CN');
-                const htmlPath = `/StarryColumn/${fileName}.html`;
+                const htmlPath = `/AngelColumn/${fileName}.html`;
                 window.open(htmlPath, '_blank');
             });
         }
@@ -681,8 +681,8 @@ function selectStarryCard(card) {
     const lang = window.currentLang || 'zh-CN';
 
     window.currentSelectedCard = card;
-    window.currentSelectedCategory = 'starryColumn';
-    window.starryColumnViewMode = 'card';  // ← 【添加这行】
+    window.currentSelectedCategory = 'AngelColumn';
+    window.AngelColumnViewMode = 'card';  // ← 【添加这行】
 
     // 准备专家数据
     let resolvedExperts;
@@ -746,7 +746,7 @@ function selectStarryCard(card) {
     document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
 
     // 5. 渲染星空专栏布局（覆盖 layout 内容，但保留关键结构）
-    renderStarryColumnLayoutForLeader(hostCategory);
+    renderAngelColumnLayoutForLeader(hostCategory);
 
     // 6. 显示 .container
     const container = document.querySelector('.container');
@@ -769,7 +769,7 @@ function selectStarryCard(card) {
 /**
  * 渲染星空专栏布局，但保留 selectLeader 需要的交互结构
  */
-function renderStarryColumnLayoutForLeader(hostCategory) {
+function renderAngelColumnLayoutForLeader(hostCategory) {
     const layout = document.getElementById('category-layout-container');
     if (!layout) return;
     
@@ -825,21 +825,21 @@ function renderStarryColumnLayoutForLeader(hostCategory) {
     document.getElementById('btn-starry-back')?.addEventListener('click', backToWheelSelection);
     
     // 右上角：返回专栏列表
-    document.getElementById('btn-back-to-list')?.addEventListener('click', backToStarryColumnList);
+    document.getElementById('btn-back-to-list')?.addEventListener('click', backToAngelColumnList);
 }
 
 /**
  * 从星空专栏卡片详情返回列表页
  * 清理对话状态，恢复列表视图
  */
-function backToStarryColumnList() {
+function backToAngelColumnList() {
     const lang = window.currentLang || 'zh-CN';
 
     // 1. 清除状态
     window.currentSelectedLeader = null;
     window.currentSelectedCard = null;
-    window.starryColumnViewMode = 'list';
-    window.currentSelectedCategory = 'starryColumn';
+    window.AngelColumnViewMode = 'list';
+    window.currentSelectedCategory = 'AngelColumn';
     window.currentGeneratedPrompt = '';
 
     // 2. 隐藏各区域（不清空 innerHTML！）
@@ -880,7 +880,7 @@ function backToStarryColumnList() {
     if (container) container.style.display = 'none';
 
     // 4. 重新渲染列表
-    renderStarryColumnLayout();
+    renderAngelColumnLayout();
     const isAdmin = checkAdminPermission();
     renderStarryCardsList(isAdmin);
 
@@ -1762,7 +1762,7 @@ function deleteStarryCard(cardId) {
 /**
  * 刷新星空专栏界面语言 - 局部更新，保留交互状态
  */
-function updateStarryColumnLanguage() {
+function updateAngelColumnLanguage() {
     const lang = window.currentLang || 'zh-CN';
     const layout = document.getElementById('category-layout-container');
     if (!layout || layout.style.display === 'none') return;
@@ -1801,7 +1801,7 @@ function updateStarryColumnLanguage() {
     }
     
     // 4. 根据模式更新内容
-    if (window.starryColumnViewMode === 'card' && window.currentSelectedLeader) {
+    if (window.AngelColumnViewMode === 'card' && window.currentSelectedLeader) {
         const leader = window.currentSelectedLeader;
         
         if (leader._rawName) {
