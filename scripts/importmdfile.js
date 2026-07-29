@@ -303,31 +303,67 @@ function extractRealUserQuestion(block) {
 }
 
 /**
- * 从背景设定中提取专家信息
+ * 【增强版】从背景设定中提取专家信息
+ * 
+ * 兼容格式：
+ *   1. 原有格式：你是 张医生（Dr. Zhang）\n主要贡献: xxx\n专业领域: xxx
+ *   2. 新格式：你是 大道修真. 根据...\n- 主要贡献 xxx\n- 专业领域 xxx
  */
 function extractLeaderInfoFromPrompt(block) {
     const info = { name: 'Unknown', field: '', contribution: '' };
 
-    // 提取"你是 XXX (英文名)"
-    const nameMatch = block.match(/你是\s+([^（(]+)[（(]([^）)]+)[）)]/);
-    if (nameMatch) {
-        info.name = nameMatch[1].trim();
+    // ========== 提取名字 ==========
+    // 策略A：原有格式 — 你是 名字（英文名）
+    const nameMatchLegacy = block.match(/你是\s+([^\s（(]+)[（(]([^）)]+)[）)]/);
+    // 策略B：新格式 — 你是 名字. 根据...（无括号英文名，名字后紧跟句号或空格）
+    const nameMatchNew = block.match(/你是\s+([^\s.（(]+)(?:[.．。]|\s+根据|$)/);
+    
+    if (nameMatchLegacy) {
+        info.name = nameMatchLegacy[1].trim();
+    } else if (nameMatchNew) {
+        info.name = nameMatchNew[1].trim();
     }
 
-    // 提取"主要贡献:"
-    const contribMatch = block.match(/主要贡献[：:]\s*([^\n]+?)(?=\n\s*-|$)/);
-    if (contribMatch) {
-        info.contribution = contribMatch[1].trim();
+    // ========== 提取贡献 ==========
+    // 兼容：原有格式（冒号分隔）和新格式（空格/列表项分隔）
+    const contribPatterns = [
+        // 原有格式：主要贡献: xxx 或 主要贡献：xxx
+        /(?:^|\n)\s*主要贡献\s*[：:]\s*([^\n]+?)(?=\n\s*-|\n|$)/,
+        // 新格式：- 主要贡献 xxx（空格分隔，无冒号）
+        /(?:^|\n)\s*-\s*主要贡献\s+([^\n]+?)(?=\n\s*-|\n|$)/,
+        // 兜底：主要贡献 xxx（无列表符号，无冒号）
+        /(?:^|\n)\s*主要贡献\s+([^\n]+?)(?=\n\s*-|\n|$)/,
+    ];
+    
+    for (const pattern of contribPatterns) {
+        const match = block.match(pattern);
+        if (match && match[1]) {
+            info.contribution = match[1].trim();
+            break;
+        }
     }
 
-    // 提取"专业领域:"
-    const fieldMatch = block.match(/专业领域[：:]\s*([^\n]+?)(?=\n\s*-|$)/);
-    if (fieldMatch) {
-        info.field = fieldMatch[1].trim();
+    // ========== 提取领域 ==========
+    const fieldPatterns = [
+        // 原有格式：专业领域: xxx 或 专业领域：xxx
+        /(?:^|\n)\s*专业领域\s*[：:]\s*([^\n]+?)(?=\n\s*-|\n|$)/,
+        // 新格式：- 专业领域 xxx（空格分隔，无冒号）
+        /(?:^|\n)\s*-\s*专业领域\s+([^\n]+?)(?=\n\s*-|\n|$)/,
+        // 兜底：专业领域 xxx（无列表符号，无冒号）
+        /(?:^|\n)\s*专业领域\s+([^\n]+?)(?=\n\s*-|\n|$)/,
+    ];
+    
+    for (const pattern of fieldPatterns) {
+        const match = block.match(pattern);
+        if (match && match[1]) {
+            info.field = match[1].trim();
+            break;
+        }
     }
 
     return info.name !== 'Unknown' ? info : null;
 }
+
 
 /**
  * 【移植增强】从MD内容解析出 conversationHistory 格式
