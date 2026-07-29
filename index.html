@@ -690,6 +690,18 @@
 	            <button onclick="exportToMD()" data-i18n-title="tooltipExportMD"><i class="fas fa-file-alt"></i></button>
 	            <button onclick="exportToHTML()" data-i18n-title="tooltipExportHTML"><i class="fas fa-file-code"></i></button>
 	            <button onclick="importFromMD()" data-i18n-title="tooltipImportMD"><i class="fas fa-file-import"></i></button>
+			    <!-- 音乐按钮从顶部移到这里 -->
+				<button class="music-wrapper-canvas" onclick="toggleMusic(this)" title="背景音乐" data-i18n-title="tooltipBgMusic">
+					<i class="fas fa-music"></i>
+				</button>
+				<audio id="bgMusic" loop>
+					<source src="music/HansZimmer-Interstellar-ImperialOrchestra.mp3" type="audio/mpeg">
+				</audio>
+				<!-- 在 .action-group 中追加 -->
+				<button class="tts-btn" onclick="toggleCanvasTTS()" id="btn-canvas-tts" title="朗读" data-i18n-title="tooltipTTS">
+				    <i class="fas fa-volume-high" id="tts-icon"></i>
+				</button>
+				
 	        </div>
 	    </div>
 	
