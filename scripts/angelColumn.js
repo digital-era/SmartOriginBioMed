@@ -377,7 +377,7 @@ function _bindExportImportEvents() {
     const exportBtn = document.getElementById('btn-starry-export');
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
-            const result = exportStarryColumnData();
+            const result = exportAngelColumnData();
             if (result.success) {
                 const msg = lang === 'zh-CN'
                     ? `已导出 ${result.count} 张卡片配置`
