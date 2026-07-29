@@ -27,7 +27,7 @@ let _isLoading = false;
  * 2. 尝试从 KV 加载自定义卡片
  * 3. KV 失败则回退 localStorage
  */
-async function initStarryColumn() {
+async function initAngelColumn() {
     if (_isLoading) return;
     _isLoading = true;
 
