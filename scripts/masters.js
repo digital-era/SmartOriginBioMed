@@ -95,7 +95,7 @@
       }
     },    
     {
-      "id": "li_zai_feng", "name": "李再峰 (Li Zaifeng / Li Zai Feng)",
+      "id": "li_zai_feng", "name": "李在峰 (Li Zaifeng / Li Zai Feng)",
       "contribution": {
         "zh-CN": "作为武当玄武派第十四代传人，推广武当太极与八段锦养生功法，结合中医与道家内养，开发适合现代人的简易教学体系，帮助众多学员提升体质。",
         "en": "As the 14th-generation successor of the Wudang Xuanwu School, he promotes Wudang Tai Chi and Baduanjin health-preserving exercises. Integrates traditional Chinese medicine with Taoist internal cultivation, developing accessible teaching systems for modern people and helping numerous students improve their physical condition."
