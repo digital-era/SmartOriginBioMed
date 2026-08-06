@@ -12,8 +12,8 @@ const angelColumnCards =  [
         "en": "Seeking the Dao, realizing the Dao, and transmitting the Dao; returning to original simplicity, and mastering complexity through simplicity."
       },
       "field": {
-        "zh-CN": "道教文化、道教养生",
-        "en": "Taoist Culture, Taoist Wellness"
+        "zh-CN": "道教文化、隐修弘道",
+        "en": "Taoist Culture, Secluded cultivation with public propagation"
       },
       "remarks": {
         "zh-CN": "心若清静，自生无穷",
@@ -46,8 +46,8 @@ const angelColumnCards =  [
         "en": "Promoting a modern holistic wellness system by blending TCM and Taoist inner cultivation."
       },
       "field": {
-        "zh-CN": "道家功法、八段锦养生",
-        "en": "Taoist Exercises, Baduanjin Health Cultivation"
+        "zh-CN": "道家功法、道家养生",
+        "en": "Taoist Exercises, Taoist wellness practices"
       },
       "remarks": {
         "zh-CN": "骨骼的对位（形）、呼吸的深浅（气）、意念的松沉（神）",
